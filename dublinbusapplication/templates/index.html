@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>BUSES</h1>
+    <ul>
+        {% for bus in buses %}
+            <li>{{ bus.name }} ({{ bus.price }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
