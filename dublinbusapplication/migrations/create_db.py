@@ -4,6 +4,11 @@ from config.db_session import Session
 session = Session()
 
 sql = """
+CREATE SCHEMA IF NOT EXISTS dublinbus
+"""
+session.execute(sql)
+
+sql = """
 CREATE TABLE IF NOT EXISTS weather (
 id int NOT NULL AUTO_INCREMENT primary key,
 description VARCHAR(256),
@@ -11,7 +16,6 @@ temp FLOAT,
 last_update DATETIME
 )
 """
-
 
 try:
     res = session.execute(sql)

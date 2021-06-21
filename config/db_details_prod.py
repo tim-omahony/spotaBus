@@ -1,5 +1,0 @@
-USER = "team18"
-PASSWORD = "Q{#9{aG.c7P^HBeQ"
-PORT = "3306"
-DB = "team18"
-URI = "telemachus.ucd.ie"
