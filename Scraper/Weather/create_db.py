@@ -1,5 +1,5 @@
 import os
-from config.db_session import Session
+from Scraper.Weather.db_session import Session
 
 session = Session()
 
