@@ -1,8 +1,3 @@
-# USER = "tim"
-# PASSWORD = "Ylu3shin123!"
-# URI = "127.0.0.1"
-# PORT = "3306"
-# DB = "dublin_bus"
 USER = "CiansDB"
 PASSWORD = "DBG18_2021"
 PORT = "3306"
