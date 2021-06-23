@@ -1,10 +1,17 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
-    <h1>BUSES</h1>
-    <ul>
-        {% for bus in buses %}
-            <li>{{ bus.name }} ({{ bus.price }}</li>
-        {% endfor %}
-    </ul>
+
+<link rel="stylesheet" type="text/css" href="{% static '/map.css' %}">
+
+<h1>BUSES</h1>
+
+<div id="MapView">hello</div>
+
+<script async
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBpmxEf_9hpbApu3UhIu8jY41LDdgPFkqc&callback=initMap&libraries=&v=weekly">
+</script>
+<script src=" {% static '/Map.js' %}"></script>
+
+
 {% endblock %}
