@@ -1,2 +1,4 @@
 /Scraper/Weather/db_details.py/
 /venv/
+/node_modules/
+.vscode
