@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'dublinbusapplication.apps.DublinbusapplicationConfig',
     'rest_framework',
-    'frontend.apps.FrontendConfig'
+    # 'frontend.apps.FrontendConfig'
 ]
 
 MIDDLEWARE = [
