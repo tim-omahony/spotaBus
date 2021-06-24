@@ -1,3 +1,4 @@
 /scraper/weather/db_details.py/
-/venv/
 .vscode
+data/stops.csv
+/venv/
