@@ -1,10 +1,11 @@
-import os
 import datetime
-import traceback
-import requests
 import json
+import os
+import traceback
+
+import requests
+
 from db_session import Session
-from Scraper.Weather import Weather
 
 session = Session()
 
@@ -27,7 +28,7 @@ def write_to_file(text, now):
 def weather_to_db(text):
     weather = json.loads(text)
     print(type(weather), len(weather))
-    weather_instance = Weather(description=weather['weather'][0].get('description'),
+    weather_instance = weather(description=weather['weather'][0].get('description'),
                                temp=float(weather['main'].get('temp') - 273.15),
                                last_update=datetime.datetime.fromtimestamp(weather.get('dt')))
     session.add(weather_instance)
