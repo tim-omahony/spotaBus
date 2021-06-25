@@ -4,7 +4,7 @@ from db_session import Session
 session = Session()
 
 sql = """
-CREATE SCHEMA IF NOT EXISTS team18
+CREATE SCHEMA IF NOT EXISTS dublinbus
 """
 session.execute(sql)
 
