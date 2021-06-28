@@ -1,4 +1,6 @@
-/scraper/weather/db_details.py/
+./scraper/weather/db_details.py/
 .vscode
-data/stops.csv
-/venv/
+dublinbusapplication/data/stops.csv
+.idea/
+*.pyc
+.venv/

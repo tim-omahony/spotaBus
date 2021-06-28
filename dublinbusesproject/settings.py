@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'dublinbusapplication.apps.DublinbusapplicationConfig',
     'rest_framework',
+    'jsonify',
+    'django_extensions'
     # 'frontend.apps.FrontendConfig'
 ]
 
@@ -78,14 +80,14 @@ WSGI_APPLICATION = 'dublinbusesproject.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-        #'ENGINE': 'django.db.backends.mysql',
-        #'NAME': 'dublinbus',
-        #'USER': 'CiansDB',
-        #'PASSWORD': 'DBG18_2021',
-        #'HOST': 'dublinbus.cmxnicqe342l.eu-west-1.rds.amazonaws.com',
-        #'PORT': '3306',
+        # 'ENGINE': 'django.db.backends.sqlite3',
+        # 'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'dublinbus',
+        'USER': 'CiansDB',
+        'PASSWORD': 'DBG18_2021',
+        'HOST': 'dublinbus.cmxnicqe342l.eu-west-1.rds.amazonaws.com',
+        'PORT': '3306',
 
     }
 }
