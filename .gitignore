@@ -3,4 +3,4 @@
 dublinbusapplication/data/stops.csv
 .idea/
 *.pyc
-.venv/
+/venv/
