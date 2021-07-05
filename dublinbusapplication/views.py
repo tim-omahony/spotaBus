@@ -18,3 +18,12 @@ def index(request):
 def stops(request):
     stops = Stop.objects.all().values()
     return JsonResponse({'stops': list(stops)})
+
+def about(request):
+    return render(request, 'about.html')
+
+def contact(request):
+    return render(request, 'contact.html')
+
+def search_test(request):
+    return render(request, 'search_test.html')
