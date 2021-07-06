@@ -10,10 +10,39 @@
 <input id="autocomplete2" placeholder="Enter a destination" type="text" />
 <select id="hours"></select>
 <select id="minutes"></select>
+<br>
+<h1>Today's date</h1>
+<div id="currentDate"></div>
 
 <div id="twitterFeed" style="width: 50%;">
 <a class="twitter-timeline" data-theme="dark" href="https://twitter.com/DublinPolice?ref_src=twsrc%5Etfw">Tweets by DublinPolice</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 </div>
+
+<script>
+    var jsonURL = http://holidayapi.com/v1/holidays?country=GB&year=
+    fetch('https://holidayapi.com/v1/holidays?pretty&key=3758828b-5369-41af-839d-c59173041849&country=MX&year=2020').then(function (response) {
+	    // The API call was successful!
+	    console.log('success!', response);
+    }).catch(function (err) {
+	    // There was an error
+	    console.warn('Something went wrong.', err);
+    });
+</script>
+
+<script>
+    var currentDate = new Date();
+    console.log(currentDate);
+    var day = String(currentDate.getDate()).padStart(2, '0');
+    var month = String(currentDate.getMonth() + 1).padStart(2, '0');
+    var year = currentDate.getFullYear();
+
+    var today = day + '/' + month + '/' + year;
+
+    document.getElementById("currentDate").innerHTML = today;
+
+
+
+</script>
 
 
 <script>
