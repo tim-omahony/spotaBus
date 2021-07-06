@@ -7,8 +7,7 @@
     <div id="weatherWidget"><a class="weatherwidget-io" data-font="Roboto Slab"
                                data-icons="Climacons Animated" data-label_1="DUBLIN" data-label_2="WEATHER"
                                data-mode="Current" data-theme="clear"
-                               href="https://forecast7.com/en/53d35n6d26/dublin/">DUBLIN
-        WEATHER</a>
+                               href="https://forecast7.com/en/53d35n6d26/dublin/">DUBLIN WEATHER</a>
         <script>
             !function (d, s, id) {
                 var js, fjs = d.getElementsByTagName(s)[0];
@@ -20,67 +19,34 @@
                 }
             }(document, 'script', 'weatherwidget-io-js');
         </script>
+
     </div>
-    <div id="autocompleteDiv">
-        <input id="autocomplete" placeholder="Enter an origin" type="text" />
-        <input id="autocomplete2" placeholder="Enter a destination" type="text" />
-    </div>
+
+     <div style="display: none">
+          <input
+            id="origin-input"
+            class="controls"
+            type="text"
+            placeholder="Enter an origin location"
+          />
+
+          <input
+            id="destination-input"
+            class="controls"
+            type="text"
+            placeholder="Enter a destination location"
+          />
+
+        </div>
+
+
     <div id="MapView"></div>
 
-
-
     <script async
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBpmxEf_9hpbApu3UhIu8jY41LDdgPFkqc&callback=initMap&libraries=&v=weekly">
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBpmxEf_9hpbApu3UhIu8jY41LDdgPFkqc&libraries=places&callback=initMap">
     </script>
     <script src=" {% static '/Map.js' %}"></script>
-    <script>
-           let autocomplete;
-    let autocomplete2;
 
-    function initAutocomplete() {
-        autocomplete = new google.maps.places.Autocomplete(document.getElementById('autocomplete'),{
-            componentRestrictions: { country: "ie" },
-            fields: ["address_components", "geometry"],
-            types: ["address"]
-            });
-
-        autocomplete2 = new google.maps.places.Autocomplete(document.getElementById('autocomplete2'),{
-            componentRestrictions: { country: "ie" },
-            fields: ["address_components", "geometry"],
-            types: ["address"]
-            });
-
-        var input = document.getElementById('autocomplete');
-        var autocomplete = new google.maps.places.Autocomplete(input);
-        google.maps.event.addListener(autocomplete, 'place_changed', function () {
-        var place = autocomplete.getPlace();
-        console.log(place.geometry.location.lat());
-        console.log(place.geometry.location.lng());
-        });
-
-        var input2 = document.getElementById('autocomplete2');
-        var autocomplete2 = new google.maps.places.Autocomplete(input2);
-        google.maps.event.addListener(autocomplete2, 'place_changed', function () {
-        var place2 = autocomplete2.getPlace();
-        console.log(place2.geometry.location.lat());
-        console.log(place2.geometry.location.lng());
-        });
-
-    }
-
-    function onPlaceChanged() {
-        var place = autocomplete.getPlace();
-
-        if (!place.geometry) {
-            //User did not select a prediction; reset the input field
-            document.getElementById('autocomplete').placeholder = 'Enter your start point';
-
-        } else {
-            document.getElementById('details').innerHTML = place.name;
-
-        }
-    }
-    </script>
 
 
 {% endblock %}
