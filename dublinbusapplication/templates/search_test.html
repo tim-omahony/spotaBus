@@ -11,16 +11,22 @@
 <select id="hours"></select>
 <select id="minutes"></select>
 
+<div id="twitterFeed" style="width: 50%;">
+<a class="twitter-timeline" data-theme="dark" href="https://twitter.com/DublinPolice?ref_src=twsrc%5Etfw">Tweets by DublinPolice</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</div>
+
+
 <script>
-    var select = document.getElementById("hours");
+    var hours = document.getElementById("hours");
     for (let i = 0; i < 25; i++) {
-        select.options[select.options.length] = new Option( i, i);
+        hours.options[hours.options.length] = new Option( i, i);
     }
 
-    var select = document.getElementById("minutes");
-    for (let i = 0; i <60 ; i+15) {
-        select.options[select.options.length] = new Option( i, i);
+    var minutes = document.getElementById("minutes");
+    for (let i = 0; i < 60; i+=15) {
+        minutes.options[minutes.options.length] = new Option( i, i);
     }
+
 </script>
 
 <script>
