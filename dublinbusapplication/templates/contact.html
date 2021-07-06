@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="formdiv">
+
+
+        <h2>Want to give us feedback on our app?</h2>
+
+        <!-- the below structure for this form code was based off the format sourced from w3 school here https://www.w3schools.com/html/tryit.asp?filename=tryhtml_form_mail . As I am not yet familiar with the type and value fields I played around with the layout and explored how one would deal with actually sending an e-mail through a html form -->
+
+        <form action="mailto:matthewfakeemail@fake.com" method="post" enctype="text/plain">
+            <br>Name:<br>
+            <input type="text" name="name"><br><br>
+            E-mail:<br>
+            <input type="text" name="mail"><br><br>
+            Rating:<br>
+            <input type="text" name="rating" size="10"><br><br>
+            Feedback:<br>
+            <input type="text" name="comment" size="100"><br><br>
+            <input type="submit" value="Send"><br><br>
+        </form>
+
+
+</div>
+{% endblock %}
