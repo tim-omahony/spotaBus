@@ -1,40 +1,30 @@
-{% extends 'base.html' %}
-{% load static %}
-{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
 
-    <link href="{% static '/map.css' %}" rel="stylesheet" type="text/css">
+<input id="autocomplete" placeholder="Enter an origin" type="text" />
+<input id="autocomplete2" placeholder="Enter a destination" type="text" />
+<select id="hours"></select>
+<select id="minutes"></select>
 
-    <div id="weatherWidget"><a class="weatherwidget-io" data-font="Roboto Slab"
-                               data-icons="Climacons Animated" data-label_1="DUBLIN" data-label_2="WEATHER"
-                               data-mode="Current" data-theme="clear"
-                               href="https://forecast7.com/en/53d35n6d26/dublin/">DUBLIN
-        WEATHER</a>
-        <script>
-            !function (d, s, id) {
-                var js, fjs = d.getElementsByTagName(s)[0];
-                if (!d.getElementById(id)) {
-                    js = d.createElement(s);
-                    js.id = id;
-                    js.src = 'https://weatherwidget.io/js/widget.min.js';
-                    fjs.parentNode.insertBefore(js, fjs);
-                }
-            }(document, 'script', 'weatherwidget-io-js');
-        </script>
-    </div>
-    <div id="autocompleteDiv">
-        <input id="autocomplete" placeholder="Enter an origin" type="text" />
-        <input id="autocomplete2" placeholder="Enter a destination" type="text" />
-    </div>
-    <div id="MapView"></div>
+<script>
+    var select = document.getElementById("hours");
+    for (let i = 0; i < 25; i++) {
+        select.options[select.options.length] = new Option( i, i);
+    }
 
+    var select = document.getElementById("minutes");
+    for (let i = 0; i <60 ; i+15) {
+        select.options[select.options.length] = new Option( i, i);
+    }
+</script>
 
-
-    <script async
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBpmxEf_9hpbApu3UhIu8jY41LDdgPFkqc&callback=initMap&libraries=&v=weekly">
-    </script>
-    <script src=" {% static '/Map.js' %}"></script>
-    <script>
-           let autocomplete;
+<script>
+    let autocomplete;
     let autocomplete2;
 
     function initAutocomplete() {
@@ -83,4 +73,11 @@
     </script>
 
 
-{% endblock %}
+<script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBpmxEf_9hpbApu3UhIu8jY41LDdgPFkqc&callback=initAutocomplete&libraries=places&v=weekly"
+      async
+></script>
+
+
+</body>
+</html>
