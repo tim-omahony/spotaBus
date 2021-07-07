@@ -23,7 +23,7 @@ function initMap() {
             //     strictBounds: false,
             // }
         });
-
+        Geolocation();
         new AutocompleteDirectionsHandler(map);
 }
 
@@ -111,7 +111,7 @@ function Geolocation(){
     const locationButton = document.createElement("button");
     locationButton.textContent = "Click to see my position";
     locationButton.classList.add("custom-map-control-button");
-    map.controls[google.maps.ControlPosition.TOP_CENTER].push(locationButton);
+    map.controls[google.maps.ControlPosition.TOP_RIGHT].push(locationButton);
     locationButton.addEventListener("click", () => {
         // Try HTML5 geolocation.
         if (navigator.geolocation) {
@@ -194,12 +194,23 @@ class AutocompleteDirectionsHandler {
 
     const originInput = document.getElementById("origin-input");
     const destinationInput = document.getElementById("destination-input");
-    const originAutocomplete = new google.maps.places.Autocomplete(originInput);
+    const originAutocomplete = new google.maps.places.Autocomplete(
+       originInput,
+           {
+      componentRestrictions: { country: ["IE"] },
+      fields: ["place_id", "geometry", "name"],
+            }
+    );
 
     // Specify just the place data fields that you need.
     originAutocomplete.setFields(["place_id"]);
     const destinationAutocomplete = new google.maps.places.Autocomplete(
-      destinationInput
+      destinationInput,
+
+            {
+      componentRestrictions: { country: ["IE"] },
+      fields: ["place_id", "geometry", "name"],
+            }
     );
     // Specify just the place data fields that you need.
     destinationAutocomplete.setFields(["place_id"]);
