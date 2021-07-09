@@ -15,30 +15,45 @@ let pos;
 
 
 function initMap() {
-        map = new google.maps.Map(document.getElementById("MapView"), {
-            center: {lat: DUBLIN_LAT, lng: DUBLIN_LNG},
-            zoom: 14,
-            // restriction: {
-            //     latLngBounds: DUBLIN_BOUNDS,
-            //     strictBounds: false,
-            // }
-        });
-        Geolocation();
-        new AutocompleteDirectionsHandler(map);
+    map = new google.maps.Map(document.getElementById("MapView"), {
+        center: {lat: DUBLIN_LAT, lng: DUBLIN_LNG},
+        zoom: 14,
+        // restriction: {
+        //     latLngBounds: DUBLIN_BOUNDS,
+        //     strictBounds: false,
+        // }
+        mapTypeControl: true,
+        mapTypeControlOptions: {
+            style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+            position: google.maps.ControlPosition.TOP_CENTER,
+        },
+        zoomControl: true,
+        zoomControlOptions: {
+            position: google.maps.ControlPosition.LEFT_CENTER,
+        },
+        scaleControl: true,
+        streetViewControl: true,
+        streetViewControlOptions: {
+            position: google.maps.ControlPosition.LEFT_TOP,
+        },
+        fullscreenControl: true,
+    });
+    Geolocation();
+    new AutocompleteDirectionsHandler(map);
 }
 
 function attachInstructionText(stepDisplay, marker, text, map) {
-              google.maps.event.addListener(marker, "click", () => {
-                // Open an info window when the marker is clicked on, containing the text
-                // of the step.
-                stepDisplay.setContent(text);
-                stepDisplay.open(map, marker);
-              });
+    google.maps.event.addListener(marker, "click", () => {
+        // Open an info window when the marker is clicked on, containing the text
+        // of the step.
+        stepDisplay.setContent(text);
+        stepDisplay.open(map, marker);
+    });
 }
 
-function DistanceMatrix(){
-   const bounds = new google.maps.LatLngBounds();
-   const markersArray = [];
+function DistanceMatrix() {
+    const bounds = new google.maps.LatLngBounds();
+    const markersArray = [];
 
     const geocoder = new google.maps.Geocoder();
     const service = new google.maps.DistanceMatrixService();
@@ -106,7 +121,7 @@ function DistanceMatrix(){
     });
 }
 
-function Geolocation(){
+function Geolocation() {
     infoWindow = new google.maps.InfoWindow();
     const locationButton = document.createElement("button");
     locationButton.textContent = "Click to see my position";
@@ -145,24 +160,29 @@ function deleteMarkers(markersArray) {
     markersArray = [];
 }
 
+function loadJson(selector) {
+    return JSON.parse(document.getElementById(selector).textContent);
+}
+
+window.onload = function () {
+    stops = loadJson("stops-data")
+    // populateStops();
+}
+
 function populateStops(map) {
-    fetch('stops/').then(async response => {
-        const data = await response.json();
-        stops = data.stops;
-        markers = stops.map(stop => {
-            return new google.maps.Marker({
-                position: {
-                    lat: Number.parseFloat(stop.stop_lat),
-                    lng: Number.parseFloat(stop.stop_lon)
-                },
-                title: stop.stop_name,
-                map: map
-            })
-        });
-        new MarkerClusterer(map, markers, {
-            imagePath: "https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m"
-        });
-    })
+    markers = stops.map(stop => {
+        return new google.maps.Marker({
+            position: {
+                lat: Number.parseFloat(stop.stop_lat),
+                lng: Number.parseFloat(stop.stop_lon)
+            },
+            title: stop.stop_name,
+            map: map
+        })
+    });
+    new MarkerClusterer(map, markers, {
+        imagePath: "https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m"
+    });
 }
 
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
@@ -177,93 +197,65 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
 
 
 class AutocompleteDirectionsHandler {
-  map;
-  originPlaceId;
-  destinationPlaceId;
-  travelMode;
-  directionsService;
-  directionsRenderer;
-  constructor(map) {
-    this.map = map;
-    this.originPlaceId = "";
-    this.destinationPlaceId = "";
-    this.travelMode = google.maps.TravelMode.TRANSIT;
-    this.directionsService = new google.maps.DirectionsService();
-    this.directionsRenderer = new google.maps.DirectionsRenderer();
-    this.directionsRenderer.setMap(map);
+    map;
+    originId;
+    destinationId;
+    travelMode;
+    directionsService;
+    directionsRenderer;
 
-    const originInput = document.getElementById("origin-input");
-    const destinationInput = document.getElementById("destination-input");
-    const originAutocomplete = new google.maps.places.Autocomplete(
-       originInput,
-           {
-      componentRestrictions: { country: ["IE"] },
-      fields: ["place_id", "geometry", "name"],
-            }
-    );
+    constructor(map) {
+        this.map = map;
+        this.originId = "";
+        this.destinationId = "";
+        this.travelMode = google.maps.TravelMode.TRANSIT;
+        this.directionsService = new google.maps.DirectionsService();
+        this.directionsRenderer = new google.maps.DirectionsRenderer();
+        this.directionsRenderer.setMap(map);
 
-    // Specify just the place data fields that you need.
-    originAutocomplete.setFields(["place_id"]);
-    const destinationAutocomplete = new google.maps.places.Autocomplete(
-      destinationInput,
+        const originInput = document.getElementById("origin-input");
+        const destinationInput = document.getElementById("destination-input");
+        this.setupStopChangeListener(originInput, "ORIG");
+        this.setupStopChangeListener(destinationInput, "DEST");
 
-            {
-      componentRestrictions: { country: ["IE"] },
-      fields: ["place_id", "geometry", "name"],
-            }
-    );
-    // Specify just the place data fields that you need.
-    destinationAutocomplete.setFields(["place_id"]);
-
-    this.setupPlaceChangedListener(originAutocomplete, "ORIG");
-    this.setupPlaceChangedListener(destinationAutocomplete, "DEST");
-    this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(originInput);
-    this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(destinationInput);
-  }
-
-
-  setupPlaceChangedListener(autocomplete, mode) {
-    autocomplete.bindTo("bounds", this.map);
-    autocomplete.addListener("place_changed", () => {
-      const place = autocomplete.getPlace();
-
-      if (!place.place_id) {
-        window.alert("Please select an option from the dropdown list.");
-        return;
-      }
-      if (mode === "ORIG") {
-        this.originPlaceId = place.place_id;
-      } else {
-        this.destinationPlaceId = place.place_id;
-      }
-      this.route();
-    });
-  }
-
-  route() {
-    if (!this.originPlaceId || !this.destinationPlaceId) {
-      return;
+        this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(originInput);
+        this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(destinationInput);
     }
-    const me = this;
 
-    this.directionsService.route(
-      {
-        origin: { placeId: this.originPlaceId },
-        destination: { placeId: this.destinationPlaceId },
-        travelMode: 'TRANSIT',
-      },
+    setupStopChangeListener(selectElement, mode) {
+        selectElement.addEventListener('change', (event) => {
+            if (mode === "ORIG") {
+                this.originId = event.target.value;
+            } else {
+                this.destinationId = event.target.value;
+            }
+            this.route();
+        });
+    }
 
-      (response, status) => {
-        if (status === "OK") {
-          me.directionsRenderer.setDirections(response);
-        } else {
-          window.alert("Directions request failed due to " + status);
+    route() {
+        if (!this.originId || !this.destinationId) {
+            return;
         }
-      }
-    );
-  }
+        const originStop = stops.find(stop => stop.id === parseInt(this.originId));
+        const destinationStop = stops.find(stop => stop.id === parseInt(this.destinationId));
+        console.log({originStop, destinationStop});
+
+        this.directionsService.route(
+            {
+                origin: {lat: originStop.stop_lat, lng: originStop.stop_lon},
+                destination: {lat: destinationStop.stop_lat, lng: destinationStop.stop_lon},
+                travelMode: 'TRANSIT',
+            },
+
+            (response, status) => {
+                if (status === "OK") {
+                    this.directionsRenderer.setDirections(response);
+                    console.log(response)
+                } else {
+                    window.alert("Directions request failed due to " + status);
+                }
+            }
+        );
+    }
 }
-
-
-
-
