@@ -15,7 +15,8 @@ session = Session()
 
 
 def index(request):
-    return render(request, 'index.html')
+    stops = Stop.objects.all().values()
+    return render(request, 'index.html', {'stops': list(stops)})
 
 
 def stops(request):
