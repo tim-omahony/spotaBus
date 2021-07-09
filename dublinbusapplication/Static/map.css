@@ -2,8 +2,8 @@
        * element that contains the map. */
 #MapView {
     height: 100%;
-    width: 80%;
-    margin-left: 10%;
+    width: 100%;
+    margin-left: 25%;
 }
 
 
@@ -37,6 +37,10 @@ body {
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
 
+#autocompleteDiv{
+    position: absolute;
+}
+
 #origin-input,
 #destination-input {
     background-color: #fff;
@@ -68,5 +72,5 @@ body {
 }
 
 .form-inline {
-    width: 10%;
+    width: 40%;
 }

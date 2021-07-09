@@ -217,9 +217,6 @@ class AutocompleteDirectionsHandler {
         const destinationInput = document.getElementById("destination-input");
         this.setupStopChangeListener(originInput, "ORIG");
         this.setupStopChangeListener(destinationInput, "DEST");
-
-        this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(originInput);
-        this.map.controls[google.maps.ControlPosition.TOP_LEFT].push(destinationInput);
     }
 
     setupStopChangeListener(selectElement, mode) {
