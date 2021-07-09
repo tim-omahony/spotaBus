@@ -51,9 +51,24 @@
 
       </li>
 
+       <li class="nav-item">
+
+        <a class="nav-link" href="/dublinbusapplication/login">Log in</a>
+
+      </li>
+
+       <li class="nav-item">
+
+        <a class="nav-link" href="/dublinbusapplication/register">Register</a>
+
+      </li>
+
     </ul>
 
   </div>
+
+     <span class="nav-link">Hello, {{ request.user }}</span>
+     <span class="nav-link"><a href="{% url 'logout' %}">Logout</a></span>
 
 </nav>
 
