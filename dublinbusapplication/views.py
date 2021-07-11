@@ -6,6 +6,10 @@ from django.core import serializers
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+import pickle
+import pandas as pd
+
+from dublinbusapplication.predictive_model.get_prediction import *
 
 from .models import Stop
 
@@ -15,13 +19,13 @@ session = Session()
 
 
 def index(request):
-    stops = Stop.objects.all().values()
-    return render(request, 'index.html', {'stops': list(stops)})
+    render_stops = Stop.objects.all().values()
+    return render(request, 'index.html', {'stops': list(render_stops)})
 
 
-def stops(request):
-    stops = Stop.objects.all().values()
-    return JsonResponse({'stops': list(stops)})
+# def stops(request):
+#     stops = Stop.objects.all().values()
+#     return JsonResponse({'stops': list(stops)})
 
 
 def about(request):
@@ -76,3 +80,15 @@ def logoutUser(request):
     logout(request)
     return redirect('login')
 
+# this method requests each of the params and sends you to a different page on the site
+
+def predict(request):
+    hour = int(request.POST.get('hour'))
+    day = int(request.POST.get('day'))
+    month = int(request.POST.get('month'))
+    start_stop_id = int(request.POST.get('start_stop_id'))
+    end_stop_id = int(request.POST.get('end_stop_id'))
+
+    result = prediction(hour, day, month, start_stop_id, end_stop_id, temp, weather_main, stops)
+
+    return render(request, 'predict.html', {'result': result})
