@@ -4,14 +4,14 @@
     {{ stops | json_script:"stops-data" }}
     <link href="{% static '/map.css' %}" rel="stylesheet" type="text/css" xmlns="http://www.w3.org/1999/html">
 
+    {#    these don't work with the form bit yet #}
     <div id="autocompleteDiv">
-
         <select id="origin-input"
                 class="controls"
                 type="text"
                 placeholder="Enter an origin location">
             {% for stop in stops %}
-            <option value="{{ stop.id }}">{{ stop.stop_name }}</option>
+                <option value="{{ stop.id }}">{{ stop.stop_name }}</option>
             {% endfor %}
         </select>
 
@@ -20,14 +20,31 @@
                 type="text"
                 placeholder="Enter a destination location">
             {% for stop in stops %}
-            <option value="{{ stop.id }}">{{ stop.stop_name }}</option>
+                <option value="{{ stop.id }}">{{ stop.stop_name }}</option>
             {% endfor %}
         </select>
 
-        <form class="form-inline" onsubmit="predict(event, ${stop.stop_name});"><input id="predictTime" class="form-control"
-                                                                                       type="datetime-local" required><input
-                type="submit" value="Plan Journey" id="button-predict" class="btn btn-primary"/></form>
-
+        <form action="predict/" method="post">
+            {% csrf_token %}
+            <p>hour</p>
+            <input type="text" name="hour"><br>
+            <p>day</p>
+            <input type="text" name="day"><br>
+            <p>month</p>
+            <input type="text" name="month"><br>
+            <p>start</p>
+            <input type="text" name="start_stop_id"><br>
+            <p>end</p>
+            <input type="text" name="end_stop_id"><br>
+            <input type="submit" value="Plan Journey">
+        </form>
+        {#        <form action="{% urls 'predict' %}" class="form-inline"><input id="predictTime"#}
+        {#                                                                 class="form-control"#}
+        {#                                                                 type="datetime-local"#}
+        {#                                                                 name="predict"#}
+        {#                                                                 required><input#}
+        {#                type="submit" value="Plan Journey" id="button-predict" class="btn btn-primary"/></form>#}
+        {##}
 
     </div>
 
@@ -38,19 +55,18 @@
                                data-icons="Climacons Animated" data-label_1="DUBLIN" data-label_2="WEATHER"
                                data-mode="Current" data-theme="clear"
                                href="https://forecast7.com/en/53d35n6d26/dublin/">DUBLIN WEATHER</a>
-    <script>
-        !function (d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (!d.getElementById(id)) {
-                js = d.createElement(s);
-                js.id = id;
-                js.src = 'https://weatherwidget.io/js/widget.min.js';
-                fjs.parentNode.insertBefore(js, fjs);
-            }
-        }(document, 'script', 'weatherwidget-io-js');
-    </script>
-
-
+        <script>
+            !function (d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0];
+                if (!d.getElementById(id)) {
+                    js = d.createElement(s);
+                    js.id = id;
+                    js.src = 'https://weatherwidget.io/js/widget.min.js';
+                    fjs.parentNode.insertBefore(js, fjs);
+                }
+            }(document, 'script', 'weatherwidget-io-js');
+        </script>
+    </div>
 
     <script async
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBpmxEf_9hpbApu3UhIu8jY41LDdgPFkqc&libraries=places&callback=initMap">
