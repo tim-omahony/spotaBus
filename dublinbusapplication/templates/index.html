@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     {{ stops | json_script:"stops-data" }}
     <link href="{% static '/map.css' %}" rel="stylesheet" type="text/css" xmlns="http://www.w3.org/1999/html">
 
@@ -23,28 +25,58 @@
             {% endfor %}
         </select>
 
-        <form action="" id="predict-form" method="POST">
-            {% csrf_token %}
-            <p>hour</p>
-            <input type="text" name="hour"><br>
-            <p>day</p>
-            <input type="text" name="day"><br>
-            <p>month</p>
-            <input type="text" name="month"><br>
-            {#            <input type="submit" value="Plan Journey" name="predict">#}
-            <button type="submit">Plan Journey</button>
+        <form id="form" method="POST">
+            <p>hour</p><input id ='hour' type="text" name="hour"><br>
+            <p>day</p><input id ='day' type="text" name="day"><br>
+            <p>month</p><input id ='month' type="text" name="month"><br>
+
+            <input type="submit" name="submit" value="Plan Journey">
+
         </form>
-        {{ result }}
-
-        {#        <form action="{% urls 'predict' %}" class="form-inline"><input id="predictTime"#}
-        {#                                                                 class="form-control"#}
-        {#                                                                 type="datetime-local"#}
-        {#                                                                 name="predict"#}
-        {#                                                                 required><input#}
-        {#                type="submit" value="Plan Journey" id="button-predict" class="btn btn-primary"/></form>#}
-        {##}
-
     </div>
+
+    <div id="output">
+    </div>
+
+    <script>
+    console.log("before ajax");
+        $('#form').on('submit', function (e) {
+            e.preventDefault();
+            $.ajax({
+                type: 'POST',
+                url: "{% url 'ajax_posting' %}",
+                data:
+                    {
+                        hour: $('#hour').val(),
+                        day: $('#day').val(),
+                        month: $('#month').val(),
+                        csrfmiddlewaretoken: '{{ csrf_token }}',
+                        dataType: "json",
+                    },
+
+                success: function(data){
+                   $('#output').val('');/* response message */
+                },
+
+                failure: function() {
+
+                }
+            });
+               console.log(data);
+        });
+    </script>
+
+
+
+    {#        <form action="{% urls 'predict' %}" class="form-inline"><input id="predictTime"#}
+    {#                                                                 class="form-control"#}
+    {#                                                                 type="datetime-local"#}
+    {#                                                                 name="predict"#}
+    {#                                                                 required><input#}
+    {#                type="submit" value="Plan Journey" id="button-predict" class="btn btn-primary"/></form>#}
+    {##}
+
+
 
 
     <div id="MapView"></div>
@@ -65,6 +97,7 @@
             }(document, 'script', 'weatherwidget-io-js');
         </script>
     </div>
+
 
     <script async
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBpmxEf_9hpbApu3UhIu8jY41LDdgPFkqc&libraries=places&callback=initMap">

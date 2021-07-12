@@ -256,20 +256,12 @@ class AutocompleteDirectionsHandler {
         );
     }
 }
+
 console.log("before ajax");
-$(document).on('submit', '#predict-form', function (e) {
-    e.preventDefault();
-    $.ajax({
-        type: 'POST',
-        url: '{% url "home" %}',
-        data:
-            {
-                hour: $("#hour").val(),
-                day: $("#day").val(),
-                month: $("#month").val(),
-            },
-    })
-});
+
+
+
+
 
 // $(document).ready(function () {
 //     $("predictForm").submit(function (event) {

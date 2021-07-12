@@ -19,18 +19,21 @@ session = Session()
 
 
 def index(request):
-    result = None
-    if request.method == 'POST':
+    render_stops = Stop.objects.all().values()
+    return render(request, 'index.html', {'stops': list(render_stops)})
+    # return render(request, 'index.html', {'stops': list(render_stops)})
+
+# ajax_posting function
+def ajax_posting(request):
+    if request.is_ajax():
         hour = int(request.POST.get('hour'))
         day = int(request.POST.get('day'))
         month = int(request.POST.get('month'))
 
         result = prediction(hour, day, month, start_stop_id, end_stop_id, temp, weather_main, stops)
 
-    render_stops = Stop.objects.all().values()
-    return render(request, 'index.html', {'result': result, 'stops': list(render_stops)})
-    # return render(request, 'index.html', {'stops': list(render_stops)})
-
+        return JsonResponse(result, safe=False)
+        # return response as JSON
 
 # def stops(request):
 #     stops = Stop.objects.all().values()
