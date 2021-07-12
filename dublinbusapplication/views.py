@@ -19,8 +19,17 @@ session = Session()
 
 
 def index(request):
+    result = None
+    if request.method == 'POST':
+        hour = int(request.POST.get('hour'))
+        day = int(request.POST.get('day'))
+        month = int(request.POST.get('month'))
+
+        result = prediction(hour, day, month, start_stop_id, end_stop_id, temp, weather_main, stops)
+
     render_stops = Stop.objects.all().values()
-    return render(request, 'index.html', {'stops': list(render_stops)})
+    return render(request, 'index.html', {'result': result, 'stops': list(render_stops)})
+    # return render(request, 'index.html', {'stops': list(render_stops)})
 
 
 # def stops(request):
@@ -82,13 +91,14 @@ def logoutUser(request):
 
 # this method requests each of the params and sends you to a different page on the site
 
-def predict(request):
-    hour = int(request.POST.get('hour'))
-    day = int(request.POST.get('day'))
-    month = int(request.POST.get('month'))
-    start_stop_id = int(request.POST.get('start_stop_id'))
-    end_stop_id = int(request.POST.get('end_stop_id'))
-
-    result = prediction(hour, day, month, start_stop_id, end_stop_id, temp, weather_main, stops)
-
-    return render(request, 'predict.html', {'result': result})
+# def predict(request):
+#     hour = int(request.POST.get('hour'))
+#     day = int(request.POST.get('day'))
+#     month = int(request.POST.get('month'))
+#     start_stop_id = int(request.POST.get('start_stop_id'))
+#     end_stop_id = int(request.POST.get('end_stop_id'))
+#
+#     result = prediction(hour, day, month, start_stop_id, end_stop_id, temp, weather_main, stops)
+#
+#     return {'result': result}
+# return render(request, 'predict.html', {'result': result})

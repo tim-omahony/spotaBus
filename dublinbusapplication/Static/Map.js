@@ -256,3 +256,39 @@ class AutocompleteDirectionsHandler {
         );
     }
 }
+console.log("before ajax");
+$(document).on('submit', '#predict-form', function (e) {
+    e.preventDefault();
+    $.ajax({
+        type: 'POST',
+        url: '{% url "home" %}',
+        data:
+            {
+                hour: $("#hour").val(),
+                day: $("#day").val(),
+                month: $("#month").val(),
+            },
+    })
+});
+
+// $(document).ready(function () {
+//     $("predictForm").submit(function (event) {
+//         var formData = {
+//             hour: $("#hour").val(),
+//             day: $("#day").val(),
+//             month: $("#month").val(),
+//         };
+//
+//         $.ajax({
+//             type: "GET",
+//             url: "index.html",
+//             data: formData,
+//             // dataType: "json",
+//             encode: true,
+//         }).done(function (data) {
+//             console.log(data);
+//         });
+//
+//         event.preventDefault();
+//     });
+// });

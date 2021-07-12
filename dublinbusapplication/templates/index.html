@@ -4,7 +4,6 @@
     {{ stops | json_script:"stops-data" }}
     <link href="{% static '/map.css' %}" rel="stylesheet" type="text/css" xmlns="http://www.w3.org/1999/html">
 
-    {#    these don't work with the form bit yet #}
     <div id="autocompleteDiv">
         <select id="origin-input"
                 class="controls"
@@ -24,7 +23,7 @@
             {% endfor %}
         </select>
 
-        <form action="predict/" method="post">
+        <form action="" id="predict-form" method="POST">
             {% csrf_token %}
             <p>hour</p>
             <input type="text" name="hour"><br>
@@ -32,12 +31,11 @@
             <input type="text" name="day"><br>
             <p>month</p>
             <input type="text" name="month"><br>
-            <p>start</p>
-            <input type="text" name="start_stop_id"><br>
-            <p>end</p>
-            <input type="text" name="end_stop_id"><br>
-            <input type="submit" value="Plan Journey">
+            {#            <input type="submit" value="Plan Journey" name="predict">#}
+            <button type="submit">Plan Journey</button>
         </form>
+        {{ result }}
+
         {#        <form action="{% urls 'predict' %}" class="form-inline"><input id="predictTime"#}
         {#                                                                 class="form-control"#}
         {#                                                                 type="datetime-local"#}

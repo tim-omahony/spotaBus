@@ -10,6 +10,8 @@ def filePath(filename):
     return filePath
 
 
+start_stop_id = 608
+end_stop_id = 220
 temp = 6
 weather_main = 'Rain'
 stops = [1730, 1731, 1732, 1733, 1650, 1652, 5141, 1773, 1774, 1651, 4784, 608, 4791, 4792, 1196,
@@ -25,7 +27,7 @@ def prediction(hour, day, month, start_stop_id, end_stop_id, temp, weather_main,
     prediction_df['NEXT_STOPPOINTID'] = prediction_df['NEXT_STOPPOINTID'].astype('int')
 
     df = pd.DataFrame(columns=['DAY', 'HOUR', 'MONTH', 'temp', 'weather_main'])
-    user_input = [hour, day, month, temp, weather_main]
+    user_input = [day, hour, month, temp, weather_main]
     df.loc[0] = user_input
 
     frames = [prediction_df, df]
