@@ -26,12 +26,12 @@ def index(request):
 # ajax_posting function
 def ajax_posting(request):
     if request.is_ajax():
-        hour = int(request.POST.get('hour'))
-        day = int(request.POST.get('day'))
-        month = int(request.POST.get('month'))
+        hour = int(float(request.POST.get('hour')))
+        day = int(float(request.POST.get('day')))
+        month = int(float(request.POST.get('month')))
 
-        result = prediction(hour, day, month, start_stop_id, end_stop_id, temp, weather_main, stops)
-
+        result = int(prediction(hour, day, month, start_stop_id, end_stop_id, temp, weather_main, stops))
+        print(result)
         return JsonResponse(result, safe=False)
         # return response as JSON
 

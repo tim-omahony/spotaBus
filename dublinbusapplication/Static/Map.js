@@ -257,7 +257,6 @@ class AutocompleteDirectionsHandler {
     }
 }
 
-console.log("before ajax");
 
 
 

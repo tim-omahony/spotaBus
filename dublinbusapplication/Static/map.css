@@ -74,3 +74,7 @@ body {
 .form-inline {
     width: 40%;
 }
+
+#output{
+    float: left;
+}
