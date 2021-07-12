@@ -257,29 +257,30 @@ class AutocompleteDirectionsHandler {
     }
 }
 
+$(document).ready(function () {
+    $('#form').on('submit', function (e) {
+        e.preventDefault();
+        const inputTime = new Date($('#predictTime').val())
+        $.ajax({
+            type: 'POST',
+            url: "/dublinbusapplication/predict/",
+            data:
+                {
+                    hour: inputTime.getHours(),
+                    day: inputTime.getDay(),
+                    month: inputTime.getMonth(),
+                    csrfmiddlewaretoken,
+                    dataType: "json",
+                },
 
+            success: function (result) {
 
+                $('#output').html("<p>estimated journey time " + result + " minutes</p>");
+            },
 
-
-
-// $(document).ready(function () {
-//     $("predictForm").submit(function (event) {
-//         var formData = {
-//             hour: $("#hour").val(),
-//             day: $("#day").val(),
-//             month: $("#month").val(),
-//         };
-//
-//         $.ajax({
-//             type: "GET",
-//             url: "index.html",
-//             data: formData,
-//             // dataType: "json",
-//             encode: true,
-//         }).done(function (data) {
-//             console.log(data);
-//         });
-//
-//         event.preventDefault();
-//     });
-// });
+            failure: function (result) {
+                console.log(result)
+            }
+        })
+    });
+})

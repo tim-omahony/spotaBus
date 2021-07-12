@@ -1,8 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
 
     {{ stops | json_script:"stops-data" }}
     <link href="{% static '/map.css' %}" rel="stylesheet" type="text/css" xmlns="http://www.w3.org/1999/html">
@@ -29,60 +27,28 @@
 
         <form id="form" method="POST">
             {% csrf_token %}
-            <p>hour</p><input id='hour' type="text" name="hour"><br>
-            <p>day</p><input id='day' type="text" name="day"><br>
-            <p>month</p><input id='month' type="text" name="month"><br>
-
+            <input id="predictTime"
+                   class="form-control"
+                   type="datetime-local"
+                   name="predict"
+                   required>
+{#            <label for="hour">hour</label><input id='hour' type="text" name="hour"><br>#}
+{#            <label for="day">day</label><input id='day' type="text" name="day"><br>#}
+{#            <label for="month">month</label><input id='month' type="text" name="month"><br>#}
             <input type="submit" name="submit" value="Plan Journey">
-
         </form>
         <div id="output">
         </div>
     </div>
 
 
+{#    <form class="form-inline"><input id="predictTime"#}
+{#                                     class="form-control"#}
+{#                                     type="datetime-local"#}
+{#                                     name="predict"#}
+{#                                     required><input#}
+{#            type="submit" value="Plan Journey" id="button-predict" class="btn btn-primary"/></form>#}
 
-    <script>
-        console.log("before ajax");
-        $('#form').on('submit', function (e) {
-            e.preventDefault();
-            $.ajax({
-                type: 'POST',
-                url: "{% url 'ajax_posting' %}",
-                data:
-                    {
-                        hour: $('#hour').val(),
-                        day: $('#day').val(),
-                        month: $('#month').val(),
-                        csrfmiddlewaretoken: '{{ csrf_token }}',
-                        dataType: "json",
-                    },
-
-                success: function (result) {
-
-                    var div = document.getElementById('output');
-                    div.innerHTML = "<p>estimated journey time " + result + " minutes</p>";
-                },
-
-                failure: function () {
-
-                }
-            })
-            console.log("after ajax");
-        });
-
-
-    </script>
-
-
-
-    {#        <form action="{% urls 'predict' %}" class="form-inline"><input id="predictTime"#}
-    {#                                                                 class="form-control"#}
-    {#                                                                 type="datetime-local"#}
-    {#                                                                 name="predict"#}
-    {#                                                                 required><input#}
-    {#                type="submit" value="Plan Journey" id="button-predict" class="btn btn-primary"/></form>#}
-    {##}
 
 
 
@@ -112,7 +78,6 @@
     <script async
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBpmxEf_9hpbApu3UhIu8jY41LDdgPFkqc&libraries=places&callback=initMap">
     </script>
-    <script src=" {% static '/Map.js' %}"></script>
 
 
 

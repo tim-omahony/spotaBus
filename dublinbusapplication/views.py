@@ -23,17 +23,18 @@ def index(request):
     return render(request, 'index.html', {'stops': list(render_stops)})
     # return render(request, 'index.html', {'stops': list(render_stops)})
 
+
 # ajax_posting function
-def ajax_posting(request):
+def predict(request):
     if request.is_ajax():
         hour = int(float(request.POST.get('hour')))
         day = int(float(request.POST.get('day')))
         month = int(float(request.POST.get('month')))
 
         result = int(prediction(hour, day, month, start_stop_id, end_stop_id, temp, weather_main, stops))
-        print(result)
         return JsonResponse(result, safe=False)
         # return response as JSON
+
 
 # def stops(request):
 #     stops = Stop.objects.all().values()

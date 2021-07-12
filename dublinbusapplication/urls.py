@@ -11,7 +11,5 @@ urlpatterns = [
     path('login/', views.loginPage, name="login"),
     path('logout/', views.logoutUser, name="logout"),
     path('register/', views.registerPage, name="register"),
-    path('ajax-posting/', ajax_posting, name='ajax_posting'),
-
-    # path('predict/', views.predict, name="predict")
+    path('predict/', predict, name='predict'),
 ]
