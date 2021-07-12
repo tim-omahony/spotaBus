@@ -4,3 +4,4 @@ dublinbusapplication/data/stops.csv
 .idea/
 *.pyc
 /venv/
+/node_modules/
