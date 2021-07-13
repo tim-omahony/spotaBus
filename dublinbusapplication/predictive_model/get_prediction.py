@@ -11,7 +11,7 @@ def filePath(filename):
 
 
 start_stop_id = 608
-end_stop_id = 220
+end_stop_id = 114
 temp = 6
 weather_main = 'Rain'
 stops = [1730, 1731, 1732, 1733, 1650, 1652, 5141, 1773, 1774, 1651, 4784, 608, 4791, 4792, 1196,

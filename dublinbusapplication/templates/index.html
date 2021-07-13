@@ -7,6 +7,27 @@
 
 
     <div id="autocompleteDiv">
+
+        <div id="weatherWidget"><a class="weatherwidget-io" data-font="Roboto Slab"
+                                   data-icons="Climacons Animated" data-label_1="DUBLIN" data-label_2="WEATHER"
+                                   data-mode="Current" data-theme="clear"
+                                   href="https://forecast7.com/en/53d35n6d26/dublin/">DUBLIN WEATHER</a>
+            <script>
+                !function (d, s, id) {
+                    var js, fjs = d.getElementsByTagName(s)[0];
+                    if (!d.getElementById(id)) {
+                        js = d.createElement(s);
+                        js.id = id;
+                        js.src = 'https://weatherwidget.io/js/widget.min.js';
+                        fjs.parentNode.insertBefore(js, fjs);
+                    }
+                }(document, 'script', 'weatherwidget-io-js');
+            </script>
+        </div>
+
+
+
+
         <select id="origin-input"
                 class="controls"
                 type="text"
@@ -32,22 +53,24 @@
                    type="datetime-local"
                    name="predict"
                    required>
-{#            <label for="hour">hour</label><input id='hour' type="text" name="hour"><br>#}
-{#            <label for="day">day</label><input id='day' type="text" name="day"><br>#}
-{#            <label for="month">month</label><input id='month' type="text" name="month"><br>#}
+            {#            <label for="hour">hour</label><input id='hour' type="text" name="hour"><br>#}
+            {#            <label for="day">day</label><input id='day' type="text" name="day"><br>#}
+            {#            <label for="month">month</label><input id='month' type="text" name="month"><br>#}
             <input type="submit" name="submit" value="Plan Journey">
         </form>
         <div id="output">
         </div>
+
+
     </div>
 
 
-{#    <form class="form-inline"><input id="predictTime"#}
-{#                                     class="form-control"#}
-{#                                     type="datetime-local"#}
-{#                                     name="predict"#}
-{#                                     required><input#}
-{#            type="submit" value="Plan Journey" id="button-predict" class="btn btn-primary"/></form>#}
+    {#    <form class="form-inline"><input id="predictTime"#}
+    {#                                     class="form-control"#}
+    {#                                     type="datetime-local"#}
+    {#                                     name="predict"#}
+    {#                                     required><input#}
+    {#            type="submit" value="Plan Journey" id="button-predict" class="btn btn-primary"/></form>#}
 
 
 
@@ -57,22 +80,7 @@
 
 
 
-    <div id="weatherWidget"><a class="weatherwidget-io" data-font="Roboto Slab"
-                               data-icons="Climacons Animated" data-label_1="DUBLIN" data-label_2="WEATHER"
-                               data-mode="Current" data-theme="clear"
-                               href="https://forecast7.com/en/53d35n6d26/dublin/">DUBLIN WEATHER</a>
-        <script>
-            !function (d, s, id) {
-                var js, fjs = d.getElementsByTagName(s)[0];
-                if (!d.getElementById(id)) {
-                    js = d.createElement(s);
-                    js.id = id;
-                    js.src = 'https://weatherwidget.io/js/widget.min.js';
-                    fjs.parentNode.insertBefore(js, fjs);
-                }
-            }(document, 'script', 'weatherwidget-io-js');
-        </script>
-    </div>
+
 
 
     <script async

@@ -275,7 +275,7 @@ $(document).ready(function () {
 
             success: function (result) {
 
-                $('#output').html("<p>estimated journey time " + result + " minutes</p>");
+                $('#output').html("<p>Estimated journey time: " + result + " minutes</p>");
             },
 
             failure: function (result) {
