@@ -257,6 +257,7 @@ class AutocompleteDirectionsHandler {
     }
 }
 
+
 $(document).ready(function () {
     $('#form').on('submit', function (e) {
         e.preventDefault();
@@ -284,3 +285,5 @@ $(document).ready(function () {
         })
     });
 })
+
+

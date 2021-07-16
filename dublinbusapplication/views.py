@@ -53,6 +53,7 @@ def search_test(request):
     return render(request, 'search_test.html')
 
 
+
 def registerPage(request):
     if request.user.is_authenticated:
         return redirect('home')

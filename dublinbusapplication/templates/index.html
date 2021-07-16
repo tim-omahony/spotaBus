@@ -1,32 +1,22 @@
 {% extends 'base.html' %}
+
 {% load static %}
+
 {% block content %}
 
     {{ stops | json_script:"stops-data" }}
-    <link href="{% static '/map.css' %}" rel="stylesheet" type="text/css" xmlns="http://www.w3.org/1999/html">
+
+
+
+
+    <div id="MapView" class="z-depth-1-half map-container-4" style="height: 500px"></div>
+
+
+{% comment %}
+    <div id="MapView" class="container-fluid" style="height: 720px"></div>{% endcomment %}
 
 
     <div id="autocompleteDiv">
-
-        <div id="weatherWidget"><a class="weatherwidget-io" data-font="Roboto Slab"
-                                   data-icons="Climacons Animated" data-label_1="DUBLIN" data-label_2="WEATHER"
-                                   data-mode="Current" data-theme="clear"
-                                   href="https://forecast7.com/en/53d35n6d26/dublin/">DUBLIN WEATHER</a>
-            <script>
-                !function (d, s, id) {
-                    var js, fjs = d.getElementsByTagName(s)[0];
-                    if (!d.getElementById(id)) {
-                        js = d.createElement(s);
-                        js.id = id;
-                        js.src = 'https://weatherwidget.io/js/widget.min.js';
-                        fjs.parentNode.insertBefore(js, fjs);
-                    }
-                }(document, 'script', 'weatherwidget-io-js');
-            </script>
-        </div>
-
-
-
 
         <select id="origin-input"
                 class="controls"
@@ -61,7 +51,6 @@
         <div id="output">
         </div>
 
-
     </div>
 
 
@@ -72,20 +61,6 @@
     {#                                     required><input#}
     {#            type="submit" value="Plan Journey" id="button-predict" class="btn btn-primary"/></form>#}
 
-
-
-
-
-    <div id="MapView"></div>
-
-
-
-
-
-
-    <script async
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBpmxEf_9hpbApu3UhIu8jY41LDdgPFkqc&libraries=places&callback=initMap">
-    </script>
 
 
 
