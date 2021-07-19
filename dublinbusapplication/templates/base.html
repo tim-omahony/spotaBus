@@ -24,7 +24,6 @@
     <title>Dublin Bus</title>
 </head>
 
-
 <body>
 
 <div id="wrapper">
@@ -34,20 +33,21 @@
             <h2>{% comment %}<i class="fas fa-bus" size: 7x></i> &nbsp;&nbsp;&nbsp;&nbsp;{% endcomment %} &nbsp; Dublin
                 Bus</h2>
         </div>
+
         <ul class="sidebar-nav">
-            <li class="active">
+            <li id="home">
                 <a href="/dublinbusapplication/"><i class="fa fa-home"></i>Home</a>
             </li>
 
-            <li>
+            <li id="about">
                 <a href="/dublinbusapplication/about"><i class="fas fa-bus"></i> About Us</a>
             </li>
 
-            <li>
+            <li id="contact">
                 <a href="/dublinbusapplication/contact"><i class="fas fa-address-book "></i> Contact Us</a>
             </li>
 
-            <li>
+            <li id="login">
                 <a href="/dublinbusapplication/login"><i class="fa fa-user"></i>Register/ Login</a>
             </li>
         </ul>
@@ -80,6 +80,8 @@
 <!-- Copyright -->
 
 <script>
+
+// this function provides the sidebar toggle functionality
     const $button = document.querySelector('#sidebar-toggle');
     const $wrapper = document.querySelector('#wrapper');
 
@@ -87,6 +89,24 @@
         e.preventDefault();
         $wrapper.classList.toggle('toggled');
     });
+
+
+// this function ensures the selected tab from the sidebar remains highlighted after page load using local storage
+    $(document).ready(function () {
+        $('.sidebar-nav > li').click(function () {
+            //set localStorage
+            localStorage.setItem("clicked", $(this).attr("id"))
+            //remove from all li
+            $('li').removeClass("active")
+            //Add class to the clicked li
+            $(this).addClass("active")
+        });
+
+        //get class on load
+        var active = localStorage.getItem("clicked")
+        active ? $("#" + active).addClass("active") : $('#home').addClass("active")
+    })
+
 </script>
 
 
