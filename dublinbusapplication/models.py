@@ -15,3 +15,11 @@ class Weather(models.Model):
     description = models.CharField(max_length=250)
     temp = models.FloatField()
     last_update = models.DateTimeField()
+
+
+class Bikes(models.Model):
+    Number = models.IntegerField()
+    Name = models.CharField(max_length=250)
+    Address = models.CharField(max_length=250)
+    Latitude = models.FloatField()
+    Longitude = models.FloatField()

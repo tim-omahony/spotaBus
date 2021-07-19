@@ -3,6 +3,9 @@ from django.apps import AppConfig, apps
 import csv
 
 
+# to run this to migrate an existing csv file do the following:
+# python manage.py backfill_csv --path="path_to_file" --model_name="model_class_name" --app_name="dublinbusapplication"
+
 class Command(BaseCommand):
     help = 'Creating model objects according the file path specified'
 

@@ -8,6 +8,10 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script async
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBpmxEf_9hpbApu3UhIu8jY41LDdgPFkqc&libraries=places&callback=initMap">
+    </script>
+    <script src="https://unpkg.com/@googlemaps/markerclustererplus/dist/index.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
 
     <script src=" {% static '/Map.js' %}"></script>
@@ -31,7 +35,8 @@
 
     <aside id="sidebar-wrapper">
         <div class="sidebar-brand">
-            <h2>{% comment %}<i class="fas fa-bus" size: 7x></i> &nbsp;&nbsp;&nbsp;&nbsp;{% endcomment %} &nbsp; Dublin Bus</h2>
+            <h2>{% comment %}<i class="fas fa-bus" size: 7x></i> &nbsp;&nbsp;&nbsp;&nbsp;{% endcomment %} &nbsp; Dublin
+                Bus</h2>
         </div>
         <ul class="sidebar-nav">
             <li class="active">
@@ -39,7 +44,7 @@
             </li>
 
             <li>
-                <a href="/dublinbusapplication/about"><i class="fas fa-bus"></i>  About Us</a>
+                <a href="/dublinbusapplication/about"><i class="fas fa-bus"></i> About Us</a>
             </li>
 
             <li>
@@ -63,7 +68,6 @@
                     <a href="#" class="navbar-brand" id="sidebar-toggle"><i class="fa fa-bars"></i></a>
 
 
-
                 </div>
 
                 {% comment %}                <div id="weatherWidget"><a class="weatherwidget-io" data-font="Roboto Slab"
@@ -85,21 +89,22 @@
                 </div>{% endcomment %}
 
 
-                    <span class="navbar-nav ml-auto" ><a href="{% url 'logout' %}"><i class="fas fa-sign-out-alt"></i></a></span>
+                <span class="navbar-nav ml-auto"><a href="{% url 'logout' %}"><i
+                        class="fas fa-sign-out-alt"></i></a></span>
             </div>
 
         </nav>
     </div>
 
     <section id="content-wrapper">
-    {% block content %}
-    {% endblock %}
+        {% block content %}
+        {% endblock %}
     </section>
 
 
 </div>
 
-    <!-- Copyright -->
+<!-- Copyright -->
 
 <script>
     const $button = document.querySelector('#sidebar-toggle');
@@ -119,9 +124,6 @@
         integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
         crossorigin="anonymous"></script>
 
-<script async
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBpmxEf_9hpbApu3UhIu8jY41LDdgPFkqc&libraries=places&callback=initMap">
-</script>
 
 <!-- Option 2: Separate Popper and Bootstrap JS -->
 <!--

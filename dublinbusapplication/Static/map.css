@@ -15,7 +15,7 @@ body {
     padding-bottom: 30px;
     position: relative;
     min-height: 100%;
-    background: #ffe06b !important;
+    background: #d8d8d8 !important;
 }
 
 a {
@@ -91,7 +91,7 @@ a:focus {
 .sidebar-nav > li.active > a {
     text-decoration: none;
     color: #fff;
-    background: #ffe06b;
+    background: #FFA500;
 }
 
 .sidebar-nav > li > a i.fa {
@@ -129,7 +129,7 @@ a:focus {
 }
 
 #navbar-wrapper .navbar a:hover {
-    color: #ffe06b;
+    color: #FFA500;
 }
 
 #content-wrapper {
@@ -279,7 +279,7 @@ a:focus {
 /* Index page css */
 #MapView {
     width: auto;
-    heigth: auto;
+    height: auto;
 }
 
 .weatherwidget-io {
@@ -316,10 +316,18 @@ a:focus {
     position: absolute;
 }
 
+.bikeButton {
+    font-family: Roboto, serif;
+    border-radius: 6px;
+    margin-left: 10px;
+    width: 50%;
+    margin-bottom: 10px;
+}
+
 #origin-input,
 #destination-input {
     background-color: #fff;
-    font-family: Roboto;
+    font-family: Roboto, sans-serif;
     font-size: 15px;
     font-weight: 300;
     margin-left: 12px;
@@ -342,7 +350,7 @@ a:focus {
 }
 
 #mode-selector label {
-    font-family: Roboto;
+    font-family: Roboto, sans-serif;
     font-size: 13px;
     font-weight: 300;
 }
@@ -365,7 +373,7 @@ a:focus {
 #output {
     float: left;
     margin-left: 30px;
-    font-family: Monaco;
+    font-family: Monaco, sans-serif;
     font-size: 20px;
 
 }
@@ -399,7 +407,7 @@ a:focus {
 
 .login_btn {
     width: 100%;
-    background: #ffe06b !important;
+    background: #FFA500 !important;
     color: white !important;
 }
 
@@ -413,7 +421,7 @@ a:focus {
 }
 
 .input-group-text {
-    background: #ffe06b !important;
+    background: #FFA500 !important;
     color: white !important;
     border: 0 !important;
     border-radius: 0.25rem 0 0 0.25rem !important;
@@ -434,5 +442,5 @@ a:focus {
 }
 
 .fa {
-font-size: 30px;
+    font-size: 30px;
 }
