@@ -5,6 +5,7 @@
 {% block content %}
 
     {{ stops | json_script:"stops-data" }}
+    {{ stations | json_script:"stations-data" }}
 
 
 
@@ -12,7 +13,7 @@
     <div id="MapView" class="z-depth-1-half map-container-4" style="height: 500px"></div>
 
 
-{% comment %}
+    {% comment %}
     <div id="MapView" class="container-fluid" style="height: 720px"></div>{% endcomment %}
 
 
@@ -43,23 +44,19 @@
                    type="datetime-local"
                    name="predict"
                    required>
-            {#            <label for="hour">hour</label><input id='hour' type="text" name="hour"><br>#}
-            {#            <label for="day">day</label><input id='day' type="text" name="day"><br>#}
-            {#            <label for="month">month</label><input id='month' type="text" name="month"><br>#}
+
             <input type="submit" name="submit" value="Plan Journey">
         </form>
         <div id="output">
         </div>
+    <div id="bikes_button">
+        <button class="bikeButton" type="button" onclick="populateDublinBikes()">Display Dublin Bikes Stations</button>
+    </div>
 
     </div>
 
 
-    {#    <form class="form-inline"><input id="predictTime"#}
-    {#                                     class="form-control"#}
-    {#                                     type="datetime-local"#}
-    {#                                     name="predict"#}
-    {#                                     required><input#}
-    {#            type="submit" value="Plan Journey" id="button-predict" class="btn btn-primary"/></form>#}
+
 
 
 

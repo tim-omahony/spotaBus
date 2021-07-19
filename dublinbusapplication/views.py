@@ -11,7 +11,7 @@ import pandas as pd
 
 from dublinbusapplication.predictive_model.get_prediction import *
 
-from .models import Stop
+from .models import Stop, Bikes
 
 from scraper.weather.db_session import Session
 
@@ -20,7 +20,8 @@ session = Session()
 
 def index(request):
     render_stops = Stop.objects.all().values()
-    return render(request, 'index.html', {'stops': list(render_stops)})
+    render_bike_stations = Bikes.objects.all().values()
+    return render(request, 'index.html', {'stops': list(render_stops), 'stations': list(render_bike_stations)})
     # return render(request, 'index.html', {'stops': list(render_stops)})
 
 
@@ -51,7 +52,6 @@ def contact(request):
 
 def search_test(request):
     return render(request, 'search_test.html')
-
 
 
 def registerPage(request):
@@ -93,17 +93,3 @@ def loginPage(request):
 def logoutUser(request):
     logout(request)
     return redirect('login')
-
-# this method requests each of the params and sends you to a different page on the site
-
-# def predict(request):
-#     hour = int(request.POST.get('hour'))
-#     day = int(request.POST.get('day'))
-#     month = int(request.POST.get('month'))
-#     start_stop_id = int(request.POST.get('start_stop_id'))
-#     end_stop_id = int(request.POST.get('end_stop_id'))
-#
-#     result = prediction(hour, day, month, start_stop_id, end_stop_id, temp, weather_main, stops)
-#
-#     return {'result': result}
-# return render(request, 'predict.html', {'result': result})

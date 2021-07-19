@@ -12,6 +12,7 @@ let map;
 let markers;
 let stops;
 let pos;
+let stations;
 
 
 function initMap() {
@@ -166,10 +167,28 @@ function loadJson(selector) {
 
 window.onload = function () {
     stops = loadJson("stops-data")
-    // populateStops();
+    stations = loadJson("stations-data")
+    // populateDublinBikes();
 }
 
-function populateStops(map) {
+function populateDublinBikes() {
+    markers = stations.map(station => {
+        return new google.maps.Marker({
+            position: {
+                lat: Number.parseFloat(station.Latitude),
+                lng: Number.parseFloat(station.Longitude)
+            },
+            title: station.Address,
+            map: map
+        });
+    });
+    new MarkerClusterer(map, markers, {
+        imagePath: "https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m"
+    });
+}
+
+
+function populateStops() {
     markers = stops.map(stop => {
         return new google.maps.Marker({
             position: {
