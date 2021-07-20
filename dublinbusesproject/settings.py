@@ -88,7 +88,6 @@ DATABASES = {
         'PASSWORD': 'DBG18_2021',
         'HOST': 'dublinbus.cmxnicqe342l.eu-west-1.rds.amazonaws.com',
         'PORT': '3306',
-
     }
 }
 
@@ -134,4 +133,4 @@ STATIC_URL = '/Static/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

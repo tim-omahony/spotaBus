@@ -18,7 +18,7 @@ class Command(BaseCommand):
         file_path = options['path']
         _model = apps.get_model(options['app_name'], options['model_name'])
         objects = []
-        with open(file_path, 'rt', encoding='utf8') as csv_file:
+        with open(file_path, 'rt') as csv_file:
             reader = csv.reader(csv_file, delimiter=',', quotechar='|')
             header = next(reader)
             for row in reader:
