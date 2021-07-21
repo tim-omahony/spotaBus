@@ -50,6 +50,9 @@
             <li id="login">
                 <a href="/dublinbusapplication/login"><i class="fa fa-user"></i>Register/ Login</a>
             </li>
+
+
+
         </ul>
 
     </aside>
@@ -61,10 +64,25 @@
                     <a href="#" class="navbar-brand" id="sidebar-toggle"><i class="fa fa-bars"></i></a>
 
 
+
                 </div>
+
+            {% comment %}<shows users name when user is logged in ;{% endcomment %}
+             {% if request.user.is_authenticated %}
+                    <span class="nav-link">Hello, {{ request.user }}</span>
+                   {% endif %}
+
+            {% comment %} Changes login/logout icon accordingly to users status {% endcomment %}
+            
+                {% if request.user.is_authenticated %}
                 <span class="navbar-nav ml-auto"><a href="{% url 'logout' %}"><i
                         class="fas fa-sign-out-alt"></i></a></span>
+                 {% else %}
+                <span class="navbar-nav ml-auto"><a href="{% url 'logout' %}"><i
+                        class="fas fa-sign-in-alt"></i></a></span>
+                {% endif %}
             </div>
+
 
         </nav>
     </div>
