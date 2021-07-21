@@ -445,3 +445,12 @@ a:focus {
 .fa {
     font-size: 30px;
 }
+
+/*NAME FIELD "HELLO, USER*/
+.nav-link{
+    color: #ffffff;
+}
+
+.nav-link:hover{
+    color: #e8e8e8;
+}
