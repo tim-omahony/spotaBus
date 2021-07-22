@@ -5,3 +5,4 @@ dublinbusapplication/data/stops.csv
 *.pyc
 /venv/
 /node_modules/
+/dublinbusesproject/settings/
