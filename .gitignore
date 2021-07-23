@@ -5,3 +5,5 @@ dublinbusapplication/data/stops.csv
 *.pyc
 /venv/
 /node_modules/
+/dublinbusesproject/settings/
+/dublinbusesproject/tim_remote_settings.py
