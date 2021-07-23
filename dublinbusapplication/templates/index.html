@@ -8,34 +8,31 @@
     {{ stations | json_script:"stations-data" }}
 
 
-
-
     <div id="MapView" class="z-depth-1-half map-container-4" style="height: 500px"></div>
-
-
     {% comment %}
     <div id="MapView" class="container-fluid" style="height: 720px"></div>{% endcomment %}
 
 
     <div id="autocompleteDiv">
+        <input id="origin-input"
+               class="controls"
+               list="originList"
+               type="text"
+               placeholder="Enter an origin location"/>
+        <datalist id="originList">{% for stop in stops %}
+            <option value="{{ stop.stop_name }}"/>
+        {% endfor %}}
+        </datalist>
 
-        <select id="origin-input"
-                class="controls"
-                type="text"
-                placeholder="Enter an origin location">
-            {% for stop in stops %}
-                <option value="{{ stop.id }}">{{ stop.stop_name }}</option>
-            {% endfor %}
-        </select>
-
-        <select id="destination-input"
-                class="controls"
-                type="text"
-                placeholder="Enter a destination location">
-            {% for stop in stops %}
-                <option value="{{ stop.id }}">{{ stop.stop_name }}</option>
-            {% endfor %}
-        </select>
+        <input id="destination-input"
+               class="controls"
+               list="destinationList"
+               type="text"
+               placeholder="Enter a destination location"/>
+        <datalist id="destinationList"> {% for stop in stops %}
+            <option value="{{ stop.stop_name }}"/>
+        {% endfor %}
+        </datalist>
 
         <form id="form" method="POST">
             {% csrf_token %}
@@ -52,8 +49,10 @@
         <div id="bikes_button">
             <button class="bikeButton" type="button" onclick="populateDublinBikes()">Display Dublin Bikes Stations
             </button>
-        </div>
 
+            <button class="bikeButton" type="button" onclick="clearMarkers()">Hide Dublin Bikes Stations
+            </button>
+        </div>
 
         <!-- Button trigger modal -->
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
@@ -82,36 +81,4 @@
             </div>
         </div>
     </div>
-
-<?php
-$servername = "localhost";
-$username = "root";
-$password = "root";
-$dbname = "2017_data";
-$conn = new mysqli($servername, $username, $password, $dbname);
-if ($conn->connect_error) {
- die("Connection failed: " . $conn->connect_error);
-}
-$id = $_GET['q'];
-$sql = "select book_title from book_table where book_title like '%".$id."%' limit 1";
-$result = $conn->query($sql);
-if ($result->num_rows > 0) {
- while($row = $result->fetch_assoc()) {
- echo $row["book_title"]. "\n";
- }
-} else {
- echo "0 results";
-}
-$conn->close();
-?>
-
-
-
-
-
-
-
-
-
-
 {% endblock %}

@@ -13,6 +13,7 @@ let markers;
 let stops;
 let pos;
 let stations;
+let markerClusterer
 
 
 function initMap() {
@@ -182,127 +183,126 @@ function populateDublinBikes() {
             map: map
         });
     });
-    new MarkerClusterer(map, markers, {
+    markerClusterer = new MarkerClusterer(map, markers, {
         imagePath: "https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m"
     });
 }
 
-
-function populateStops() {
-    markers = stops.map(stop => {
-        return new google.maps.Marker({
-            position: {
-                lat: Number.parseFloat(stop.stop_lat),
-                lng: Number.parseFloat(stop.stop_lon)
-            },
-            title: stop.stop_name,
-            map: map
-        })
-    });
-    new MarkerClusterer(map, markers, {
-        imagePath: "https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m"
-    });
-}
-
-function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-    infoWindow.setPosition(pos);
-    infoWindow.setContent(
-        browserHasGeolocation
-            ? "Error: The Geolocation service failed."
-            : "Error: Your browser doesn't support geolocation."
-    );
-    infoWindow.open(map);
-}
-
-
-class AutocompleteDirectionsHandler {
-    map;
-    originId;
-    destinationId;
-    travelMode;
-    directionsService;
-    directionsRenderer;
-
-    constructor(map) {
-        this.map = map;
-        this.originId = "";
-        this.destinationId = "";
-        this.travelMode = google.maps.TravelMode.TRANSIT;
-        this.directionsService = new google.maps.DirectionsService();
-        this.directionsRenderer = new google.maps.DirectionsRenderer();
-        this.directionsRenderer.setMap(map);
-
-        const originInput = document.getElementById("origin-input");
-        const destinationInput = document.getElementById("destination-input");
-        this.setupStopChangeListener(originInput, "ORIG");
-        this.setupStopChangeListener(destinationInput, "DEST");
+  function clearMarkers() {
+        markerClusterer.clearMarkers();
     }
 
-    setupStopChangeListener(selectElement, mode) {
-        selectElement.addEventListener('change', (event) => {
-            if (mode === "ORIG") {
-                this.originId = event.target.value;
-            } else {
-                this.destinationId = event.target.value;
-            }
-            this.route();
+    function populateStops() {
+        markers = stops.map(stop => {
+            return new google.maps.Marker({
+                position: {
+                    lat: Number.parseFloat(stop.stop_lat),
+                    lng: Number.parseFloat(stop.stop_lon)
+                },
+                title: stop.stop_name,
+                map: map
+            })
         });
     }
 
-    route() {
-        if (!this.originId || !this.destinationId) {
-            return;
-        }
-        const originStop = stops.find(stop => stop.id === parseInt(this.originId));
-        const destinationStop = stops.find(stop => stop.id === parseInt(this.destinationId));
-        console.log({originStop, destinationStop});
-
-        this.directionsService.route(
-            {
-                origin: {lat: originStop.stop_lat, lng: originStop.stop_lon},
-                destination: {lat: destinationStop.stop_lat, lng: destinationStop.stop_lon},
-                travelMode: 'TRANSIT',
-            },
-
-            (response, status) => {
-                if (status === "OK") {
-                    this.directionsRenderer.setDirections(response);
-                    console.log(response)
-                } else {
-                    window.alert("Directions request failed due to " + status);
-                }
-            }
+    function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+        infoWindow.setPosition(pos);
+        infoWindow.setContent(
+            browserHasGeolocation
+                ? "Error: The Geolocation service failed."
+                : "Error: Your browser doesn't support geolocation."
         );
+        infoWindow.open(map);
     }
-}
 
 
-$(document).ready(function () {
-    $('#form').on('submit', function (e) {
-        e.preventDefault();
-        const inputTime = new Date($('#predictTime').val())
-        $.ajax({
-            type: 'POST',
-            url: "/dublinbusapplication/predict/",
-            data:
+    class AutocompleteDirectionsHandler {
+        map;
+        originId;
+        destinationId;
+        travelMode;
+        directionsService;
+        directionsRenderer;
+
+        constructor(map) {
+            this.map = map;
+            this.originId = "";
+            this.destinationId = "";
+            this.travelMode = google.maps.TravelMode.TRANSIT;
+            this.directionsService = new google.maps.DirectionsService();
+            this.directionsRenderer = new google.maps.DirectionsRenderer();
+            this.directionsRenderer.setMap(map);
+
+            const originInput = document.getElementById("origin-input");
+            const destinationInput = document.getElementById("destination-input");
+            this.setupStopChangeListener(originInput, "ORIG");
+            this.setupStopChangeListener(destinationInput, "DEST");
+        }
+
+        setupStopChangeListener(selectElement, mode) {
+            selectElement.addEventListener('change', (event) => {
+                if (mode === "ORIG") {
+                    this.originId = event.target.value;
+                } else {
+                    this.destinationId = event.target.value;
+                }
+                this.route();
+            });
+        }
+
+        route() {
+            if (!this.originId || !this.destinationId) {
+                return;
+            }
+            const originStop = stops.find(stop => stop.stop_name === (this.originId));
+            const destinationStop = stops.find(stop => stop.stop_name === (this.destinationId));
+            console.log({originStop, destinationStop});
+
+            this.directionsService.route(
                 {
-                    hour: inputTime.getHours(),
-                    day: inputTime.getDay(),
-                    month: inputTime.getMonth(),
-                    csrfmiddlewaretoken,
-                    dataType: "json",
+                    origin: {lat: originStop.stop_lat, lng: originStop.stop_lon},
+                    destination: {lat: destinationStop.stop_lat, lng: destinationStop.stop_lon},
+                    travelMode: 'TRANSIT',
                 },
 
-            success: function (result) {
+                (response, status) => {
+                    if (status === "OK") {
+                        this.directionsRenderer.setDirections(response);
+                        console.log(response)
+                    } else {
+                        window.alert("Directions request failed due to " + status);
+                    }
+                }
+            );
+        }
+    }
 
-                $('#output').html("<p>Estimated journey time: " + result + " minutes</p>");
-            },
 
-            failure: function (result) {
-                console.log(result)
-            }
-        })
-    });
-})
+    $(document).ready(function () {
+        $('#form').on('submit', function (e) {
+            e.preventDefault();
+            const inputTime = new Date($('#predictTime').val())
+            $.ajax({
+                type: 'POST',
+                url: "/dublinbusapplication/predict/",
+                data:
+                    {
+                        hour: inputTime.getHours(),
+                        day: inputTime.getDay(),
+                        month: inputTime.getMonth(),
+                        csrfmiddlewaretoken,
+                        dataType: "json",
+                    },
 
+                success: function (result) {
+
+                    $('#output').html("<p>Estimated journey time: " + result + " minutes</p>");
+                },
+
+                failure: function (result) {
+                    console.log(result)
+                }
+            })
+        });
+    })
 
