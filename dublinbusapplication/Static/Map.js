@@ -171,6 +171,23 @@ window.onload = function () {
     stations = loadJson("stations-data")
     // populateDublinBikes();
 }
+// timeout function for dublin bikes buttons :)
+// const button = document.getElementById("bikeButton")
+// const debounce = (func, delay) => {
+//     let debounceTimer
+//     return function() {
+//         const context = this
+//         const args = arguments
+//             clearTimeout(debounceTimer)
+//                 debounceTimer
+//             = setTimeout(() => func.apply(context, args), delay)
+//     }
+// }
+// button.addEventListener('click', debounce(function() {
+//         alert("Hello\nNo matter how many times you" +
+//             "click the debounce button, I get " +
+//             "executed once every 3 seconds!!")
+//                         }, 3000));
 
 function populateDublinBikes() {
     markers = stations.map(station => {
