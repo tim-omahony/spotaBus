@@ -13,7 +13,9 @@ let markers;
 let stops;
 let pos;
 let stations;
-let markerClusterer
+let markerClusterer;
+let origin_stop;
+let destination_stop;
 
 
 function initMap() {
@@ -205,121 +207,130 @@ function populateDublinBikes() {
     });
 }
 
-  function clearMarkers() {
-        markerClusterer.clearMarkers();
+function clearMarkers() {
+    markerClusterer.clearMarkers();
+}
+
+function populateStops() {
+    markers = stops.map(stop => {
+        return new google.maps.Marker({
+            position: {
+                lat: Number.parseFloat(stop.stop_lat),
+                lng: Number.parseFloat(stop.stop_lon)
+            },
+            title: stop.stop_name,
+            map: map
+        })
+    });
+}
+
+function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+    infoWindow.setPosition(pos);
+    infoWindow.setContent(
+        browserHasGeolocation
+            ? "Error: The Geolocation service failed."
+            : "Error: Your browser doesn't support geolocation."
+    );
+    infoWindow.open(map);
+}
+
+
+class AutocompleteDirectionsHandler {
+    map;
+    originId;
+    destinationId;
+    travelMode;
+    directionsService;
+    directionsRenderer;
+
+    constructor(map) {
+        this.map = map;
+        this.originId = "";
+        this.destinationId = "";
+        this.travelMode = google.maps.TravelMode.TRANSIT;
+        this.directionsService = new google.maps.DirectionsService();
+        this.directionsRenderer = new google.maps.DirectionsRenderer();
+        this.directionsRenderer.setMap(map);
+
+        const originInput = document.getElementById("origin-input");
+        const destinationInput = document.getElementById("destination-input");
+        this.setupStopChangeListener(originInput, "ORIG");
+        this.setupStopChangeListener(destinationInput, "DEST");
     }
 
-    function populateStops() {
-        markers = stops.map(stop => {
-            return new google.maps.Marker({
-                position: {
-                    lat: Number.parseFloat(stop.stop_lat),
-                    lng: Number.parseFloat(stop.stop_lon)
-                },
-                title: stop.stop_name,
-                map: map
-            })
-        });
-    }
-
-    function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-        infoWindow.setPosition(pos);
-        infoWindow.setContent(
-            browserHasGeolocation
-                ? "Error: The Geolocation service failed."
-                : "Error: Your browser doesn't support geolocation."
-        );
-        infoWindow.open(map);
-    }
-
-
-    class AutocompleteDirectionsHandler {
-        map;
-        originId;
-        destinationId;
-        travelMode;
-        directionsService;
-        directionsRenderer;
-
-        constructor(map) {
-            this.map = map;
-            this.originId = "";
-            this.destinationId = "";
-            this.travelMode = google.maps.TravelMode.TRANSIT;
-            this.directionsService = new google.maps.DirectionsService();
-            this.directionsRenderer = new google.maps.DirectionsRenderer();
-            this.directionsRenderer.setMap(map);
-
-            const originInput = document.getElementById("origin-input");
-            const destinationInput = document.getElementById("destination-input");
-            this.setupStopChangeListener(originInput, "ORIG");
-            this.setupStopChangeListener(destinationInput, "DEST");
-        }
-
-        setupStopChangeListener(selectElement, mode) {
-            selectElement.addEventListener('change', (event) => {
-                if (mode === "ORIG") {
-                    this.originId = event.target.value;
-                } else {
-                    this.destinationId = event.target.value;
-                }
-                this.route();
-            });
-        }
-
-        route() {
-            if (!this.originId || !this.destinationId) {
-                return;
+    setupStopChangeListener(selectElement, mode) {
+        selectElement.addEventListener('change', (event) => {
+            if (mode === "ORIG") {
+                this.originId = event.target.value;
+            } else {
+                this.destinationId = event.target.value;
             }
-            const originStop = stops.find(stop => stop.stop_name === (this.originId));
-            const destinationStop = stops.find(stop => stop.stop_name === (this.destinationId));
-            console.log({originStop, destinationStop});
-
-            this.directionsService.route(
-                {
-                    origin: {lat: originStop.stop_lat, lng: originStop.stop_lon},
-                    destination: {lat: destinationStop.stop_lat, lng: destinationStop.stop_lon},
-                    travelMode: 'TRANSIT',
-                },
-
-                (response, status) => {
-                    if (status === "OK") {
-                        this.directionsRenderer.setDirections(response);
-                        console.log(response)
-                    } else {
-                        window.alert("Directions request failed due to " + status);
-                    }
-                }
-            );
-        }
+            this.route();
+        });
     }
 
+    route() {
+        if (!this.originId || !this.destinationId) {
+            return;
+        }
+        const originStop = stops.find(stop => stop.stop_name === (this.originId));
+        const destinationStop = stops.find(stop => stop.stop_name === (this.destinationId));
+        console.log({originStop, destinationStop});
 
-    $(document).ready(function () {
-        $('#form').on('submit', function (e) {
-            e.preventDefault();
-            const inputTime = new Date($('#predictTime').val())
-            $.ajax({
-                type: 'POST',
-                url: "/dublinbusapplication/predict/",
-                data:
-                    {
-                        hour: inputTime.getHours(),
-                        day: inputTime.getDay(),
-                        month: inputTime.getMonth(),
-                        csrfmiddlewaretoken,
-                        dataType: "json",
-                    },
+        this.directionsService.route(
+            {
+                origin: {lat: originStop.stop_lat, lng: originStop.stop_lon},
+                destination: {lat: destinationStop.stop_lat, lng: destinationStop.stop_lon},
+                travelMode: 'TRANSIT',
+            },
 
-                success: function (result) {
+            (response, status) => {
+                if (status === "OK") {
+                    this.directionsRenderer.setDirections(response);
+                    console.log(response)
+                } else {
+                    window.alert("Directions request failed due to " + status);
+                }
+            }
+        );
+    }
+}
 
-                    $('#output').html("<p>Estimated journey time: " + result + " minutes</p>");
+function getWeather() {
+    let currentWeather = ($.getJSON("https://api.openweathermap.org/data/2.5/weather?lat=53.344&lon=-6.2672&appid=37038b4337b3dbf599fe6b12dad969bd"))
+    console.log(currentWeather)
+    return currentWeather
+}
+
+$(document).ready(function () {
+    $('#form').on('submit', function (e) {
+        e.preventDefault();
+        const inputTime = new Date($('#predictTime').val())
+        $.ajax({
+            type: 'POST',
+            url: "/dublinbusapplication/predict/",
+            data:
+                {
+                    hour: inputTime.getHours(),
+                    day: inputTime.getDay(),
+                    month: inputTime.getMonth(),
+                    temp: currentWeather.responseJSON.main.temp,
+                    weather_main: currentWeather.responseJSON.weather[0].main,
+                    start_stop_id: origin_stop.stop_id,
+                    end_stop_id: destination_stop.stop_id,
+                    csrfmiddlewaretoken,
+                    dataType: "json",
                 },
 
-                failure: function (result) {
-                    console.log(result)
-                }
-            })
-        });
-    })
+            success: function (result) {
+
+                $('#output').html("<p>Estimated journey time: " + result + " minutes</p>");
+            },
+
+            failure: function (result) {
+                console.log(result)
+            }
+        })
+    });
+})
 
