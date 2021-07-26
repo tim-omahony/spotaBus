@@ -317,11 +317,11 @@ a:focus {
     position: absolute;
 }
 
-.bikeButton {
+#bikeButton {
     font-family: Roboto, serif;
     border-radius: 6px;
     margin-left: 10px;
-    width: 50%;
+    width: 20%;
     margin-bottom: 10px;
 }
 

@@ -12,70 +12,69 @@
     {% comment %}
     <div id="MapView" class="container-fluid" style="height: 720px"></div>{% endcomment %}
 
-
-    <div id="autocompleteDiv">
-        <input id="origin-input"
-               class="controls"
-               list="originList"
-               type="text"
-               placeholder="Enter an origin location"/>
-        <datalist id="originList">{% for stop in stops %}
-            <option value="{{ stop.stop_name }}"/>
-        {% endfor %}}
-        </datalist>
-
-        <input id="destination-input"
-               class="controls"
-               list="destinationList"
-               type="text"
-               placeholder="Enter a destination location"/>
-        <datalist id="destinationList"> {% for stop in stops %}
-            <option value="{{ stop.stop_name }}"/>
-        {% endfor %}
-        </datalist>
-
-        <form id="form" method="POST">
-            {% csrf_token %}
-            <input id="predictTime"
-                   class="form-control"
-                   type="datetime-local"
-                   name="predict"
-                   required>
-
-            <input type="submit" name="submit" value="Plan Journey">
-        </form>
-        <div id="output">
-        </div>
-        <div id="bikes_button">
-            <button class="bikeButton" type="button" onclick="populateDublinBikes()">Display Dublin Bikes Stations
-            </button>
-
-            <button class="bikeButton" type="button" onclick="clearMarkers()">Hide Dublin Bikes Stations
-            </button>
-        </div>
-
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-            Launch demo modal
+    <div id="bikes_button">
+        <button id="bikeButton" type="button" onclick="populateDublinBikes()">Show Dublin Bikes
         </button>
 
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
-             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        ...
-                    </div>
+        <button id="bikeButton" type="button" onclick="clearMarkers()">Hide Dublin Bikes
+        </button>
+    </div>
+
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+        Plan Your Journey
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Dublin Bus Journey Planner</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    {#                    <div id="autocompleteDiv">#}
+                    <input id="origin-input"
+                           class="controls"
+                           list="originList"
+                           type="text"
+                           placeholder="Enter an origin location"/>
+                    <datalist id="originList">{% for stop in stops %}
+                        <option value="{{ stop.stop_name }}"/>
+                    {% endfor %}}
+                    </datalist>
+
+                    <input id="destination-input"
+                           class="controls"
+                           list="destinationList"
+                           type="text"
+                           placeholder="Enter a destination location"/>
+                    <datalist id="destinationList"> {% for stop in stops %}
+                        <option value="{{ stop.stop_name }}"/>
+                    {% endfor %}
+                    </datalist>
+
+                    <form id="form" method="POST">
+                        {% csrf_token %}
+                        <input id="predictTime"
+                               class="form-control"
+                               type="datetime-local"
+                               name="predict"
+                               required>
+
+                        {#                            <input type="submit" name="submit" value="Plan Journey">#}
+                    </form>
+
+                    {#                    </div>#}
                     <div class="modal-footer">
+                        <div id="output">
+                        </div>
+                        <input type="button" class="btn btn-primary" name="submit" value="Plan Journey">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
                     </div>
                 </div>
             </div>
