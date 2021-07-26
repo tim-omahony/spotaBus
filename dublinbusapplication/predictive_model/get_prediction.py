@@ -10,10 +10,10 @@ def filePath(filename):
     return filePath
 
 
-start_stop_id = 608
-end_stop_id = 114
-temp = 6
-weather_main = 'Rain'
+# start_stop_id = 608
+# end_stop_id = 114
+# temp = 6
+# weather_main = 'Rain'
 stops = [1730, 1731, 1732, 1733, 1650, 1652, 5141, 1773, 1774, 1651, 4784, 608, 4791, 4792, 1196,
          1197, 4473, 250, 251, 4597, 255, 218, 219, 220, 221, 222, 223, 224, 225, 226, 114, 1645, 1646, 7571]
 

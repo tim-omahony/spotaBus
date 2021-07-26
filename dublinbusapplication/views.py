@@ -31,7 +31,10 @@ def predict(request):
         hour = int(float(request.POST.get('hour')))
         day = int(float(request.POST.get('day')))
         month = int(float(request.POST.get('month')))
-
+        temp = int(float(request.POST.get('temp')))
+        start_stop_id = int(float(request.POST.get('start_stop_id')))
+        end_stop_id = int(float(request.POST.get('end_stop_id')))
+        weather_main = str(float(request.POST.get('weather_main')))
         result = int(prediction(hour, day, month, start_stop_id, end_stop_id, temp, weather_main, stops))
         return JsonResponse(result, safe=False)
         # return response as JSON
