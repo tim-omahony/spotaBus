@@ -17,15 +17,14 @@ let markerClusterer;
 let originStop;
 let destinationStop;
 let currentWeather;
+let googleResponse;
+
+// function to render the map on the main application page
 
 function initMap() {
     map = new google.maps.Map(document.getElementById("MapView"), {
         center: {lat: DUBLIN_LAT, lng: DUBLIN_LNG},
         zoom: 14,
-        // restriction: {
-        //     latLngBounds: DUBLIN_BOUNDS,
-        //     strictBounds: false,
-        // }
         mapTypeControl: true,
         mapTypeControlOptions: {
             style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
@@ -125,6 +124,8 @@ function DistanceMatrix() {
     });
 }
 
+// this function returns the location of the user as a point on the map
+
 function Geolocation() {
     infoWindow = new google.maps.InfoWindow();
     const locationButton = document.createElement("button");
@@ -150,46 +151,25 @@ function Geolocation() {
                 }
             );
         } else {
-            // Browser doesn't support Geolocation
+            // if the browser doesn't support Geolocation this error is returned
             handleLocationError(false, infoWindow, map.getCenter());
         }
     });
 }
 
-
-function deleteMarkers(markersArray) {
-    for (let i = 0; i < markersArray.length; i++) {
-        markersArray[i].setMap(null);
-    }
-    markersArray = [];
-}
-
+// this function is used to parse JSON (used for the data on stops and Dublin Bikes stations
 function loadJson(selector) {
     return JSON.parse(document.getElementById(selector).textContent);
 }
 
+// when the main window of the application loads data on Dublin Bus stops and Dublin Bikes stations
+
 window.onload = function () {
     stops = loadJson("stops-data")
     stations = loadJson("stations-data")
-    // populateDublinBikes();
 }
-// timeout function for dublin bikes buttons :)
-// const button = document.getElementById("bikeButton")
-// const debounce = (func, delay) => {
-//     let debounceTimer
-//     return function() {
-//         const context = this
-//         const args = arguments
-//             clearTimeout(debounceTimer)
-//                 debounceTimer
-//             = setTimeout(() => func.apply(context, args), delay)
-//     }
-// }
-// button.addEventListener('click', debounce(function() {
-//         alert("Hello\nNo matter how many times you" +
-//             "click the debounce button, I get " +
-//             "executed once every 3 seconds!!")
-//                         }, 3000));
+
+// this function renders markers on the map based on the location of Dublin Bikes stations contained within the DB
 
 function populateDublinBikes() {
     markers = stations.map(station => {
@@ -207,22 +187,28 @@ function populateDublinBikes() {
     });
 }
 
+// function to clear markers from the map
+
 function clearMarkers() {
     markerClusterer.clearMarkers();
 }
 
-function populateStops() {
-    markers = stops.map(stop => {
-        return new google.maps.Marker({
-            position: {
-                lat: Number.parseFloat(stop.stop_lat),
-                lng: Number.parseFloat(stop.stop_lon)
-            },
-            title: stop.stop_name,
-            map: map
-        })
-    });
-}
+// this function renders markers on the map based on the location of Dublin Bus stops contained within the DB
+
+// function populateStops() {
+//     markers = stops.map(stop => {
+//         return new google.maps.Marker({
+//             position: {
+//                 lat: Number.parseFloat(stop.stop_lat),
+//                 lng: Number.parseFloat(stop.stop_lon)
+//             },
+//             title: stop.stop_name,
+//             map: map
+//         })
+//     });
+// }
+
+//this function  handles geolocation errors based on whether the browser supports geolocation or if the service fails
 
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
     infoWindow.setPosition(pos);
@@ -243,21 +229,26 @@ class AutocompleteDirectionsHandler {
     directionsService;
     directionsRenderer;
 
+    // constructors based on the origin and destination inputs provided to the application
+
     constructor(map) {
         this.map = map;
         this.originId = "";
         this.destinationId = "";
+        // travel mode TRANSIT means that buses will be used as the desired mode of travel
         this.travelMode = google.maps.TravelMode.TRANSIT;
         this.directionsService = new google.maps.DirectionsService();
         this.directionsRenderer = new google.maps.DirectionsRenderer();
         this.directionsRenderer.setMap(map);
 
+        // retrieves the origin and destination stops from index.html
         const originInput = document.getElementById("origin-input");
         const destinationInput = document.getElementById("destination-input");
         this.setupStopChangeListener(originInput, "ORIG");
         this.setupStopChangeListener(destinationInput, "DEST");
     }
 
+    // provides the route between two given stops
     setupStopChangeListener(selectElement, mode) {
         selectElement.addEventListener('change', (event) => {
             if (mode === "ORIG") {
@@ -269,6 +260,7 @@ class AutocompleteDirectionsHandler {
         });
     }
 
+    // the route function uses the Google directions API to find the route between two given stations
     route() {
         if (!this.originId || !this.destinationId) {
             return;
@@ -285,14 +277,16 @@ class AutocompleteDirectionsHandler {
                 transitOptions: {
                     modes: ['BUS'],
                     routingPreference: 'FEWER_TRANSFERS',
-/*                  departureTime: new Date(time)*/
+                    /*                  departureTime: new Date(time)*/
                 }
             },
 
             (response, status) => {
                 if (status === "OK") {
                     this.directionsRenderer.setDirections(response);
-                    console.log(response)
+                    googleResponse = response
+                    console.log("googs", response)
+                    return googleResponse
                 } else {
                     window.alert("Directions request failed due to " + status);
                 }
@@ -301,12 +295,21 @@ class AutocompleteDirectionsHandler {
     }
 }
 
+// function to retrieve the most recent weather update from openweathermap
 function getWeather() {
     currentWeather = ($.getJSON("https://api.openweathermap.org/data/2.5/weather?lat=53.344&lon=-6.2672&appid=37038b4337b3dbf599fe6b12dad969bd"))
     console.log(currentWeather)
     return currentWeather
 }
 
+// function to retrieve the 5 day forecast from openweatherapi
+function getForecast() {
+    weatherForecast = ($.getJSON("https://api.openweathermap.org/data/2.5/forecast?lat=53.344&lon=-6.2672&appid=37038b4337b3dbf599fe6b12dad969bd"))
+    console.log(weatherForecast)
+    return weatherForecast
+}
+
+// function to return provided details on travel to the prediction model
 $(document).ready(function () {
     $('#form').on('submit', function (e) {
         e.preventDefault();
@@ -329,11 +332,11 @@ $(document).ready(function () {
                     dataType: "json",
                 },
 
-
-
+            // if the function properly sends data to the predictive model the estimated travel time is returned
             success: function (result) {
                 console.log(result)
-                $('#output').html("<p>Estimated journey time: " + result + " minutes</p>");
+                $('#output').html("<p>Estimated journey time: " + result + " minutes</p>" +
+                    "<p>You will arrive at approximately:  " + googleResponse.routes[0].legs[0].arrival_time.text + "</p>");
             },
 
             failure: function (result) {
@@ -341,5 +344,28 @@ $(document).ready(function () {
             }
         })
     });
+})
+
+// function to provide date time picker if the user wants to plan a journey in the future
+$(function () {
+    $('#date-toggle-event').change(function () {
+        if ($(this).prop('checked') == true) {
+            $('#datetime-toggle').html('<input form = "form" id="predictTime" class="form-control" ' +
+                'type="datetime-local" name="predict" required onclick="getForecast()">');
+        } else {
+            $('#datetime-toggle').html('');
+        }
+    })
+})
+
+// function toggles between showing and hiding Dublin Bikes stations on the map
+$(function () {
+    $('#bike-toggle-event').change(function () {
+        if ($(this).prop('checked') == true) {
+            $(populateDublinBikes());
+        } else {
+            $(clearMarkers());
+        }
+    })
 })
 
