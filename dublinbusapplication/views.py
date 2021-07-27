@@ -31,12 +31,24 @@ def predict(request):
         hour = int(float(request.POST.get('hour')))
         day = int(float(request.POST.get('day')))
         month = int(float(request.POST.get('month')))
-        temp = int(float(request.POST.get('temp')))
-        start_stop_id = int(float(request.POST.get('start_stop_id')))
-        end_stop_id = int(float(request.POST.get('end_stop_id')))
-        weather_main = str(float(request.POST.get('weather_main')))
-        result = int(prediction(hour, day, month, start_stop_id, end_stop_id, temp, weather_main, stops))
+        wind_speed = int(float(request.POST.get('wind_speed')))
+        humidity = int(float(request.POST.get('humidity')))
+        temp = int(float(request.POST.get('temp')) - 273)
+        start_stop_id = (request.POST.get('start_stop_id'))
+        end_stop_id = (request.POST.get('end_stop_id'))
+        weather_main = (request.POST.get('weather_main'))
+
+        # converting the start and stop ids to the required format
+        start_stop_id = int(start_stop_id[len(start_stop_id) - 5:])
+        end_stop_id = int(end_stop_id[len(end_stop_id) - 5:])
+
+        print(hour, day, month, wind_speed, humidity, temp, start_stop_id, end_stop_id, weather_main)
+        result = int(
+            prediction(route, hour, day, month, start_stop_id, end_stop_id, wind_speed, temp, humidity, weather_main,
+                       stops_dict))
+        print(result)
         return JsonResponse(result, safe=False)
+
         # return response as JSON
 
 

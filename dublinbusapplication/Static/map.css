@@ -88,12 +88,11 @@ a:focus {
 }
 
 .sidebar-nav > li > a:hover,
-.sidebar-nav > li.active > a{
+.sidebar-nav > li.active > a {
     text-decoration: none;
     color: #fff;
     background: #FFA500;
 }
-
 
 
 .sidebar-nav > li > a i.fa {
@@ -365,15 +364,9 @@ a:focus {
     margin-bottom: 10px;
 }
 
-#form {
-    margin-left: 10px;
-    width: 50%;
-    margin-bottom: 10px;
-}
-
 #output {
-    float: left;
-    margin-left: 30px;
+
+    margin-left: 40px;
     font-family: Monaco, sans-serif;
     font-size: 20px;
 
@@ -447,10 +440,30 @@ a:focus {
 }
 
 /*NAME FIELD "HELLO, USER*/
-.nav-link{
+.nav-link {
     color: #ffffff;
 }
 
-.nav-link:hover{
+.nav-link:hover {
     color: #e8e8e8;
+}
+
+
+/*toggle buttons CSS*/
+.toggle.ios, .toggle-on.ios, .toggle-off.ios {
+    border-radius: 20px;
+    border-color: #222222;
+
+}
+
+.toggle.ios .toggle-handle {
+    border-radius: 20px;
+    border-color: #757575;
+
+}
+
+#origin-toggle, #date-toggle, #bike-toggle{
+    margin-top:20px;
+    margin-bottom:5px;
+    margin-left:20px;
 }

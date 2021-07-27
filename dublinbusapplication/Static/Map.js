@@ -14,9 +14,9 @@ let stops;
 let pos;
 let stations;
 let markerClusterer;
-let origin_stop;
-let destination_stop;
-
+let originStop;
+let destinationStop;
+let currentWeather;
 
 function initMap() {
     map = new google.maps.Map(document.getElementById("MapView"), {
@@ -273,8 +273,8 @@ class AutocompleteDirectionsHandler {
         if (!this.originId || !this.destinationId) {
             return;
         }
-        const originStop = stops.find(stop => stop.stop_name === (this.originId));
-        const destinationStop = stops.find(stop => stop.stop_name === (this.destinationId));
+        originStop = stops.find(stop => stop.stop_name === (this.originId));
+        destinationStop = stops.find(stop => stop.stop_name === (this.destinationId));
         console.log({originStop, destinationStop});
 
         this.directionsService.route(
@@ -282,6 +282,11 @@ class AutocompleteDirectionsHandler {
                 origin: {lat: originStop.stop_lat, lng: originStop.stop_lon},
                 destination: {lat: destinationStop.stop_lat, lng: destinationStop.stop_lon},
                 travelMode: 'TRANSIT',
+                transitOptions: {
+                    modes: ['BUS'],
+                    routingPreference: 'FEWER_TRANSFERS',
+/*                  departureTime: new Date(time)*/
+                }
             },
 
             (response, status) => {
@@ -297,7 +302,7 @@ class AutocompleteDirectionsHandler {
 }
 
 function getWeather() {
-    let currentWeather = ($.getJSON("https://api.openweathermap.org/data/2.5/weather?lat=53.344&lon=-6.2672&appid=37038b4337b3dbf599fe6b12dad969bd"))
+    currentWeather = ($.getJSON("https://api.openweathermap.org/data/2.5/weather?lat=53.344&lon=-6.2672&appid=37038b4337b3dbf599fe6b12dad969bd"))
     console.log(currentWeather)
     return currentWeather
 }
@@ -308,22 +313,26 @@ $(document).ready(function () {
         const inputTime = new Date($('#predictTime').val())
         $.ajax({
             type: 'POST',
-            url: "/dublinbusapplication/predict/",
+            url: "/predict/",
             data:
                 {
                     hour: inputTime.getHours(),
                     day: inputTime.getDay(),
                     month: inputTime.getMonth(),
                     temp: currentWeather.responseJSON.main.temp,
+                    wind_speed: currentWeather.responseJSON.wind.speed,
+                    humidity: currentWeather.responseJSON.main.humidity,
                     weather_main: currentWeather.responseJSON.weather[0].main,
-                    start_stop_id: origin_stop.stop_id,
-                    end_stop_id: destination_stop.stop_id,
+                    start_stop_id: originStop.stop_id,
+                    end_stop_id: destinationStop.stop_id,
                     csrfmiddlewaretoken,
                     dataType: "json",
                 },
 
-            success: function (result) {
 
+
+            success: function (result) {
+                console.log(result)
                 $('#output').html("<p>Estimated journey time: " + result + " minutes</p>");
             },
 
