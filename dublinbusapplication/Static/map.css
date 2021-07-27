@@ -364,15 +364,9 @@ a:focus {
     margin-bottom: 10px;
 }
 
-#form {
-    margin-left: 10px;
-    width: 50%;
-    margin-bottom: 10px;
-}
-
 #output {
-    float: left;
-    margin-left: 30px;
+
+    margin-left: 40px;
     font-family: Monaco, sans-serif;
     font-size: 20px;
 
@@ -471,5 +465,5 @@ a:focus {
 #origin-toggle, #date-toggle, #bike-toggle{
     margin-top:20px;
     margin-bottom:5px;
-
+    margin-left:20px;
 }
