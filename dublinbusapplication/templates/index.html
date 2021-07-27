@@ -9,8 +9,6 @@
 
 
     <div id="MapView" class="z-depth-1-half map-container-4" style="height: 500px"></div>
-    {% comment %}
-    <div id="MapView" class="container-fluid" style="height: 720px"></div>{% endcomment %}
 
     <div id="bikes_button">
 
@@ -37,7 +35,6 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    {#                    <div id="autocompleteDiv">#}
                     <input id="origin-input"
                            class="controls"
                            list="originList"
@@ -65,65 +62,21 @@
                     <div id="date-toggle">Now or later?<input id="date-toggle-event" type="checkbox"
                                                               data-toggle="toggle" data-style="ios"
                                                               data-on="later" data-off="now"></div>
-
-
                     <div id="datetime-toggle"></div>
-
-
-                    {% comment %}<form id="form" method="POST">
-                        {% csrf_token %}
-                        <input id="predictTime" class="form-control"
-                               type="datetime-local" name="predict"
-                               required><input type="submit" name="submit"
-                                               value="Plan Journey"></form>{% endcomment %}
-
                     <div class="modal-output">
                         <div id="output"></div>
                     </div>
-
                     <div class="modal-footer">
                         <div id="output"></div>
-
                         <form id="form" method="POST">
                             {% csrf_token %}
                             <button form="form" type="submit" class="btn btn-primary" name="submit">Plan Journey
                             </button>
                         </form>
-
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-
                     </div>
-
-
                 </div>
             </div>
         </div>
     </div>
-
-    <script>
-        $(function () {
-            $('#date-toggle-event').change(function () {
-                if ($(this).prop('checked') == true) {
-                    $('#datetime-toggle').html('<input form = "form" id="predictTime" class="form-control" type="datetime-local" name="predict" required>');
-                } else {
-                    $('#datetime-toggle').html('');
-                }
-                ;
-            })
-        })
-
-
-        $(function () {
-            $('#bike-toggle-event').change(function () {
-                if ($(this).prop('checked') == true) {
-                    $(populateDublinBikes());
-                } else {
-                    $(clearMarkers());
-                }
-                ;
-            })
-        })
-    </script>
-
-
 {% endblock %}

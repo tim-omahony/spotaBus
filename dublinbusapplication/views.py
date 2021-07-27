@@ -1,28 +1,16 @@
-import json
-
-from django.http import HttpResponse, JsonResponse
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
-from django.core import serializers
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-import pickle
-import pandas as pd
-
 from dublinbusapplication.predictive_model.get_prediction import *
-
 from .models import Stop, Bikes
-
-from scraper.weather.db_session import Session
-
-session = Session()
 
 
 def index(request):
     render_stops = Stop.objects.all().values()
     render_bike_stations = Bikes.objects.all().values()
     return render(request, 'index.html', {'stops': list(render_stops), 'stations': list(render_bike_stations)})
-    # return render(request, 'index.html', {'stops': list(render_stops)})
 
 
 # ajax_posting function
@@ -48,13 +36,7 @@ def predict(request):
                        stops_dict))
         print(result)
         return JsonResponse(result, safe=False)
-
         # return response as JSON
-
-
-# def stops(request):
-#     stops = Stop.objects.all().values()
-#     return JsonResponse({'stops': list(stops)})
 
 
 def about(request):

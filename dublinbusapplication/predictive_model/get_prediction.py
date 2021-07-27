@@ -28,7 +28,6 @@ stops_dict = {'d1': [1730, 1731, 1732, 1733, 1650, 1652, 5141, 1773, 1774, 1651,
 
 
 def peak_hour(hour):
-    """ returns 1 if hour is within peak hour time slots, 0 otherwise"""
     if (7 < hour < 10) or (16 < hour < 19):
         peak = 1
     else:
