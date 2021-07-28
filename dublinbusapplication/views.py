@@ -16,6 +16,7 @@ def index(request):
 # ajax_posting function
 def predict(request):
     if request.is_ajax():
+        route = (request.POST.get('route'))
         hour = int(float(request.POST.get('hour')))
         day = int(float(request.POST.get('day')))
         month = int(float(request.POST.get('month')))
@@ -30,7 +31,8 @@ def predict(request):
         start_stop_id = int(start_stop_id[len(start_stop_id) - 5:])
         end_stop_id = int(end_stop_id[len(end_stop_id) - 5:])
 
-        print(hour, day, month, wind_speed, humidity, temp, start_stop_id, end_stop_id, weather_main)
+        stops_dict = get_route(stops_sequence, route)
+        print(stops_dict)
         result = int(
             prediction(route, hour, day, month, start_stop_id, end_stop_id, wind_speed, temp, humidity, weather_main,
                        stops_dict))
