@@ -1,4 +1,5 @@
 from django.test import TestCase, Client
+from django.http import JsonResponse
 from django.urls import reverse, resolve
 from .models import *
 from .views import *
@@ -7,17 +8,17 @@ from .views import *
 class TestViews(TestCase):
     pass
 
-# Testing URLs
 
+# Testing URLs
 class TestUrls(TestCase):
 
     def setUp(self):
         self.client = Client()
-        self.home_url= '/dublinbusapplication/'
-        self.about_url= '/dublinbusapplication/about/'
-        self.contact_url = '/dublinbusapplication/contact/'
-        self.register_url= '/dublinbusapplication/register/'
-        self.login_url = '/dublinbusapplication/login/'
+        self.home_url = '/'
+        self.about_url = '/about/'
+        self.contact_url = '/contact/'
+        self.register_url = '/register/'
+        self.login_url = '/login/'
 
     # Home page tests
     def test_home_response_code(self):
@@ -74,23 +75,23 @@ class TestUrls(TestCase):
 
     # Login page tests
 
-    def test_register_page_resposne_code(self):
+    def test_login_page_response_code(self):
         response = self.client.get(self.login_url)
         self.assertEqual(response.status_code, 200)
 
-    def test_register_template_used(self):
+    def test_login_template_used(self):
         response = self.client.get(self.login_url)
         self.assertTemplateUsed(response, 'login.html')
 
-    def test_register_content_returned(self):
+    def test_login_content_returned(self):
         response = self.client.get(self.login_url)
         self.assertNotEqual(response.content, "")
 
 
 
 
-# Testing Models
 
+# Testing Models
 class StandardUserTestCase(TestCase):
 
     def setUp(self):
@@ -107,6 +108,12 @@ class StandardUserTestCase(TestCase):
 
     def test_user_str_return_value(self):
         self.assertEqual(self.user.str(), self.user.username)
+
+    def test_user_has_perm_return_value(self):
+        self.assertEqual(self.user.has_perm(), self.user.is_admin)
+
+    def test_user_has_module_perms_return_value(self):
+        self.assertEqual(self.user.has_module_perms(), True)
 
 
 
