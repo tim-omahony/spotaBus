@@ -18,6 +18,8 @@ class TestUrls(TestCase):
         self.contact_url = '/dublinbusapplication/contact/'
         self.register_url= '/dublinbusapplication/register/'
         self.login_url = '/dublinbusapplication/login/'
+        self.login_url = '/dublinbusapplication/previous/'
+        self.login_url = '/dublinbusapplication/predict/'
 
     # Home page tests
     def test_home_response_code(self):
@@ -74,7 +76,7 @@ class TestUrls(TestCase):
 
     # Login page tests
 
-    def test_register_page_resposne_code(self):
+    def test_register_page_response_code(self):
         response = self.client.get(self.login_url)
         self.assertEqual(response.status_code, 200)
 
@@ -85,6 +87,36 @@ class TestUrls(TestCase):
     def test_register_content_returned(self):
         response = self.client.get(self.login_url)
         self.assertNotEqual(response.content, "")
+
+    # Previous page tests
+
+    def test_previous_page_response_code(self):
+        response = self.client.get(self.login_url)
+        self.assertEqual(response.status_code, 200)
+
+    def test_previous_template_used(self):
+        response = self.client.get(self.previous_url)
+        self.assertTemplateUsed(response, 'previous.html')
+
+    def test_previous_content_returned(self):
+        response = self.client.get(self.previous_url)
+        self.assertNotEqual(response.content, "")
+
+    # Predict page tests
+
+    def test_predict_page_response_code(self):
+        response = self.client.get(self.predict_url)
+        self.assertEqual(response.status_code, 200)
+
+    def test_predict_template_used(self):
+        response = self.client.get(self.predict_url)
+        self.assertTemplateUsed(response, 'predict.html')
+
+    def test_predict_content_returned(self):
+        response = self.client.get(self.predict_url)
+        self.assertNotEqual(response.content, "")
+
+
 
 
 
@@ -107,6 +139,12 @@ class StandardUserTestCase(TestCase):
 
     def test_user_str_return_value(self):
         self.assertEqual(self.user.str(), self.user.username)
+
+    def test_user_has_perm_return_value(self):
+        self.assertEqual(self.user.has_perm(), self.user.is_admin)
+
+    def test_user_has_module_perms_return_value(self):
+        self.assertEqual(self.user.has_module_perms(), True)
 
 
 
