@@ -110,3 +110,10 @@ def add_favourite_route(request):
             fav_journey.save()
 
         return JsonResponse({'message': 'saved that there now you cunt'})
+
+
+def userPage(request):
+    return render(request, 'userpage.html')
+
+
+

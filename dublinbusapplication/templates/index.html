@@ -74,8 +74,10 @@
                             <button form="form" type="submit" class="btn btn-primary" name="submit">Plan Journey
                             </button>
                         </form>
+                         {% if user.is_authenticated %}
                         {% csrf_token %}
                         <button type="button" value="Save Route" onclick="saveRoute()">Save Route</button>
+                        {% endif %}
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     </div>
                 </div>

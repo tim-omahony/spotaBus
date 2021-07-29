@@ -53,10 +53,15 @@
             <li id="contact">
                 <a href="/contact"><i class="fas fa-address-book "></i> Contact Us</a>
             </li>
-
-            <li id="login">
-                <a href="/login"><i class="fa fa-user"></i>Register/Login</a>
-            </li>
+            {% if user.is_authenticated %}
+                <li id="login">
+                    <a href="/userPage"><i class="fa fa-user"></i>Account Details</a>
+                </li>
+            {% else %}
+                <li id="login">
+                    <a href="/login"><i class="fa fa-user"></i>Register/Login</a>
+                </li>
+            {% endif %}
         </ul>
     </aside>
 
