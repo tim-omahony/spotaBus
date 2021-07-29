@@ -277,6 +277,15 @@ a:focus {
 /* ------------------------------------------------------------------------------------------------------------- */
 
 /* Index page css */
+
+
+#holidayWidget{
+    color: #fff;
+    background-color: #ffcd4f;
+    margin-left: 12px;
+    padding: 5px 11px 0px 11px;
+}
+
 #MapView {
     width: auto;
     height: auto;
