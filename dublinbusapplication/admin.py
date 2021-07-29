@@ -1,6 +1,6 @@
 from django.contrib import admin
-from dublinbusapplication.models import User
+from dublinbusapplication.models import user
 
-admin.site.register(User)
+admin.site.register(user)
 
 

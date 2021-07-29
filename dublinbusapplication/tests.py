@@ -95,14 +95,14 @@ class TestUrls(TestCase):
 class StandardUserTestCase(TestCase):
 
     def setUp(self):
-        self.user = User(email="test@email.com", username="JohnDoe", date_joined="", last_login="", is_admin=False,
-                    is_active=True, is_staff=False, is_superuser=False)
+        self.user = user(email="test@email.com", username="JohnDoe", date_joined="", last_login="", is_admin=False,
+                         is_active=True, is_staff=False, is_superuser=False)
         self.user.save()
 
         app_label = 'django.contrib.admin'
 
     def test_user_created(self):
-        num_users = User.objects.all().count()
+        num_users = user.objects.all().count()
         self.assertEqual(num_users, 1)
         self.assertNotEqual(num_users, 0)
 

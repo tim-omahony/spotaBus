@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.contrib.auth import get_user_model
+from django.conf import settings
 
 
 class Stop(models.Model):
@@ -54,7 +56,7 @@ class UserManager(BaseUserManager):
         return user
 
 
-class User(AbstractBaseUser):
+class user(AbstractBaseUser):
     email = models.EmailField(verbose_name='email', max_length=60, unique=True)
     # fields underneath are required to build a custom form
     username = models.CharField(max_length=30, unique=True)
@@ -79,3 +81,12 @@ class User(AbstractBaseUser):
 
     def has_module_perms(self):
         return True
+
+
+class FavouriteJourney(models.Model):
+    users_origin_stop = models.CharField(max_length=200)
+    users_dest_stop = models.CharField(max_length=200)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"Route: {self.users_origin_stop} to stop {self.users_dest_stop}"
