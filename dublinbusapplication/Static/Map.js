@@ -18,6 +18,7 @@ let originStop;
 let destinationStop;
 let currentWeather;
 let googleResponse;
+let enableFav;
 
 // function to render the map on the main application page
 
@@ -345,6 +346,29 @@ $(document).ready(function () {
         })
     });
 })
+
+function saveRoute() {
+    $.ajax({
+        type: 'POST',
+        url: "/add_favourite_route/",
+        data:
+            {
+                users_origin_stop: originStop.stop_id,
+                users_dest_stop: destinationStop.stop_id,
+                csrfmiddlewaretoken,
+                dataType: "json",
+            },
+
+        // if the function properly sends data to the predictive model the estimated travel time is returned
+        success: function (result) {
+            console.log('success', result)
+        },
+
+        failure: function (result) {
+            console.log(result)
+        }
+    })
+}
 
 // function to provide date time picker if the user wants to plan a journey in the future
 $(function () {

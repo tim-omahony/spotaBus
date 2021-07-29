@@ -79,3 +79,12 @@ class User(AbstractBaseUser):
 
     def has_module_perms(self, app_label):
         return True
+
+
+class FavouriteJourney(models.Model):
+    users_origin_stop = models.CharField(max_length=200)
+    users_dest_stop = models.CharField(max_length=200)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"Route: {self.users_origin_stop} to stop {self.users_dest_stop}"
