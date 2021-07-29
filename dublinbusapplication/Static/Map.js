@@ -431,6 +431,7 @@ function saveRoute() {
         // if the function properly sends data to the predictive model the estimated travel time is returned
         success: function (result) {
             console.log('success', result)
+            alert("Route successfully saved to database!")
         },
 
         failure: function (result) {
