@@ -1,7 +1,7 @@
 import pandas as pd
 import pickle
 import os
-
+import json
 
 # added in this filePath method to find the right path to the pkl files because it couldn't find them before
 def filePath(filename):
@@ -18,13 +18,23 @@ def filePath(filename):
 # currently the route and stops sequence dictionary are hard coded
 # but these will be retrieved from the google response and a static JSON file
 
-route = 104
-stops_dict = {'d1': [1730, 1731, 1732, 1733, 1650, 1652, 5141, 1773, 1774, 1651, 4784, 608, 4791, 4792, 1196,
-                     1197, 4473, 250, 251, 4597, 255, 218, 219, 220, 221, 222, 223, 224, 225, 226, 114, 1645, 1646,
-                     7571],
-              'd2': [7571, 1644, 1605, 228, 229, 227, 230, 231, 232, 233, 242, 243, 253, 245, 4474, 4790, 1220, 1221,
-                     674,
-                     4389, 4390, 530, 4785, 1764, 1765, 1766, 1767, 7129, 1744, 1745, 1746, 1747, 1748, 1749]}
+f = open(filePath('Stop_sequences_full.json'))
+stops_sequence = json.load(f)
+
+def get_route(stops_sequence, bus_route):
+    route_dict = {}
+    for i in range(1, 3):
+
+        if (bus_route + "_{}".format(i)) in stops_sequence:
+
+            sequence = stops_sequence[bus_route + "_{}".format(i)]
+            route_dict['d{}'.format(i)] = {}
+            route_dict['d{}'.format(i)] = sequence
+
+        else:
+            pass
+
+    return route_dict
 
 
 def peak_hour(hour):

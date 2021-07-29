@@ -76,10 +76,10 @@ class user(AbstractBaseUser):
     def str(self):
         return self.username
 
-    def has_perm(self, perm, obj=None):
+    def has_perm(self):
         return self.is_admin
 
-    def has_module_perms(self, app_label):
+    def has_module_perms(self):
         return True
 
 

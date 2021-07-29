@@ -19,7 +19,7 @@ let destinationStop;
 let currentWeather;
 let googleResponse;
 let enableFav;
-
+let RouteShortname;
 // function to render the map on the main application page
 
 function initMap() {
@@ -262,6 +262,7 @@ class AutocompleteDirectionsHandler {
     }
 
     // the route function uses the Google directions API to find the route between two given stations
+
     route() {
         if (!this.originId || !this.destinationId) {
             return;
@@ -278,21 +279,34 @@ class AutocompleteDirectionsHandler {
                 transitOptions: {
                     modes: ['BUS'],
                     routingPreference: 'FEWER_TRANSFERS',
-                    /*                  departureTime: new Date(time)*/
+
                 }
             },
 
             (response, status) => {
                 if (status === "OK") {
                     this.directionsRenderer.setDirections(response);
-                    googleResponse = response
-                    console.log("googs", response)
-                    return googleResponse
+
+                    var Steps = response.routes[0].legs[0].steps.length;
+                    var steps_array = [];
+                    for (var y = 0; y < Steps; y++) {
+
+                        var Transit_Type = response.routes[0].legs[0].steps[y].travel_mode;
+
+                        if (Transit_Type == "TRANSIT") {
+                            var route_dict = {};
+                            RouteShortname = response.routes[0].legs[0].steps[y].transit.line.short_name;
+                            route_dict['route'] = RouteShortname;
+                            steps_array.push(route_dict);
+                            }
+                        }
+                    console.log(steps_array)
+
                 } else {
                     window.alert("Directions request failed due to " + status);
                 }
             }
-        );
+        )
     }
 }
 
@@ -320,6 +334,8 @@ $(document).ready(function () {
             url: "/predict/",
             data:
                 {
+
+                    route: RouteShortname,
                     hour: inputTime.getHours(),
                     day: inputTime.getDay(),
                     month: inputTime.getMonth(),
@@ -336,8 +352,8 @@ $(document).ready(function () {
             // if the function properly sends data to the predictive model the estimated travel time is returned
             success: function (result) {
                 console.log(result)
-                $('#output').html("<p>Estimated journey time: " + result + " minutes</p>" +
-                    "<p>You will arrive at approximately:  " + googleResponse.routes[0].legs[0].arrival_time.text + "</p>");
+                $('#output').html("<p>Estimated journey time: " + result + " minutes</p>"
+                 /*   "<p>You will arrive at approximately:  " + googleResponse.routes[0].legs[0].arrival_time.text + "</p>"*/);
             },
 
             failure: function (result) {
@@ -381,6 +397,8 @@ $(function () {
         }
     })
 })
+
+
 
 // function toggles between showing and hiding Dublin Bikes stations on the map
 $(function () {
