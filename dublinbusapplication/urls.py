@@ -12,5 +12,6 @@ urlpatterns = [
     path('logout/', views.logoutUser, name="logout"),
     path('register/', views.registerPage, name="register"),
     path('predict/', predict, name='predict'),
-    path('add_favourite_route/', add_favourite_route, name="add_favourite_route")
+    path('add_favourite_route/', add_favourite_route, name="add_favourite_route"),
+    path('userPage/', views.userPage, name="userPage"),
 ]
