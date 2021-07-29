@@ -49,11 +49,6 @@ def about(request):
 def contact(request):
     return render(request, 'contact.html')
 
-
-def search_test(request):
-    return render(request, 'search_test.html')
-
-
 def registerPage(request):
     if request.user.is_authenticated:
         return redirect('home')
@@ -109,7 +104,7 @@ def add_favourite_route(request):
             fav_journey.user_id = request.session['_auth_user_id']
             fav_journey.save()
 
-        return JsonResponse({'message': 'saved that there now you cunt'})
+        return JsonResponse({'message': 'Successfully saved you beautiful human beaing'})
 
 
 def userPage(request):
