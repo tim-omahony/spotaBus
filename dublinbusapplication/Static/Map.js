@@ -247,20 +247,6 @@ function clearMarkers() {
     markerClusterer.clearMarkers();
 }
 
-// this function renders markers on the map based on the location of Dublin Bus stops contained within the DB
-
-// function populateStops() {
-//     markers = stops.map(stop => {
-//         return new google.maps.Marker({
-//             position: {
-//                 lat: Number.parseFloat(stop.stop_lat),
-//                 lng: Number.parseFloat(stop.stop_lon)
-//             },
-//             title: stop.stop_name,
-//             map: map
-//         })
-//     });
-// }
 
 //this function  handles geolocation errors based on whether the browser supports geolocation or if the service fails
 
@@ -363,6 +349,86 @@ class AutocompleteDirectionsHandler {
     }
 }
 
+
+class AutocompleteDirectionsHandlerGoogle {
+    map;
+    originPlaceIdGoogle;
+    destinationPlaceIdGoogle;
+    directionsService;
+    directionsRenderer;
+
+    constructor(map) {
+        this.map = map;
+        this.originPlaceIdGoogle = "";
+        this.destinationPlaceIdGoogle = "";
+        this.directionsService = new google.maps.DirectionsService();
+        this.directionsRenderer = new google.maps.DirectionsRenderer();
+        this.directionsRenderer.setMap(map);
+        const options = {
+            componentRestrictions: {country: "ie"},
+            fields: ["formatted_address", "geometry", "name"],
+            strictBounds: false,
+        };
+        const originInputGoogle = document.getElementById("origin-input-google");
+        console.log({originInputGoogle})
+        const destinationInputGoogle = document.getElementById("destination-input-google");
+        const originAutocomplete = new google.maps.places.Autocomplete(originInputGoogle, options);
+        console.log({originAutocomplete})
+        // Specify just the place data fields that you need.
+        originAutocomplete.setFields(["place_id"]);
+        const destinationAutocomplete = new google.maps.places.Autocomplete(
+            destinationInputGoogle, options
+        );
+        // Specify just the place data fields that you need.
+        destinationAutocomplete.setFields(["place_id"]);
+
+        this.setupPlaceChangedListener(originAutocomplete, "ORIGOOGLE");
+        this.setupPlaceChangedListener(destinationAutocomplete, "DESTGOOGLE");
+    }
+
+    setupPlaceChangedListener(autocomplete, mode) {
+        console.log('in here')
+        autocomplete.bindTo("bounds", this.map);
+        autocomplete.addListener("place_changed", () => {
+            const place = autocomplete.getPlace();
+            console.log('place is', place)
+
+            if (!place.place_id) {
+                window.alert("Please select an option from the dropdown list.");
+                return;
+            }
+            console.log({mode})
+            if (mode === "ORIGOOGLE") {
+                console.log('In here orig')
+                this.originPlaceIdGoogle = place.place_id;
+            } else if (mode === "DESTGOOGLE") {
+                this.destinationPlaceIdGoogle = place.place_id;
+            }
+            this.route();
+        });
+    }
+
+    route() {
+        if (!this.originPlaceIdGoogle || !this.destinationPlaceIdGoogle) {
+            return;
+        }
+        const me = this;
+        this.directionsService.route(
+            {
+                origin: {placeId: this.originPlaceIdGoogle},
+                destination: {placeId: this.destinationPlaceIdGoogle}
+            },
+            (response, status) => {
+                if (status === "OK") {
+                    me.directionsRenderer.setDirections(response);
+                } else {
+                    window.alert("Directions request failed due to " + status);
+                }
+            }
+        );
+    }
+}
+
 // function to retrieve the most recent weather update from openweathermap
 function getWeather() {
     currentWeather = ($.getJSON("https://api.openweathermap.org/data/2.5/weather?lat=53.344&lon=-6.2672&appid=37038b4337b3dbf599fe6b12dad969bd"))
@@ -452,7 +518,23 @@ $(function () {
     })
 })
 
+$(function () {
+    $('#autocomplete-toggle-event').change(function () {
+        if ($(this).prop('checked') == true) {
+            console.log('db handler')
+            new AutocompleteDirectionsHandler(map)
+            $('modal-body').html('dbAutocomplete');
+            // $('#autocomplete-toggle').html('<input form = "form" id="predictTime" class="form-control" ' +
+            //     'type="datetime-local" name="predict" required onclick="getForecast()">');
+        } else {
+            console.log('googs handler')
+            new AutocompleteDirectionsHandlerGoogle(map)
+            $('modal-body').html('google-input')
 
+            // $('#datetime-toggle').html('');
+        }
+    })
+})
 
 // function toggles between showing and hiding Dublin Bikes stations on the map
 $(function () {

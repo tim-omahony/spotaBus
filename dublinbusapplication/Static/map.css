@@ -351,6 +351,10 @@ a:focus {
     border-color: #4d90fe;
 }
 
+.pac-container {
+    z-index: 10000 !important;
+}
+
 #mode-selector {
     color: #fff;
     background-color: #4d90fe;

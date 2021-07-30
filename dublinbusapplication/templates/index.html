@@ -35,26 +35,46 @@
                     <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
                     </button>
                 </div>
-                <div class="modal-body">
-                    <input id="origin-input"
-                           class="controls"
-                           list="originList"
-                           type="text"
-                           placeholder="Enter an origin location"/>
-                    <datalist id="originList">{% for stop in stops %}
-                        <option value="{{ stop.stop_name }}"/>
-                    {% endfor %}}
-                    </datalist>
+                <div class="modal-body"><div id="dbAutocomplete">
+                        <input id="origin-input"
+                               class="controls"
+                               list="originList"
+                               type="text"
+                               placeholder="Enter an origin location"/>
+                        <datalist id="originList">{% for stop in stops %}
+                            <option value="{{ stop.stop_name }}"/>
+                        {% endfor %}}
+                        </datalist>
 
-                    <input id="destination-input"
-                           class="controls"
-                           list="destinationList"
-                           type="text"
-                           placeholder="Enter a destination location"/>
-                    <datalist id="destinationList"> {% for stop in stops %}
-                        <option value="{{ stop.stop_name }}"/>
-                    {% endfor %}
-                    </datalist>
+                        <input id="destination-input"
+                               class="controls"
+                               list="destinationList"
+                               type="text"
+                               placeholder="Enter a destination location"/>
+                        <datalist id="destinationList"> {% for stop in stops %}
+                            <option value="{{ stop.stop_name }}"/>
+                        {% endfor %}
+                        </datalist>
+                    </div>
+                    <div class="pac-container" id="google-input">
+                        <input
+                                id="origin-input-google"
+                                class="controls"
+                                type="text"
+                                placeholder="Enter an origin location"
+                        />
+
+                        <input
+                                id="destination-input-google"
+                                class="controls"
+                                type="text"
+                                placeholder="Enter a destination location"
+                        />
+                    </div>
+                    <div id="autocomplete-toggle">Search by location / Search by bus stop <input
+                            id="autocomplete-toggle-event"
+                            type="checkbox" data-toggle="toggle" data-style="ios" data-on="stop"
+                            data-off=""></div>
 
                     <div id="origin-toggle">Set origin as current location<input id="origin-toggle-event"
                                                                                  type="checkbox" data-toggle="toggle"
