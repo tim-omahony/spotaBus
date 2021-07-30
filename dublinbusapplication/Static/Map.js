@@ -20,6 +20,7 @@ let currentWeather;
 let googleResponse;
 let enableFav;
 let RouteShortname;
+
 // function to render the map on the main application page
 
 function initMap() {
@@ -44,6 +45,7 @@ function initMap() {
     });
     Geolocation();
     new AutocompleteDirectionsHandler(map);
+    // new AutocompleteDirectionsHandlerGoogle(map);
 }
 
 function attachInstructionText(stepDisplay, marker, text, map) {
@@ -67,116 +69,45 @@ function formattedDate() {
 }
 
 function publicHolidayChecker() {
-  fetch('https://www.googleapis.com/calendar/v3/calendars/en.irish%23holiday%40group.v.calendar.google.com/events?key=AIzaSyBpmxEf_9hpbApu3UhIu8jY41LDdgPFkqc').then((response) => {
-  if (response.ok) {
-    console.log('public holiday json retrieved successfully');
-    return response.json();
-  } else {
-    throw new Error('Something went wrong');
-  }
-})
-.then((responseJson) => {
-  // Do something with the response
-  var holidays = [];
+    fetch('https://www.googleapis.com/calendar/v3/calendars/en.irish%23holiday%40group.v.calendar.google.com/events?key=AIzaSyBpmxEf_9hpbApu3UhIu8jY41LDdgPFkqc').then((response) => {
+        if (response.ok) {
+            console.log('public holiday json retrieved successfully');
+            return response.json();
+        } else {
+            throw new Error('Something went wrong');
+        }
+    })
+        .then((responseJson) => {
+            // Do something with the response
+            var holidays = [];
 
 
+            for (var i = 0; i < responseJson.items.length; i++) {
+                holidays.push([responseJson.items[i].start.date, responseJson.items[i].summary]);
+            }
 
-  for (var i=0; i < responseJson.items.length; i++) {
-    holidays.push([responseJson.items[i].start.date, responseJson.items[i].summary]);
-  }
-
-  console.log(holidays);
-
-  for (let item of holidays) {
-  if (item[0] === formattedDate()) {
-
-    document.getElementById("holidayWidget").innerHTML ="Please be advised today is`"+item[1]+ ", bus schedules may be affected.";
-    document.getElementById("holidayWidget").style.visibility = "visible";
-    break;
-  }
-  }
+            console.log(holidays);
 
 
-})
-.catch((error) => {
-  console.log(error)
-});
+            for (let item of holidays) {
+                if (item[0] === formattedDate()) {
+
+                    document.getElementById("holidayWidget").innerHTML = "Please be advised today is`" + item[1] + ", bus schedules may be affected.";
+                    document.getElementById("holidayWidget").style.visibility = "visible";
+                    break;
+                }
+            }
+
+
+        })
+        .catch((error) => {
+            console.log(error)
+        });
 }
-
-
 
 
 publicHolidayChecker();
 
-function DistanceMatrix() {
-    const bounds = new google.maps.LatLngBounds();
-    const markersArray = [];
-
-    const geocoder = new google.maps.Geocoder();
-    const service = new google.maps.DistanceMatrixService();
-
-
-    // build request
-    // const origin1 = pos;
-    const origin1 = {lat: 53.349804, lng: -6.260310}
-    const origin2 = "Your Location";
-    const destinationA = "Stockholm, Sweden";
-    const destinationB = {lat: 55.93, lng: -3.120};
-    const request = {
-        origins: [origin1, origin2],
-        destinations: [destinationA, destinationB],
-        travelMode: google.maps.TravelMode.DRIVING,
-        unitSystem: google.maps.UnitSystem.METRIC,
-        avoidHighways: false,
-        avoidTolls: false,
-    };
-
-    // document.getElementById("request").innerText = JSON.stringify(
-    //     request,
-    //     null,
-    //     2
-    // );
-    // get distance matrix response
-    service.getDistanceMatrix(request).then((response) => {
-        // put response
-        // document.getElementById("response").innerText = JSON.stringify(
-        //     response,
-        //     null,
-        //     2
-        // );
-        // show on map
-        const originList = response.originAddresses;
-        const destinationList = response.destinationAddresses;
-        // deleteMarkers(markersArray);
-
-        const showGeocodedAddressOnMap = (asDestination) => {
-            const handler = ({results}) => {
-                map.fitBounds(bounds.extend(results[0].geometry.location));
-                markersArray.push(
-                    new google.maps.Marker({
-                        map,
-                        position: results[0].geometry.location,
-                        label: asDestination ? "D" : "O",
-                    })
-                );
-            };
-            return handler;
-        };
-
-        for (let i = 0; i < originList.length; i++) {
-            const results = response.rows[i].elements;
-            geocoder
-                .geocode({address: originList[i]})
-                .then(showGeocodedAddressOnMap(false));
-
-            for (let j = 0; j < results.length; j++) {
-                geocoder
-                    .geocode({address: destinationList[j]})
-                    .then(showGeocodedAddressOnMap(true));
-            }
-        }
-    });
-}
 
 // this function returns the location of the user as a point on the map
 
@@ -246,21 +177,6 @@ function populateDublinBikes() {
 function clearMarkers() {
     markerClusterer.clearMarkers();
 }
-
-// this function renders markers on the map based on the location of Dublin Bus stops contained within the DB
-
-// function populateStops() {
-//     markers = stops.map(stop => {
-//         return new google.maps.Marker({
-//             position: {
-//                 lat: Number.parseFloat(stop.stop_lat),
-//                 lng: Number.parseFloat(stop.stop_lon)
-//             },
-//             title: stop.stop_name,
-//             map: map
-//         })
-//     });
-// }
 
 //this function  handles geolocation errors based on whether the browser supports geolocation or if the service fails
 
@@ -351,8 +267,8 @@ class AutocompleteDirectionsHandler {
                             RouteShortname = response.routes[0].legs[0].steps[y].transit.line.short_name;
                             route_dict['route'] = RouteShortname;
                             steps_array.push(route_dict);
-                            }
                         }
+                    }
                     console.log(steps_array)
 
                 } else {
@@ -360,6 +276,85 @@ class AutocompleteDirectionsHandler {
                 }
             }
         )
+    }
+}
+
+class AutocompleteDirectionsHandlerGoogle {
+    map;
+    originPlaceIdGoogle;
+    destinationPlaceIdGoogle;
+    directionsService;
+    directionsRenderer;
+
+    constructor(map) {
+        this.map = map;
+        this.originPlaceIdGoogle = "";
+        this.destinationPlaceIdGoogle = "";
+        this.directionsService = new google.maps.DirectionsService();
+        this.directionsRenderer = new google.maps.DirectionsRenderer();
+        this.directionsRenderer.setMap(map);
+        const options = {
+            componentRestrictions: {country: "ie"},
+            fields: ["formatted_address", "geometry", "name"],
+            strictBounds: false,
+        };
+        const originInputGoogle = document.getElementById("origin-input-google");
+        console.log({originInputGoogle})
+        const destinationInputGoogle = document.getElementById("destination-input-google");
+        const originAutocomplete = new google.maps.places.Autocomplete(originInputGoogle, options);
+        console.log({originAutocomplete})
+        // Specify just the place data fields that you need.
+        originAutocomplete.setFields(["place_id"]);
+        const destinationAutocomplete = new google.maps.places.Autocomplete(
+            destinationInputGoogle, options
+        );
+        // Specify just the place data fields that you need.
+        destinationAutocomplete.setFields(["place_id"]);
+
+        this.setupPlaceChangedListener(originAutocomplete, "ORIGOOGLE");
+        this.setupPlaceChangedListener(destinationAutocomplete, "DESTGOOGLE");
+    }
+
+    setupPlaceChangedListener(autocomplete, mode) {
+        console.log('in here')
+        autocomplete.bindTo("bounds", this.map);
+        autocomplete.addListener("place_changed", () => {
+            const place = autocomplete.getPlace();
+            console.log('place is', place)
+
+            if (!place.place_id) {
+                window.alert("Please select an option from the dropdown list.");
+                return;
+            }
+            console.log({mode})
+            if (mode === "ORIGOOGLE") {
+                console.log('In here orig')
+                this.originPlaceIdGoogle = place.place_id;
+            } else if (mode === "DESTGOOGLE") {
+                this.destinationPlaceIdGoogle = place.place_id;
+            }
+            this.route();
+        });
+    }
+
+    route() {
+        if (!this.originPlaceIdGoogle || !this.destinationPlaceIdGoogle) {
+            return;
+        }
+        const me = this;
+        this.directionsService.route(
+            {
+                origin: {placeId: this.originPlaceIdGoogle},
+                destination: {placeId: this.destinationPlaceIdGoogle}
+            },
+            (response, status) => {
+                if (status === "OK") {
+                    me.directionsRenderer.setDirections(response);
+                } else {
+                    window.alert("Directions request failed due to " + status);
+                }
+            }
+        );
     }
 }
 
@@ -406,7 +401,7 @@ $(document).ready(function () {
             success: function (result) {
                 console.log(result)
                 $('#output').html("<p>Estimated journey time: " + result + " minutes</p>"
-                 /*   "<p>You will arrive at approximately:  " + googleResponse.routes[0].legs[0].arrival_time.text + "</p>"*/);
+                    /*   "<p>You will arrive at approximately:  " + googleResponse.routes[0].legs[0].arrival_time.text + "</p>"*/);
             },
 
             failure: function (result) {
@@ -451,6 +446,23 @@ $(function () {
     })
 })
 
+$(function () {
+    $('#autocomplete-toggle-event').change(function () {
+        if ($(this).prop('checked') == true) {
+            console.log('db handler')
+            new AutocompleteDirectionsHandler(map)
+            $('modal-body').html('dbAutocomplete');
+            // $('#autocomplete-toggle').html('<input form = "form" id="predictTime" class="form-control" ' +
+            //     'type="datetime-local" name="predict" required onclick="getForecast()">');
+        } else {
+            console.log('googs handler')
+            new AutocompleteDirectionsHandlerGoogle(map)
+            $('modal-body').html('google-input')
+
+            // $('#datetime-toggle').html('');
+        }
+    })
+})
 
 
 // function toggles between showing and hiding Dublin Bikes stations on the map

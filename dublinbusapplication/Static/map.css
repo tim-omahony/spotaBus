@@ -279,7 +279,7 @@ a:focus {
 /* Index page css */
 
 
-#holidayWidget{
+#holidayWidget {
     color: #fff;
     background-color: #ffcd4f;
     margin-left: 12px;
@@ -350,6 +350,11 @@ a:focus {
 #destination-input:focus {
     border-color: #4d90fe;
 }
+
+.pac-container {
+    z-index: 10000 !important;
+}
+
 
 #mode-selector {
     color: #fff;
@@ -471,8 +476,8 @@ a:focus {
 
 }
 
-#origin-toggle, #date-toggle, #bike-toggle{
-    margin-top:20px;
-    margin-bottom:5px;
-    margin-left:20px;
+#origin-toggle, #date-toggle, #bike-toggle {
+    margin-top: 20px;
+    margin-bottom: 5px;
+    margin-left: 20px;
 }

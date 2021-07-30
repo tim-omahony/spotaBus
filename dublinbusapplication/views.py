@@ -3,9 +3,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import User
 from dublinbusapplication.predictive_model.get_prediction import *
-from .models import Stop, Bikes, FavouriteJourney, user
+from .models import Stop, Bikes, FavouriteJourney
 
 
 def index(request):
@@ -102,7 +101,6 @@ def add_favourite_route(request):
     print('request is', request)
     if request.method == 'POST':
         if request.POST.get('users_origin_stop') and request.POST.get('users_dest_stop'):
-            # user = User.objects.get(id=request.session['_auth_user_id'])
             fav_journey = FavouriteJourney()
             fav_journey.users_origin_stop = request.POST.get('users_origin_stop')
             fav_journey.users_dest_stop = request.POST.get('users_dest_stop')
