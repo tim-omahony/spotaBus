@@ -439,6 +439,13 @@ function saveRoute() {
     })
 }
 
+function fillFavRoute(){
+
+}
+
+
+
+
 // function to provide date time picker if the user wants to plan a journey in the future
 $(function () {
     $('#date-toggle-event').change(function () {
