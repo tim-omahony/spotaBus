@@ -13,4 +13,5 @@ urlpatterns = [
     path('predict/', predict, name='predict'),
     path('add_favourite_route/', add_favourite_route, name="add_favourite_route"),
     path('userPage/', views.userPage, name="userPage"),
+    path('dist/', distance, name='distance')
 ]

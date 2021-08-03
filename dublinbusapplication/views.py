@@ -3,14 +3,20 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import User
 from dublinbusapplication.predictive_model.get_prediction import *
-from .models import Stop, Bikes, FavouriteJourney, user
+from .models import Stop, Bikes, FavouriteJourney
+from math import cos, asin, sqrt
 
 
 def index(request):
     render_stops = Stop.objects.all().values()
     render_bike_stations = Bikes.objects.all().values()
+    stop = Stop.objects.all.values()
+    start_stop_lat = (request.POST.get('start_stop_lat'))
+    start_stop_lon = (request.POST.get('start_stop_lon'))
+    v = {'lat': start_stop_lat, 'lon': start_stop_lon}
+    print(JsonResponse(closest(stop, v)))
+
     return render(request, 'index.html', {'stops': list(render_stops), 'stations': list(render_bike_stations)})
 
 
@@ -35,7 +41,8 @@ def predict(request):
         stops_dict = get_route(stops_sequence, route)
         print(stops_dict)
         result = int(
-            prediction(route, hour, day, month, start_stop_id, end_stop_id, wind_speed, temp, humidity, weather_main,
+            prediction(route, hour, day, month, start_stop_id, end_stop_id, wind_speed, temp, humidity,
+                       weather_main,
                        stops_dict))
         print(result)
         return JsonResponse(result, safe=False)
@@ -48,6 +55,7 @@ def about(request):
 
 def contact(request):
     return render(request, 'contact.html')
+
 
 def registerPage(request):
     if request.user.is_authenticated:
@@ -104,11 +112,29 @@ def add_favourite_route(request):
             fav_journey.user_id = request.session['_auth_user_id']
             fav_journey.save()
 
-        return JsonResponse({'message': 'Successfully saved you beautiful human beaing'})
+        return JsonResponse({'message': 'Successfully saved you beautiful human being'})
 
 
 def userPage(request):
     return render(request, 'userpage.html')
 
 
+def distance(request):
+    start_stop_lat = (request.POST.get('start_stop_lat'))
+    end_stop_lat = (request.POST.get('end_stop_lat'))
+    start_stop_lon = (request.POST.get('start_stop_lon'))
+    end_stop_lon = (request.POST.get('end_stop_lon'))
+    p = 0.017453292519943295
+    hav = 0.5 - cos((end_stop_lat - start_stop_lat) * p) / 2 + cos(start_stop_lat * p) * cos(end_stop_lat * p) * (
+            1 - cos((end_stop_lon - start_stop_lon) * p)) / 2
+    return 12742 * asin(sqrt(hav))
 
+
+def closest(data, v):
+    return min(data, key=lambda p: distance(v['start_stop_lat'], v['start_stop_lon'], p['end_stop_lat'],
+                                            p['end_stop_lon']))
+
+# stop = Stop.objects.all.values()
+# v = {'lat': start_stop_lat, 'lon': start_stop_lon}
+#
+# print(JsonResponse(closest(stop, v)))

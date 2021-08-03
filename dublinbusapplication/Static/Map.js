@@ -20,6 +20,9 @@ let currentWeather;
 let googleResponse;
 let enableFav;
 let RouteShortname;
+let googleHandler;
+let dbAutocomplete;
+
 // function to render the map on the main application page
 
 function initMap() {
@@ -67,43 +70,40 @@ function formattedDate() {
 }
 
 function publicHolidayChecker() {
-  fetch('https://www.googleapis.com/calendar/v3/calendars/en.irish%23holiday%40group.v.calendar.google.com/events?key=AIzaSyBpmxEf_9hpbApu3UhIu8jY41LDdgPFkqc').then((response) => {
-  if (response.ok) {
-    console.log('public holiday json retrieved successfully');
-    return response.json();
-  } else {
-    throw new Error('Something went wrong');
-  }
-})
-.then((responseJson) => {
-  // Do something with the response
-  var holidays = [];
+    fetch('https://www.googleapis.com/calendar/v3/calendars/en.irish%23holiday%40group.v.calendar.google.com/events?key=AIzaSyBpmxEf_9hpbApu3UhIu8jY41LDdgPFkqc').then((response) => {
+        if (response.ok) {
+            console.log('public holiday json retrieved successfully');
+            return response.json();
+        } else {
+            throw new Error('Something went wrong');
+        }
+    })
+        .then((responseJson) => {
+            // Do something with the response
+            var holidays = [];
 
 
+            for (var i = 0; i < responseJson.items.length; i++) {
+                holidays.push([responseJson.items[i].start.date, responseJson.items[i].summary]);
+            }
 
-  for (var i=0; i < responseJson.items.length; i++) {
-    holidays.push([responseJson.items[i].start.date, responseJson.items[i].summary]);
-  }
+            console.log(holidays);
 
-  console.log(holidays);
+            for (let item of holidays) {
+                if (item[0] === formattedDate()) {
 
-  for (let item of holidays) {
-  if (item[0] === formattedDate()) {
-
-    document.getElementById("holidayWidget").innerHTML ="Please be advised today is`"+item[1]+ ", bus schedules may be affected.";
-    document.getElementById("holidayWidget").style.visibility = "visible";
-    break;
-  }
-  }
+                    document.getElementById("holidayWidget").innerHTML = "Please be advised today is`" + item[1] + ", bus schedules may be affected.";
+                    document.getElementById("holidayWidget").style.visibility = "visible";
+                    break;
+                }
+            }
 
 
-})
-.catch((error) => {
-  console.log(error)
-});
+        })
+        .catch((error) => {
+            console.log(error)
+        });
 }
-
-
 
 
 publicHolidayChecker();
@@ -130,20 +130,8 @@ function DistanceMatrix() {
         avoidHighways: false,
         avoidTolls: false,
     };
-
-    // document.getElementById("request").innerText = JSON.stringify(
-    //     request,
-    //     null,
-    //     2
-    // );
     // get distance matrix response
     service.getDistanceMatrix(request).then((response) => {
-        // put response
-        // document.getElementById("response").innerText = JSON.stringify(
-        //     response,
-        //     null,
-        //     2
-        // );
         // show on map
         const originList = response.originAddresses;
         const destinationList = response.destinationAddresses;
@@ -332,13 +320,15 @@ class AutocompleteDirectionsHandler {
 
                         var Transit_Type = response.routes[0].legs[0].steps[y].travel_mode;
 
-                        if (Transit_Type == "TRANSIT") {
+                        if (Transit_Type === "TRANSIT") {
                             var route_dict = {};
                             RouteShortname = response.routes[0].legs[0].steps[y].transit.line.short_name;
                             route_dict['route'] = RouteShortname;
                             steps_array.push(route_dict);
-                            }
                         }
+                    }
+                    console.log('googs', response)
+                    console.log('lat', response.routes[0].legs[0].start_location.lat(), 'lng', response.routes[0].legs[0].start_location.lng())
                     console.log(steps_array)
 
                 } else {
@@ -464,6 +454,10 @@ $(document).ready(function () {
                     weather_main: currentWeather.responseJSON.weather[0].main,
                     start_stop_id: originStop.stop_id,
                     end_stop_id: destinationStop.stop_id,
+                    start_stop_lat: originStop.stop_lat,
+                    start_stop_lon: originStop.stop_lon,
+                    end_stop_lat: destinationStop.stop_lat,
+                    end_stop_lon: destinationStop.stop_lon,
                     csrfmiddlewaretoken,
                     dataType: "json",
                 },
@@ -472,7 +466,7 @@ $(document).ready(function () {
             success: function (result) {
                 console.log(result)
                 $('#output').html("<p>Estimated journey time: " + result + " minutes</p>"
-                 /*   "<p>You will arrive at approximately:  " + googleResponse.routes[0].legs[0].arrival_time.text + "</p>"*/);
+                    /*   "<p>You will arrive at approximately:  " + googleResponse.routes[0].legs[0].arrival_time.text + "</p>"*/);
             },
 
             failure: function (result) {
@@ -523,15 +517,17 @@ $(function () {
         if ($(this).prop('checked') == true) {
             console.log('db handler')
             new AutocompleteDirectionsHandler(map)
-            $('modal-body').html('dbAutocomplete');
-            // $('#autocomplete-toggle').html('<input form = "form" id="predictTime" class="form-control" ' +
-            //     'type="datetime-local" name="predict" required onclick="getForecast()">');
+            // $('modal-body').html('dbAutocomplete')
+            googleHandler = document.getElementById('google-input');
+            dbAutocomplete = document.getElementById('dbAutocomplete');
+            googleHandler.style.display = "block";
+            dbAutocomplete.style.display = "hidden"
         } else {
             console.log('googs handler')
             new AutocompleteDirectionsHandlerGoogle(map)
-            $('modal-body').html('google-input')
-
-            // $('#datetime-toggle').html('');
+            // $('modal-body').html('google-input')
+            dbAutocomplete.style.display = "block";
+            googleHandler.style.display = "hidden";
         }
     })
 })
