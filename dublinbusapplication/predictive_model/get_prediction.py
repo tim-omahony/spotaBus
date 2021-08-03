@@ -2,6 +2,7 @@ import pandas as pd
 import pickle
 import os
 import json
+from math import cos, asin, sqrt
 
 # added in this filePath method to find the right path to the pkl files because it couldn't find them before
 def filePath(filename):
@@ -55,6 +56,14 @@ def direction(start, end, stops):
         if start in value and end in value:
             return key
 
+
+def distance(lat1, lon1, lat2, lon2):
+    p = 0.017453292519943295
+    hav = 0.5 - cos((lat2-lat1)*p)/2 + cos(lat1*p)*cos(lat2*p) * (1-cos((lon2-lon1)*p)) / 2
+    return 12742 * asin(sqrt(hav))
+
+def closest(data, v):
+    return min(data, key=lambda p: distance(v['lat'],v['lon'],p['lat'],p['lon']))
 
 def prediction(route, hour, day, month, start_stop_id, end_stop_id, wind_speed, temp, humidity, weather_main,
                stops):

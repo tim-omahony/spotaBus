@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from dublinbusapplication.predictive_model.get_prediction import *
 from .models import Stop, Bikes, FavouriteJourney
-from math import cos, asin, sqrt
+
 
 
 def index(request):
@@ -17,7 +17,24 @@ def index(request):
 
 # ajax_posting function
 def predict(request):
+    stop = Stop.objects.all().values()
+    start_stop_lat = float(request.POST.get('start_stop_lat'))
+    end_stop_lat = float(request.POST.get('end_stop_lat'))
+    start_stop_lon = float(request.POST.get('start_stop_lon'))
+    end_stop_lon = float(request.POST.get('end_stop_lon'))
+
+
+    tempDataList = [{'lat': 39.7612992, 'lon': -86.1519681},
+                    {'lat': 39.762241, 'lon': -86.158436},
+                    {'lat': 39.7622292, 'lon': -86.1578917}]
+
+    v = {'lat': start_stop_lat, 'lon': start_stop_lon}
+
+    print(closest(tempDataList, v))
+
+    print(start_stop_lat,end_stop_lat,start_stop_lon,end_stop_lon)
     if request.is_ajax():
+
         route = (request.POST.get('route'))
         hour = int(float(request.POST.get('hour')))
         day = int(float(request.POST.get('day')))
@@ -32,6 +49,7 @@ def predict(request):
         # converting the start and stop ids to the required format
         start_stop_id = int(start_stop_id[len(start_stop_id) - 5:])
         end_stop_id = int(end_stop_id[len(end_stop_id) - 5:])
+
 
         stops_dict = get_route(stops_sequence, route)
         print(stops_dict)
@@ -114,26 +132,15 @@ def userPage(request):
     return render(request, 'userpage.html')
 
 
-def closest(data, v, request):
-    stop = Stop.objects.all.values()
-    start_stop_lon = (request.POST.get('start_stop_lon'))
-    start_stop_lat = (request.POST.get('start_stop_lat'))
-
-    v = {'lat': start_stop_lat, 'lon': start_stop_lon}
-    return (
-        min(data, key=lambda p: distance(request, v['lat'], v['lon'], p['lat'], p['lon'])),
-        JsonResponse(closest(stop, v, request)))
 
 
-def distance(request, start_stop_lat, start_stop_lon, end_stop_lat, end_stop_lon):
-    start_stop_lat = (request.POST.get('start_stop_lat'))
-    end_stop_lat = (request.POST.get('end_stop_lat'))
-    start_stop_lon = (request.POST.get('start_stop_lon'))
-    end_stop_lon = (request.POST.get('end_stop_lon'))
-    p = 0.017453292519943295
-    hav = 0.5 - cos((end_stop_lat - start_stop_lat) * p) / 2 + cos(start_stop_lat * p) * cos(end_stop_lat * p) * (
-            1 - cos((end_stop_lon - start_stop_lon) * p)) / 2
-    return 12742 * asin(sqrt(hav))
+
+
+
+
+
+
+
 
 # stop = Stop.objects.all.values()
 # v = {'lat': start_stop_lat, 'lon': start_stop_lon}
