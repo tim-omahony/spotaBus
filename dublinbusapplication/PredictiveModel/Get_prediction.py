@@ -6,9 +6,9 @@ Weather_Main = 'Rain'
 stops = [1730, 1731, 1732, 1733, 1650, 1652, 5141, 1773, 1774, 1651, 4784, 608, 4791, 4792, 1196,
          1197, 4473, 250, 251, 4597, 255, 218, 219, 220, 221, 222, 223, 224, 225, 226, 114, 1645, 1646, 7571]
 
-def prediction(Hour, Day, Month, Start_Stop_ID, End_Stop_ID, Temp, Weather_Main, stops):
 
-    journey_stops = stops[stops.index(Start_Stop_ID):stops.index(End_Stop_ID)+1]
+def prediction(Hour, Day, Month, Start_Stop_ID, End_Stop_ID, Temp, Weather_Main, stops):
+    journey_stops = stops[stops.index(Start_Stop_ID):stops.index(End_Stop_ID) + 1]
 
     prediction_df = pd.DataFrame(journey_stops, columns=['STOPPOINTID'])
     prediction_df['NEXT_STOPPOINTID'] = prediction_df['STOPPOINTID'].shift(-1)
@@ -45,6 +45,6 @@ def prediction(Hour, Day, Month, Start_Stop_ID, End_Stop_ID, Temp, Weather_Main,
 
     y_pred_linear = model.predict(final_df_for_predict)
 
-    final_prediction = sum(y_pred_linear)/60
+    final_prediction = sum(y_pred_linear) / 60
 
     return final_prediction

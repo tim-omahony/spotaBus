@@ -3,20 +3,46 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import User
 from dublinbusapplication.predictive_model.get_prediction import *
-from .models import Stop, Bikes, FavouriteJourney, user
+from .models import Stop, Bikes, FavouriteJourney
+
 
 
 def index(request):
     render_stops = Stop.objects.all().values()
     render_bike_stations = Bikes.objects.all().values()
+
     return render(request, 'index.html', {'stops': list(render_stops), 'stations': list(render_bike_stations)})
 
 
 # ajax_posting function
 def predict(request):
+    stop = Stop.objects.all().values()
+    start_stop_lat = float(request.POST.get('start_stop_lat'))
+    end_stop_lat = float(request.POST.get('end_stop_lat'))
+    start_stop_lon = float(request.POST.get('start_stop_lon'))
+    end_stop_lon = float(request.POST.get('end_stop_lon'))
+
+    data_list = []
+    for item in stop:
+        adict = {'id': item['stop_id'], 'lat': item['stop_lat'], 'lon': item['stop_lon']}
+        data_list.append(adict)
+
+    start_stop = {'lat': start_stop_lat, 'lon': start_stop_lon}
+    end_stop = {'lat': end_stop_lat, 'lon': end_stop_lon}
+
+    closest_start_id = (closest(data_list, start_stop))
+    closest_end_id = (closest(data_list, end_stop))
+
+
+    start_id_full = closest_start_id['id']
+    end_id_full = closest_end_id['id']
+
+
+
+    print(start_stop_lat,end_stop_lat,start_stop_lon,end_stop_lon)
     if request.is_ajax():
+
         route = (request.POST.get('route'))
         hour = int(float(request.POST.get('hour')))
         day = int(float(request.POST.get('day')))
@@ -24,18 +50,19 @@ def predict(request):
         wind_speed = int(float(request.POST.get('wind_speed')))
         humidity = int(float(request.POST.get('humidity')))
         temp = int(float(request.POST.get('temp')) - 273)
-        start_stop_id = (request.POST.get('start_stop_id'))
-        end_stop_id = (request.POST.get('end_stop_id'))
         weather_main = (request.POST.get('weather_main'))
 
         # converting the start and stop ids to the required format
-        start_stop_id = int(start_stop_id[len(start_stop_id) - 5:])
-        end_stop_id = int(end_stop_id[len(end_stop_id) - 5:])
+        start_stop_id = int(start_id_full[len(start_id_full) - 5:])
+        end_stop_id = int(end_id_full[len(end_id_full) - 5:])
 
+        print("ids", start_stop_id, end_stop_id)
         stops_dict = get_route(stops_sequence, route)
         print(stops_dict)
+        print
         result = int(
-            prediction(route, hour, day, month, start_stop_id, end_stop_id, wind_speed, temp, humidity, weather_main,
+            prediction(route, hour, day, month, start_stop_id, end_stop_id, wind_speed, temp, humidity,
+                       weather_main,
                        stops_dict))
         print(result)
         return JsonResponse(result, safe=False)
@@ -48,6 +75,7 @@ def about(request):
 
 def contact(request):
     return render(request, 'contact.html')
+
 
 def registerPage(request):
     if request.user.is_authenticated:
@@ -104,7 +132,7 @@ def add_favourite_route(request):
             fav_journey.user_id = request.session['_auth_user_id']
             fav_journey.save()
 
-        return JsonResponse({'message': 'Successfully saved you beautiful human beaing'})
+        return JsonResponse({'message': 'Successfully saved you beautiful human being'})
 
 
 def userPage(request):
@@ -112,3 +140,16 @@ def userPage(request):
 
 
 
+
+
+
+
+
+
+
+
+
+# stop = Stop.objects.all.values()
+# v = {'lat': start_stop_lat, 'lon': start_stop_lon}
+#
+# print(JsonResponse(closest(stop, v)))
