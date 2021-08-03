@@ -11,11 +11,6 @@ from math import cos, asin, sqrt
 def index(request):
     render_stops = Stop.objects.all().values()
     render_bike_stations = Bikes.objects.all().values()
-    stop = Stop.objects.all.values()
-    start_stop_lat = (request.POST.get('start_stop_lat'))
-    start_stop_lon = (request.POST.get('start_stop_lon'))
-    v = {'lat': start_stop_lat, 'lon': start_stop_lon}
-    print(JsonResponse(closest(stop, v)))
 
     return render(request, 'index.html', {'stops': list(render_stops), 'stations': list(render_bike_stations)})
 
@@ -119,7 +114,18 @@ def userPage(request):
     return render(request, 'userpage.html')
 
 
-def distance(request):
+def closest(data, v, request):
+    stop = Stop.objects.all.values()
+    start_stop_lon = (request.POST.get('start_stop_lon'))
+    start_stop_lat = (request.POST.get('start_stop_lat'))
+
+    v = {'lat': start_stop_lat, 'lon': start_stop_lon}
+    return (
+        min(data, key=lambda p: distance(request, v['lat'], v['lon'], p['lat'], p['lon'])),
+        JsonResponse(closest(stop, v, request)))
+
+
+def distance(request, start_stop_lat, start_stop_lon, end_stop_lat, end_stop_lon):
     start_stop_lat = (request.POST.get('start_stop_lat'))
     end_stop_lat = (request.POST.get('end_stop_lat'))
     start_stop_lon = (request.POST.get('start_stop_lon'))
@@ -128,11 +134,6 @@ def distance(request):
     hav = 0.5 - cos((end_stop_lat - start_stop_lat) * p) / 2 + cos(start_stop_lat * p) * cos(end_stop_lat * p) * (
             1 - cos((end_stop_lon - start_stop_lon) * p)) / 2
     return 12742 * asin(sqrt(hav))
-
-
-def closest(data, v):
-    return min(data, key=lambda p: distance(v['start_stop_lat'], v['start_stop_lon'], p['end_stop_lat'],
-                                            p['end_stop_lon']))
 
 # stop = Stop.objects.all.values()
 # v = {'lat': start_stop_lat, 'lon': start_stop_lon}
