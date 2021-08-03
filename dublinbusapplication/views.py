@@ -23,14 +23,22 @@ def predict(request):
     start_stop_lon = float(request.POST.get('start_stop_lon'))
     end_stop_lon = float(request.POST.get('end_stop_lon'))
 
+    data_list = []
+    for item in stop:
+        adict = {'id': item['stop_id'], 'lat': item['stop_lat'], 'lon': item['stop_lon']}
+        data_list.append(adict)
 
-    tempDataList = [{'lat': 39.7612992, 'lon': -86.1519681},
-                    {'lat': 39.762241, 'lon': -86.158436},
-                    {'lat': 39.7622292, 'lon': -86.1578917}]
+    start_stop = {'lat': start_stop_lat, 'lon': start_stop_lon}
+    end_stop = {'lat': end_stop_lat, 'lon': end_stop_lon}
 
-    v = {'lat': start_stop_lat, 'lon': start_stop_lon}
+    closest_start_id = (closest(data_list, start_stop))
+    closest_end_id = (closest(data_list, end_stop))
 
-    print(closest(tempDataList, v))
+
+    start_id_full = closest_start_id['id']
+    end_id_full = closest_end_id['id']
+
+
 
     print(start_stop_lat,end_stop_lat,start_stop_lon,end_stop_lon)
     if request.is_ajax():
@@ -42,17 +50,16 @@ def predict(request):
         wind_speed = int(float(request.POST.get('wind_speed')))
         humidity = int(float(request.POST.get('humidity')))
         temp = int(float(request.POST.get('temp')) - 273)
-        start_stop_id = (request.POST.get('start_stop_id'))
-        end_stop_id = (request.POST.get('end_stop_id'))
         weather_main = (request.POST.get('weather_main'))
 
         # converting the start and stop ids to the required format
-        start_stop_id = int(start_stop_id[len(start_stop_id) - 5:])
-        end_stop_id = int(end_stop_id[len(end_stop_id) - 5:])
+        start_stop_id = int(start_id_full[len(start_id_full) - 5:])
+        end_stop_id = int(end_id_full[len(end_id_full) - 5:])
 
-
+        print("ids", start_stop_id, end_stop_id)
         stops_dict = get_route(stops_sequence, route)
         print(stops_dict)
+        print
         result = int(
             prediction(route, hour, day, month, start_stop_id, end_stop_id, wind_speed, temp, humidity,
                        weather_main,

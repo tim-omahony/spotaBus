@@ -19,12 +19,12 @@ def filePath(filename):
 # currently the route and stops sequence dictionary are hard coded
 # but these will be retrieved from the google response and a static JSON file
 
-f = open(filePath('Stop_sequences_full.json'))
+f = open(filePath('Stop_sequences_full_current.json'))
 stops_sequence = json.load(f)
 
 def get_route(stops_sequence, bus_route):
     route_dict = {}
-    for i in range(1, 3):
+    for i in range(0, 2):
 
         if (bus_route + "_{}".format(i)) in stops_sequence:
 
@@ -112,6 +112,13 @@ def prediction(route, hour, day, month, start_stop_id, end_stop_id, wind_speed, 
 
     y_pred_linear = model.predict(final_df_for_predict)
 
-    final_prediction = sum(y_pred_linear) / 60
+    # remove any predictions that are way off due to the new stop sequence data being used
+    # take the average journey time between all other stops and replace the incorrect prediction with this value
+
+    good_array = [item for item in y_pred_linear if item < 400 and item > 0]
+    average = sum(good_array) / len(good_array)
+    good_pred = [average if test > 400 or test < 0 else test for test in y_pred_linear]
+
+    final_prediction = sum(good_pred) / 60
 
     return final_prediction
