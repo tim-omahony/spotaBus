@@ -7,17 +7,17 @@ from dublinbusapplication.predictive_model.get_prediction import *
 from .models import Stop, Bikes, FavouriteJourney
 
 
-
 def index(request):
-    render_stops = Stop.objects.all().values()
+    stops = Stop.objects.all().values()
     render_bike_stations = Bikes.objects.all().values()
+    fave_routes = FavouriteJourney.objects.all().values()
 
-    return render(request, 'index.html', {'stops': list(render_stops), 'stations': list(render_bike_stations)})
+    return render(request, 'index.html', {'stops': list(stops), 'stations': list(render_bike_stations),
+                                          'fave_routes': list(fave_routes)})
 
 
 # ajax_posting function
 def predict(request):
-
     try:
         stop = Stop.objects.all().values()
         journey_steps = json.loads(request.POST["steps_array"])
@@ -49,7 +49,6 @@ def predict(request):
                 end_id_full = closest_end_id['id']
 
                 if request.is_ajax():
-
                     hour = int(float(request.POST.get('hour')))
                     day = int(float(request.POST.get('day')))
                     month = int(float(request.POST.get('month')))
@@ -82,12 +81,10 @@ def predict(request):
 
         for item in journey_steps:
             if item["transit_type"] == "TRANSIT":
-                google_time = int(item["Google_Journey_time"]/60)
+                google_time = int(item["Google_Journey_time"] / 60)
                 google_time_result.append(google_time)
 
-
         return JsonResponse(sum(google_time_result), safe=False)
-
 
 
 def about(request):
@@ -151,6 +148,7 @@ def add_favourite_route(request):
             fav_journey.users_origin_stop = request.POST.get('users_origin_stop')
             fav_journey.users_dest_stop = request.POST.get('users_dest_stop')
             fav_journey.user_id = request.session['_auth_user_id']
+            # fav_journey.user = request.user.username
             fav_journey.save()
 
         return JsonResponse({'message': 'Successfully saved you beautiful human being'})
@@ -158,17 +156,6 @@ def add_favourite_route(request):
 
 def userPage(request):
     return render(request, 'userpage.html')
-
-
-
-
-
-
-
-
-
-
-
 
 # stop = Stop.objects.all.values()
 # v = {'lat': start_stop_lat, 'lon': start_stop_lon}

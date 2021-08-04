@@ -87,6 +87,7 @@ class FavouriteJourney(models.Model):
     users_origin_stop = models.CharField(max_length=200)
     users_dest_stop = models.CharField(max_length=200)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    username = models.CharField(max_length=200, primary_key=True)
 
     def __str__(self):
         return f"Route: {self.users_origin_stop} to stop {self.users_dest_stop}"
