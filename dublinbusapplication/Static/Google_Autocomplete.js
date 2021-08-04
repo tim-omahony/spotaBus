@@ -53,6 +53,7 @@ function initMap() {
     });
     Geolocation();
     new AutocompleteDirectionsHandler(map);
+
 }
 
 function attachInstructionText(stepDisplay, marker, text, map) {
@@ -114,6 +115,63 @@ function publicHolidayChecker() {
 
 publicHolidayChecker();
 
+function DistanceMatrix() {
+    const bounds = new google.maps.LatLngBounds();
+    const markersArray = [];
+
+    const geocoder = new google.maps.Geocoder();
+    const service = new google.maps.DistanceMatrixService();
+
+
+    // build request
+    // const origin1 = pos;
+    const origin1 = {lat: 53.349804, lng: -6.260310}
+    const origin2 = "Your Location";
+    const destinationA = "Stockholm, Sweden";
+    const destinationB = {lat: 55.93, lng: -3.120};
+    const request = {
+        origins: [origin1, origin2],
+        destinations: [destinationA, destinationB],
+        travelMode: google.maps.TravelMode.DRIVING,
+        unitSystem: google.maps.UnitSystem.METRIC,
+        avoidHighways: false,
+        avoidTolls: false,
+    };
+    // get distance matrix response
+    service.getDistanceMatrix(request).then((response) => {
+        // show on map
+        const originList = response.originAddresses;
+        const destinationList = response.destinationAddresses;
+        // deleteMarkers(markersArray);
+
+        const showGeocodedAddressOnMap = (asDestination) => {
+            const handler = ({results}) => {
+                map.fitBounds(bounds.extend(results[0].geometry.location));
+                markersArray.push(
+                    new google.maps.Marker({
+                        map,
+                        position: results[0].geometry.location,
+                        label: asDestination ? "D" : "O",
+                    })
+                );
+            };
+            return handler;
+        };
+
+        for (let i = 0; i < originList.length; i++) {
+            const results = response.rows[i].elements;
+            geocoder
+                .geocode({address: originList[i]})
+                .then(showGeocodedAddressOnMap(false));
+
+            for (let j = 0; j < results.length; j++) {
+                geocoder
+                    .geocode({address: destinationList[j]})
+                    .then(showGeocodedAddressOnMap(true));
+            }
+        }
+    });
+}
 
 // this function returns the location of the user as a point on the map
 
@@ -200,68 +258,57 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
 
 class AutocompleteDirectionsHandler {
     map;
-    originPlaceId;
-    destinationPlaceId;
+    originId;
+    destinationId;
     travelMode;
     directionsService;
     directionsRenderer;
 
+    // constructors based on the origin and destination inputs provided to the application
+
     constructor(map) {
         this.map = map;
-        this.originPlaceId = "";
-        this.destinationPlaceId = "";
+        this.originId = "";
+        this.destinationId = "";
+        // travel mode TRANSIT means that buses will be used as the desired mode of travel
         this.travelMode = google.maps.TravelMode.TRANSIT;
         this.directionsService = new google.maps.DirectionsService();
         this.directionsRenderer = new google.maps.DirectionsRenderer();
         this.directionsRenderer.setMap(map);
-        const options = {
-            componentRestrictions: {country: "ie"}
-        };
+
+        // retrieves the origin and destination stops from index.html
         const originInput = document.getElementById("origin-input");
         const destinationInput = document.getElementById("destination-input");
-        const originAutocomplete = new google.maps.places.Autocomplete(originInput,options);
-        // Specify just the place data fields that you need.
-        originAutocomplete.setFields(["place_id"]);
-        const destinationAutocomplete = new google.maps.places.Autocomplete(
-            destinationInput,options
-        );
-
-
-        this.setupPlaceChangedListener(originAutocomplete, "ORIG");
-        this.setupPlaceChangedListener(destinationAutocomplete, "DEST");
+        this.setupStopChangeListener(originInput, "ORIG");
+        this.setupStopChangeListener(destinationInput, "DEST");
     }
 
-
     // provides the route between two given stops
-
-    setupPlaceChangedListener(autocomplete, mode) {
-        autocomplete.bindTo("bounds", this.map);
-        autocomplete.addListener("place_changed", () => {
-            const place = autocomplete.getPlace();
-
-            if (!place.place_id) {
-                window.alert("Please select an option from the dropdown list.");
-                return;
-            }
-
+    setupStopChangeListener(selectElement, mode) {
+        selectElement.addEventListener('change', (event) => {
             if (mode === "ORIG") {
-                this.originPlaceId = place.place_id;
+                this.originId = event.target.value;
             } else {
-                this.destinationPlaceId = place.place_id;
+                this.destinationId = event.target.value;
             }
             this.route();
         });
     }
 
+    // the route function uses the Google directions API to find the route between two given stations
+
     route() {
-        if (!this.originPlaceId || !this.destinationPlaceId) {
+        if (!this.originId || !this.destinationId) {
             return;
         }
-        const me = this;
+        originStop = stops.find(stop => stop.stop_name === (this.originId));
+        destinationStop = stops.find(stop => stop.stop_name === (this.destinationId));
+        console.log({originStop, destinationStop});
+
         this.directionsService.route(
             {
-                origin: {placeId: this.originPlaceId},
-                destination: {placeId: this.destinationPlaceId},
+                origin: {lat: originStop.stop_lat, lng: originStop.stop_lon},
+                destination: {lat: destinationStop.stop_lat, lng: destinationStop.stop_lon},
                 travelMode: 'TRANSIT',
                 transitOptions: {
                     modes: ['BUS'],
@@ -272,7 +319,7 @@ class AutocompleteDirectionsHandler {
 
             (response, status) => {
                 if (status === "OK") {
-                    me.directionsRenderer.setDirections(response);
+                    this.directionsRenderer.setDirections(response);
 
                     var Steps = response.routes[0].legs[0].steps.length;
                     steps_array = [];
@@ -323,6 +370,85 @@ class AutocompleteDirectionsHandler {
     }
 }
 
+
+class AutocompleteDirectionsHandlerGoogle {
+    map;
+    originPlaceIdGoogle;
+    destinationPlaceIdGoogle;
+    directionsService;
+    directionsRenderer;
+
+    constructor(map) {
+        this.map = map;
+        this.originPlaceIdGoogle = "";
+        this.destinationPlaceIdGoogle = "";
+        this.directionsService = new google.maps.DirectionsService();
+        this.directionsRenderer = new google.maps.DirectionsRenderer();
+        this.directionsRenderer.setMap(map);
+        const options = {
+            componentRestrictions: {country: "ie"},
+            fields: ["formatted_address", "geometry", "name"],
+            strictBounds: false,
+        };
+        const originInputGoogle = document.getElementById("origin-input-google");
+        console.log({originInputGoogle})
+        const destinationInputGoogle = document.getElementById("destination-input-google");
+        const originAutocomplete = new google.maps.places.Autocomplete(originInputGoogle, options);
+        console.log({originAutocomplete})
+        // Specify just the place data fields that you need.
+        originAutocomplete.setFields(["place_id"]);
+        const destinationAutocomplete = new google.maps.places.Autocomplete(
+            destinationInputGoogle, options
+        );
+        // Specify just the place data fields that you need.
+        destinationAutocomplete.setFields(["place_id"]);
+
+        this.setupPlaceChangedListener(originAutocomplete, "ORIGOOGLE");
+        this.setupPlaceChangedListener(destinationAutocomplete, "DESTGOOGLE");
+    }
+
+    setupPlaceChangedListener(autocomplete, mode) {
+        console.log('in here')
+        autocomplete.bindTo("bounds", this.map);
+        autocomplete.addListener("place_changed", () => {
+            const place = autocomplete.getPlace();
+            console.log('place is', place)
+
+            if (!place.place_id) {
+                window.alert("Please select an option from the dropdown list.");
+                return;
+            }
+            console.log({mode})
+            if (mode === "ORIGOOGLE") {
+                console.log('In here orig')
+                this.originPlaceIdGoogle = place.place_id;
+            } else if (mode === "DESTGOOGLE") {
+                this.destinationPlaceIdGoogle = place.place_id;
+            }
+            this.route();
+        });
+    }
+
+    route() {
+        if (!this.originPlaceIdGoogle || !this.destinationPlaceIdGoogle) {
+            return;
+        }
+        const me = this;
+        this.directionsService.route(
+            {
+                origin: {placeId: this.originPlaceIdGoogle},
+                destination: {placeId: this.destinationPlaceIdGoogle}
+            },
+            (response, status) => {
+                if (status === "OK") {
+                    me.directionsRenderer.setDirections(response);
+                } else {
+                    window.alert("Directions request failed due to " + status);
+                }
+            }
+        );
+    }
+}
 
 // function to retrieve the most recent weather update from openweathermap
 function getWeather() {
@@ -418,6 +544,26 @@ $(function () {
                 'type="datetime-local" name="predict" required onclick="getForecast()">');
         } else {
             $('#datetime-toggle').html('');
+        }
+    })
+})
+
+$(function () {
+    $('#autocomplete-toggle-event').change(function () {
+        if ($(this).prop('checked') == true) {
+            console.log('db handler')
+            new AutocompleteDirectionsHandler(map)
+            // $('modal-body').html('dbAutocomplete')
+            googleHandler = document.getElementById('google-input');
+            dbAutocomplete = document.getElementById('dbAutocomplete');
+            googleHandler.style.display = "block";
+            dbAutocomplete.style.display = "hidden"
+        } else {
+            console.log('googs handler')
+            new AutocompleteDirectionsHandlerGoogle(map)
+            // $('modal-body').html('google-input')
+            dbAutocomplete.style.display = "block";
+            googleHandler.style.display = "hidden";
         }
     })
 })

@@ -42,20 +42,22 @@
                                list="originList"
                                type="text"
                                placeholder="Enter an origin location"/>
-                        <datalist id="originList">{% for stop in stops %}
+
+{% comment %}                        <datalist id="originList">{% for stop in stops %}
                             <option value="{{ stop.stop_name }}"/>
                         {% endfor %}}
-                        </datalist>
+                        </datalist>{% endcomment %}
 
                         <input id="destination-input"
                                class="controls"
                                list="destinationList"
                                type="text"
                                placeholder="Enter a destination location"/>
-                        <datalist id="destinationList"> {% for stop in stops %}
+                                                <datalist id="destinationList"> {% for stop in stops %}
                             <option value="{{ stop.stop_name }}"/>
                         {% endfor %}
                         </datalist>
+
                     </div>
                     <div class="pac-container" id="google-input" style="display: none">
                         <input
@@ -72,10 +74,10 @@
                                 placeholder="Enter a destination location"
                         />
                     </div>
-                    <div id="autocomplete-toggle">Search by location / Search by bus stop <input
+                    {% comment %}                    <div id="autocomplete-toggle">Search by location / Search by bus stop <input
                             id="autocomplete-toggle-event"
                             type="checkbox" data-toggle="toggle" data-on="place"
-                            data-off="stop" data-width="100" data-onstyle="info" data-offstyle="success"></div>
+                            data-off="stop" data-width="100" data-onstyle="info" data-offstyle="success"></div>{% endcomment %}
 
                     <div id="origin-toggle">Set origin as current location<input id="origin-toggle-event"
                                                                                  type="checkbox" data-toggle="toggle"
