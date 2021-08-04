@@ -19,7 +19,7 @@ def filePath(filename):
 # currently the route and stops sequence dictionary are hard coded
 # but these will be retrieved from the google response and a static JSON file
 
-f = open(filePath('Stop_sequences_full_current.json'))
+f = open(filePath('Full_stops_sequence_merged.json'))
 stops_sequence = json.load(f)
 
 def get_route(stops_sequence, bus_route):
@@ -62,8 +62,12 @@ def distance(lat1, lon1, lat2, lon2):
     hav = 0.5 - cos((lat2-lat1)*p)/2 + cos(lat1*p)*cos(lat2*p) * (1-cos((lon2-lon1)*p)) / 2
     return 12742 * asin(sqrt(hav))
 
+
+
 def closest(data, v):
     return min(data, key=lambda p: distance(v['lat'],v['lon'],p['lat'],p['lon']))
+
+
 
 def prediction(route, hour, day, month, start_stop_id, end_stop_id, wind_speed, temp, humidity, weather_main,
                stops):

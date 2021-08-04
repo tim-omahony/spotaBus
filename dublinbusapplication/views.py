@@ -17,56 +17,77 @@ def index(request):
 
 # ajax_posting function
 def predict(request):
-    stop = Stop.objects.all().values()
-    start_stop_lat = float(request.POST.get('start_stop_lat'))
-    end_stop_lat = float(request.POST.get('end_stop_lat'))
-    start_stop_lon = float(request.POST.get('start_stop_lon'))
-    end_stop_lon = float(request.POST.get('end_stop_lon'))
 
-    data_list = []
-    for item in stop:
-        adict = {'id': item['stop_id'], 'lat': item['stop_lat'], 'lon': item['stop_lon']}
-        data_list.append(adict)
+    try:
+        stop = Stop.objects.all().values()
+        journey_steps = json.loads(request.POST["steps_array"])
 
-    start_stop = {'lat': start_stop_lat, 'lon': start_stop_lon}
-    end_stop = {'lat': end_stop_lat, 'lon': end_stop_lon}
+        print(journey_steps)
 
-    closest_start_id = (closest(data_list, start_stop))
-    closest_end_id = (closest(data_list, end_stop))
+        final_estimate = []
+        for i in range(0, len(journey_steps)):
+            if journey_steps[i]["transit_type"] == "TRANSIT":
+                start_stop_lat_lon = (journey_steps[i]['start_stop_lat_lon'])
+                end_stop_lat_lon = (journey_steps[i]['end_stop_lat_lon'])
+                route = (journey_steps[i]['route'])
 
+                start_stop_lat_lon_split = start_stop_lat_lon.split(",")
+                end_stop_lat_lon_split = end_stop_lat_lon.split(",")
 
-    start_id_full = closest_start_id['id']
-    end_id_full = closest_end_id['id']
+                data_list = []
+                for item in stop:
+                    adict = {'id': item['stop_id'], 'lat': item['stop_lat'], 'lon': item['stop_lon']}
+                    data_list.append(adict)
 
+                start_stop = {'lat': float(start_stop_lat_lon_split[0]), 'lon': float(start_stop_lat_lon_split[1])}
+                end_stop = {'lat': float(end_stop_lat_lon_split[0]), 'lon': float(end_stop_lat_lon_split[1])}
 
+                closest_start_id = (closest(data_list, start_stop))
+                closest_end_id = (closest(data_list, end_stop))
 
-    print(start_stop_lat,end_stop_lat,start_stop_lon,end_stop_lon)
-    if request.is_ajax():
+                start_id_full = closest_start_id['id']
+                end_id_full = closest_end_id['id']
 
-        route = (request.POST.get('route'))
-        hour = int(float(request.POST.get('hour')))
-        day = int(float(request.POST.get('day')))
-        month = int(float(request.POST.get('month')))
-        wind_speed = int(float(request.POST.get('wind_speed')))
-        humidity = int(float(request.POST.get('humidity')))
-        temp = int(float(request.POST.get('temp')) - 273)
-        weather_main = (request.POST.get('weather_main'))
+                if request.is_ajax():
 
-        # converting the start and stop ids to the required format
-        start_stop_id = int(start_id_full[len(start_id_full) - 5:])
-        end_stop_id = int(end_id_full[len(end_id_full) - 5:])
+                    hour = int(float(request.POST.get('hour')))
+                    day = int(float(request.POST.get('day')))
+                    month = int(float(request.POST.get('month')))
+                    wind_speed = int(float(request.POST.get('wind_speed')))
+                    humidity = int(float(request.POST.get('humidity')))
+                    temp = int(float(request.POST.get('temp')) - 273)
+                    weather_main = (request.POST.get('weather_main'))
 
-        print("ids", start_stop_id, end_stop_id)
-        stops_dict = get_route(stops_sequence, route)
-        print(stops_dict)
-        print
-        result = int(
-            prediction(route, hour, day, month, start_stop_id, end_stop_id, wind_speed, temp, humidity,
-                       weather_main,
-                       stops_dict))
-        print(result)
-        return JsonResponse(result, safe=False)
+                    # converting the start and stop ids to the required format
+                    start_stop_id = int(start_id_full[len(start_id_full) - 5:])
+                    end_stop_id = int(end_id_full[len(end_id_full) - 5:])
+
+                    print("ids", start_stop_id, end_stop_id)
+                    stops_dict = get_route(stops_sequence, route)
+
+                    result = int(
+                        prediction(route, hour, day, month, start_stop_id, end_stop_id, wind_speed, temp, humidity,
+                                   weather_main,
+                                   stops_dict))
+
+                    final_estimate.append(result)
+
+        return JsonResponse(sum(final_estimate), safe=False)
         # return response as JSON
+
+    except Exception as e:
+        print(e)
+        journey_steps = json.loads(request.POST["steps_array"])
+        google_time_result = []
+
+        for item in journey_steps:
+            if item["transit_type"] == "TRANSIT":
+                google_time = int(item["Google_Journey_time"]/60)
+                google_time_result.append(google_time)
+
+
+        return JsonResponse(sum(google_time_result), safe=False)
+
 
 
 def about(request):

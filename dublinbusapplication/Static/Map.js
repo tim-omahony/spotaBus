@@ -22,6 +22,12 @@ let enableFav;
 let RouteShortname;
 let googleHandler;
 let dbAutocomplete;
+let Direction_Steps;
+let steps_array;
+let start_stop_lat_lon;
+let end_stop_lat_lon;
+let Journey_Steps;
+let Google_Journey_time;
 
 // function to render the map on the main application page
 
@@ -315,25 +321,49 @@ class AutocompleteDirectionsHandler {
                     this.directionsRenderer.setDirections(response);
 
                     var Steps = response.routes[0].legs[0].steps.length;
-                    var steps_array = [];
-                    for (var y = 0; y < Steps; y++) {
+                    steps_array = [];
 
+                    for (var y = 0; y < Steps; y++) {
+                        var route_dict = {};
                         var Transit_Type = response.routes[0].legs[0].steps[y].travel_mode;
 
-                        if (Transit_Type === "TRANSIT") {
-                            var route_dict = {};
-                            RouteShortname = response.routes[0].legs[0].steps[y].transit.line.short_name;
-                            route_dict['route'] = RouteShortname;
-                            steps_array.push(route_dict);
+                        Direction_Steps = [];
+                        Direction_Steps = response.routes[0].legs[0].steps[y].instructions;
+
+                        route_dict['instructions'] = Direction_Steps;
+
+
+                        if (Transit_Type == "WALKING") {
+                            route_dict['transit_type'] = Transit_Type;
                         }
+
+                        if (Transit_Type == "TRANSIT") {
+                            RouteShortname = [];
+                            start_stop_lat_lon = [];
+                            end_stop_lat_lon = [];
+
+                            RouteShortname = response.routes[0].legs[0].steps[y].transit.line.short_name;
+                            start_stop_lat_lon = response.routes[0].legs[0].steps[y].start_location.lat() + ',' + response.routes[0].legs[0].steps[y].start_location.lng();
+                            end_stop_lat_lon = response.routes[0].legs[0].steps[y].end_location.lat() + ',' + response.routes[0].legs[0].steps[y].end_location.lng();
+                            Google_Journey_time = response.routes[0].legs[0].steps[y].duration['value']
+
+                            route_dict['route'] = RouteShortname;
+                            route_dict['start_stop_lat_lon'] = start_stop_lat_lon;
+                            route_dict['end_stop_lat_lon'] = end_stop_lat_lon;
+                            route_dict['transit_type'] = Transit_Type;
+                            route_dict['Google_Journey_time'] = Google_Journey_time;
+                        }
+                        steps_array.push(route_dict);
                     }
-                    console.log('googs', response)
-                    console.log('lat', response.routes[0].legs[0].start_location.lat(), 'lng', response.routes[0].legs[0].start_location.lng())
+
+                    console.log(response)
                     console.log(steps_array)
 
                 } else {
                     window.alert("Directions request failed due to " + status);
                 }
+
+                Journey_Steps = JSON.stringify(steps_array);
             }
         )
     }
@@ -452,12 +482,7 @@ $(document).ready(function () {
                     wind_speed: currentWeather.responseJSON.wind.speed,
                     humidity: currentWeather.responseJSON.main.humidity,
                     weather_main: currentWeather.responseJSON.weather[0].main,
-                    start_stop_id: originStop.stop_id,
-                    end_stop_id: destinationStop.stop_id,
-                    start_stop_lat: originStop.stop_lat,
-                    start_stop_lon: originStop.stop_lon,
-                    end_stop_lat: destinationStop.stop_lat,
-                    end_stop_lon: destinationStop.stop_lon,
+                    steps_array: Journey_Steps,
                     csrfmiddlewaretoken,
                     dataType: "json",
                 },
@@ -465,8 +490,7 @@ $(document).ready(function () {
             // if the function properly sends data to the predictive model the estimated travel time is returned
             success: function (result) {
                 console.log(result)
-                $('#output').html("<p>Estimated journey time: " + result + " minutes</p>"
-                    /*   "<p>You will arrive at approximately:  " + googleResponse.routes[0].legs[0].arrival_time.text + "</p>"*/);
+                $('#output').html("<p>Estimated Bus Journey Time: " + result + " minutes</p>");
             },
 
             failure: function (result) {
@@ -475,6 +499,17 @@ $(document).ready(function () {
         })
     });
 })
+
+function instructions_display(array) {
+    var Steps = array.length;
+    var str = '<ul>'
+    for (var y = 0; y <= Steps; y++) {
+        str += '<li>' + array[y].instructions + '</li>';
+    }
+    str += '</ul>';
+    document.getElementById('slideContainer').innerHTML = str;
+
+}
 
 function saveRoute() {
     $.ajax({
