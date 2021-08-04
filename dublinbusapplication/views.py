@@ -6,7 +6,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from dublinbusapplication.predictive_model.get_prediction import *
 from .models import Stop, Bikes, FavouriteJourney, user
-
+from django.contrib.auth.models import User
 
 def index(request):
     render_stops = Stop.objects.all().values()
@@ -97,9 +97,6 @@ def logoutUser(request):
 
 # @login_required
 def add_favourite_route(request):
-    for key, value in request.session.items():
-        print('{} => {}'.format(key, value))
-    print('request is', request)
     if request.method == 'POST':
         if request.POST.get('users_origin_stop') and request.POST.get('users_dest_stop'):
             # user = User.objects.get(id=request.session['_auth_user_id'])
@@ -107,13 +104,33 @@ def add_favourite_route(request):
             fav_journey.users_origin_stop = request.POST.get('users_origin_stop')
             fav_journey.users_dest_stop = request.POST.get('users_dest_stop')
             fav_journey.user_id = request.session['_auth_user_id']
-            fav_journey.save()
+            fav_journey.username = request.user.username
+            user_exists = request.user.username
+            #if fav_journey.user_id.exists():
+            #if hasattr(fav_journey, 'user_id'):
+            if fav_journey.objects.exists(user_exists):
+           # if fav_journey.username == request.user.username:
+               # user_exists = request.user.username
 
-        return JsonResponse({'message': 'saved that there now you cunt'})
+            #if 'user_id' in fav_journey.objects.filter(user=request.user):
+                return JsonResponse({'message': 'NO', }, user_exists)
+            else:
+                fav_journey.save()
+                return JsonResponse({'message': 'saved that there now you cunt'})
 
 
-def userPage(request):
-    return render(request, 'userpage.html')
 
 
+# def userPage(request):
+#    return render(request, 'userpage.html')
 
+
+def displayFavRoute(request):
+    # user_id = user.user_id.get()
+    # current_user = request.user
+    # user_id = request.session['_auth_user_id']
+    # user_routes = FavouriteJourney.objects.get(pk=6)
+    user_routes = FavouriteJourney.objects.filter(user_id=request.user)
+    #  user_routes = FavouriteJourney.objects.all()
+
+    return render(request, 'userpage.html', {'user_routes': user_routes})

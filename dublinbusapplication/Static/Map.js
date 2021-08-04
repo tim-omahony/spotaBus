@@ -422,8 +422,8 @@ function saveRoute() {
         url: "/add_favourite_route/",
         data:
             {
-                users_origin_stop: originStop.stop_id,
-                users_dest_stop: destinationStop.stop_id,
+                users_origin_stop: originStop.stop_name,
+                users_dest_stop: destinationStop.stop_name,
                 csrfmiddlewaretoken,
                 dataType: "json",
             },
@@ -431,6 +431,7 @@ function saveRoute() {
         // if the function properly sends data to the predictive model the estimated travel time is returned
         success: function (result) {
             console.log('success', result)
+            alert("Route successfully saved to database!")
         },
 
         failure: function (result) {

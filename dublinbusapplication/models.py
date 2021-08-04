@@ -86,6 +86,7 @@ class user(AbstractBaseUser):
 class FavouriteJourney(models.Model):
     users_origin_stop = models.CharField(max_length=200)
     users_dest_stop = models.CharField(max_length=200)
+    username = models.CharField(max_length=200, primary_key=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     def __str__(self):
