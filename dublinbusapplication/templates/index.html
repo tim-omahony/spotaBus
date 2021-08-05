@@ -70,19 +70,21 @@
                                placeholder="Enter a destination location"/>
                     </div>
                 </div>
+
                 <div id="origin-toggle">Set origin as current location<input id="origin-toggle-event"
                                                                              type="checkbox" data-toggle="toggle"
                                                                              data-style="ios" data-on=""
                                                                              data-off=""></div>
+
                 {% comment %}                <div id="date-toggle">Now or later?<input id="date-toggle-event" type="checkbox"
                                                           data-toggle="toggle" data-style="ios"
                                                           data-on="later" data-off="now"></div>{% endcomment %}
-
 
                 <div id="datetime-toggle">
                     <input form="form" id="predictTime" class="form-control" type="datetime-local" name="predict"
                            required onChange="InitialMap.route()">
                 </div>
+
                 <div class="modal-output">
                     <div id="output"></div>
                 </div>

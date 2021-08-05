@@ -40,7 +40,7 @@ function getForecast() {
             }
 
             Forecast_weather = JSON.stringify(forecast_weather_array);
-            console.log('Forecast:', Forecast_weather);
+/*            console.log('Forecast:', Forecast_weather);*/
 
         })
         .catch(err => {
@@ -74,7 +74,7 @@ function getWeather() {
             current_weather_array.push(weather_dict);
             Current_weather = JSON.stringify(current_weather_array);
 
-            console.log('current:', Current_weather);
+/*            console.log('current:', Current_weather);*/
         })
         .catch(err => {
             console.log(err);

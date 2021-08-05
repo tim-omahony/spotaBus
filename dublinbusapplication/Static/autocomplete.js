@@ -178,7 +178,7 @@ class AutocompleteDirectionsHandler {
                 }
             }
         )
-        journeyComparerFadeIn();
+/*        journeyComparerFadeIn();*/
 
     }
 }
@@ -227,4 +227,9 @@ function cyclingComparatorInfoPopulator(duration, distance) {
     document.getElementById("cycleTransitDistance").innerHTML = distance/1000 + " km";
  }
 
+/* function journeyComparerFadeIn(){
+    $("journeyComparer").click(function () {
+  $(this).fadeIn(1000);
+})
+}*/
 

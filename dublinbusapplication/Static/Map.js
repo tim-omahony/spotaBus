@@ -16,8 +16,9 @@ let start_stop_lat_lon;
 let end_stop_lat_lon;
 let Journey_Steps;
 let Google_Journey_time;
-let InitialMap
-let weatherForecast
+let InitialMap;
+let weatherForecast;
+
 
 // function to render the map on the main application page
 function initMap() {
@@ -40,8 +41,8 @@ function initMap() {
         },
         fullscreenControl: true,
     });
-    Geolocation();
-     InitialMap = new AutocompleteDirectionsHandler(map);
+
+    InitialMap = new AutocompleteDirectionsHandler(map);
 }
 
 function attachInstructionText(stepDisplay, marker, text, map) {
