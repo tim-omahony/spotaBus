@@ -1,12 +1,3 @@
-/*
-// function to retrieve the most recent weather update from openweathermap
-function getWeather() {
-    currentWeather = ($.getJSON("https://api.openweathermap.org/data/2.5/weather?lat=53.344&lon=-6.2672&appid=37038b4337b3dbf599fe6b12dad969bd"))
-    console.log(currentWeather)
-    return currentWeather
-}
-*/
-let weather_array;
 let temp;
 let humidity;
 let wind_speed;
@@ -15,23 +6,18 @@ let date_time;
 let Forecast_weather
 let Current_weather
 
-let future_forecast
-let current_weather
-
 
 // function to retrieve the 5 day forecast from openweatherapi
 function getForecast() {
     weatherForecast = ($.getJSON("https://api.openweathermap.org/data/2.5/forecast?lat=53.344&lon=-6.2672&appid=37038b4337b3dbf599fe6b12dad969bd"))
-
         .then(response => {
             forecast_weather_array = [];
-            var weather_dict = {};
 
             var interval = response.list.length;
+            console.log(response);
             console.log(interval);
             for (var y = 0; y < interval; y++) {
-
-
+                var weather_dict = {};
                 date_time = [];
                 temp = [];
                 humidity = [];
@@ -51,12 +37,10 @@ function getForecast() {
                 weather_dict['weather_main'] = weather_main;
 
                 forecast_weather_array.push(weather_dict);
-
             }
+
             Forecast_weather = JSON.stringify(forecast_weather_array);
-            console.log(Forecast_weather)
-            console.log('here')
-            return Forecast_weather
+            console.log('Forecast:', Forecast_weather);
 
         })
         .catch(err => {
@@ -88,11 +72,9 @@ function getWeather() {
             weather_dict['weather_main'] = weather_main;
 
             current_weather_array.push(weather_dict);
-
-
             Current_weather = JSON.stringify(current_weather_array);
 
-            return Current_weather
+            console.log('current:', Current_weather);
         })
         .catch(err => {
             console.log(err);
@@ -100,21 +82,9 @@ function getWeather() {
 
 }
 
-function Merge_weather(Current_weather, Forecast_weather) {
-    Current_weather = getWeather();
-
-    console.log('merged:', JSON.stringify(Current_weather))
-
-/*
-    const obj1 = JSON.parse(Forecast_weather);
-    console.log(obj1)
-
-    const obj2 = JSON.parse(Current_weather);
-
-    const mergedObject = {obj1, obj2};
-
-    const Weather_forecast = JSON.stringify(mergedObject);
-    console.log(Weather_forecast);*/
+function Merge_weather() {
+    getForecast();
+    getWeather();
 
 }
 

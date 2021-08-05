@@ -10,12 +10,13 @@ $(document).ready(function () {
             url: "/predict/",
             data:
                 {
-                    date_time: inputTime,
+                    date_time: inputTime.getTime(),
                     route: RouteShortname,
                     hour: inputTime.getHours(),
                     day: inputTime.getDay(),
                     month: inputTime.getMonth(),
-                    weather_array: Weather_forecast,
+                    current_weather: Current_weather,
+                    weather_forecast: Forecast_weather,
                     steps_array: Journey_Steps,
                     csrfmiddlewaretoken,
                     dataType: "json",
