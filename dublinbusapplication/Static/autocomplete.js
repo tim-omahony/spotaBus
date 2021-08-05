@@ -71,6 +71,7 @@ class AutocompleteDirectionsHandler {
             },
 
             (response, status) => {
+                busComparatorInfoPopulator(response.routes[0].legs[0].duration.value,response.routes[0].legs[0].distance.value);
                 googleResponse = response
                 if (status === "OK") {
                     me.directionsRenderer.setDirections(response);
@@ -121,5 +122,72 @@ class AutocompleteDirectionsHandler {
                 Journey_Steps = JSON.stringify(steps_array);
             }
         )
+
+        this.directionsService.route(
+            {
+                origin: {placeId: this.originPlaceId},
+                destination: {placeId: this.destinationPlaceId},
+                travelMode: 'DRIVING',
+            },
+
+            (response, status) => {
+                //passing response to the populator function to update html divs
+                drivingComparatorInfoPopulator(response.routes[0].legs[0].duration.value,response.routes[0].legs[0].distance.value);
+                if (status === "OK") {
+
+
+                } else {
+                    window.alert("Directions request failed due to " + status);
+                }
+            }
+        )
+
+        this.directionsService.route(
+            {
+                origin: {placeId: this.originPlaceId},
+                destination: {placeId: this.destinationPlaceId},
+                travelMode: 'WALKING',
+            },
+
+            (response, status) => {
+                if (status === "OK") {
+                    walkingComparatorInfoPopulator(response.routes[0].legs[0].duration.value,response.routes[0].legs[0].distance.value);
+
+
+                } else {
+                    window.alert("Directions request failed due to " + status);
+                }
+            }
+        )
+        journeyComparerFadeIn();
+
     }
 }
+
+function drivingComparatorInfoPopulator(duration, distance) {
+    //populates information fields for various journey transit methods
+
+    document.getElementById("drivingTransitTime").innerHTML = Math.round(duration/60) + " minute(s)";
+    document.getElementById("drivingTransitDistance").innerHTML = distance/1000 + " km";
+
+
+
+}
+
+function walkingComparatorInfoPopulator(duration, distance) {
+    //populates information fields for various journey transit methods
+
+    document.getElementById("walkingTransitTime").innerHTML = Math.round(duration/60) + " minute(s)";
+    document.getElementById("walkingTransitDistance").innerHTML = distance/1000 + " km";
+
+
+
+}
+
+function busComparatorInfoPopulator(duration, distance) {
+    //populates information fields for various journey transit methods
+
+    document.getElementById("busTransitTime").innerHTML = Math.round(duration/60) + " minute(s)";
+    document.getElementById("busTransitDistance").innerHTML = distance/1000 + " km";
+ }
+
