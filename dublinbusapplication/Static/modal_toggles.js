@@ -10,6 +10,17 @@
     })
 })*!/*/
 
+
+$(function () {
+    $('#origin-toggle-event').change(function () {
+        if ($(this).prop('checked') == true) {
+            $(Geolocation());
+        } else {
+            document.getElementById("origin-input").value = null;
+        }
+    })
+})
+
 // function toggles between showing and hiding Dublin Bikes stations on the map
 $(function () {
     $('#bike-toggle-event').change(function () {
