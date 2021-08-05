@@ -161,3 +161,25 @@ def userPage(request):
 # v = {'lat': start_stop_lat, 'lon': start_stop_lon}
 #
 # print(JsonResponse(closest(stop, v)))
+
+def displayFavRoute(request):
+    # user_id = user.user_id.get()
+    # current_user = request.user
+    # user_id = request.session['_auth_user_id']
+    # user_routes = FavouriteJourney.objects.get(pk=6)
+    user_routes = FavouriteJourney.objects.filter(user_id=request.user)
+    #  user_routes = FavouriteJourney.objects.all()
+
+    return render(request, 'userpage.html', {'user_routes': user_routes})
+
+
+
+def deleteUserFavJourney(request, id):
+    if FavouriteJourney.objects.filter(id=FavouriteJourney.objects.id).exists():
+        user_records = FavouriteJourney.objects.get(id=FavouriteJourney.objects.id)
+        user_records.delete()
+        messages.success(request, "The favorite journey was successfully deleted")
+        return redirect('userpage.html')
+    else:
+        messages.error(request, "ERROR: the journey was not deleted..")
+        return redirect('userpage.html')
