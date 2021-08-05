@@ -66,6 +66,9 @@ class user(AbstractBaseUser):
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
+    total_distance_travelled = models.FloatField(default=0)
+    total_trips_planned = models.IntegerField(default=0)
+
 
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email']

@@ -72,7 +72,6 @@ class AutocompleteDirectionsHandler {
             },
 
             (response, status) => {
-                busComparatorInfoPopulator(response.routes[0].legs[0].duration.value,response.routes[0].legs[0].distance.value);
                 googleResponse = response
                 if (status === "OK") {
                     me.directionsRenderer.setDirections(response);
@@ -147,6 +146,25 @@ class AutocompleteDirectionsHandler {
             {
                 origin: {placeId: this.originPlaceId},
                 destination: {placeId: this.destinationPlaceId},
+                travelMode: 'BICYCLING',
+            },
+
+            (response, status) => {
+                //passing response to the populator function to update html divs
+                cyclingComparatorInfoPopulator(response.routes[0].legs[0].duration.value,response.routes[0].legs[0].distance.value);
+                if (status === "OK") {
+
+
+                } else {
+                    window.alert("Directions request failed due to " + status);
+                }
+            }
+        )
+
+        this.directionsService.route(
+            {
+                origin: {placeId: this.originPlaceId},
+                destination: {placeId: this.destinationPlaceId},
                 travelMode: 'WALKING',
             },
 
@@ -202,11 +220,11 @@ function walkingComparatorInfoPopulator(duration, distance) {
 
 }
 
-function busComparatorInfoPopulator(duration, distance) {
+function cyclingComparatorInfoPopulator(duration, distance) {
     //populates information fields for various journey transit methods
 
-    document.getElementById("busTransitTime").innerHTML = Math.round(duration/60) + " minute(s)";
-    document.getElementById("busTransitDistance").innerHTML = distance/1000 + " km";
+    document.getElementById("cycleTransitTime").innerHTML = Math.round(duration/60) + " minute(s)";
+    document.getElementById("cycleTransitDistance").innerHTML = distance/1000 + " km";
  }
 
 
