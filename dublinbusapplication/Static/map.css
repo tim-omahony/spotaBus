@@ -387,6 +387,51 @@ a:focus {
 
 
 /* ------------------------------------------------------------------------------------------------------------- */
+/* Transport comparator widget */
+
+#walkingDiv {
+    border-top-left-radius: 25px;
+    border-bottom-left-radius: 25px;
+    padding: 1em;
+    float: left;
+    width: 33%;
+    background-color: #e5e6e0;
+
+
+}
+
+#drivingDiv {
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+    padding: 1em;
+    float: left;
+    width: 33%;
+    background-color: #e5e6e0;
+}
+
+#transitDiv {
+    padding: 1em;
+    float: left;
+    width: 33%;
+    background-color: #37383b;
+    color: #fffeff;
+}
+
+#slideSource {
+  opacity: 1;
+  transition: opacity 1s;
+}
+
+#slideSource.fade {
+  opacity: 0;
+}
+
+
+
+/* ------------------------------------------------------------------------------------------------------------- */
+
+
+/* ------------------------------------------------------------------------------------------------------------- */
 
 /*register/login css*/
 .user_card {
@@ -527,3 +572,21 @@ figcaption.ratings a:hover
 {
     margin-bottom:0;
     }
+
+/*Table in Userpage styling*/
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
