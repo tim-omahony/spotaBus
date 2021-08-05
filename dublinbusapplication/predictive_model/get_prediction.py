@@ -4,20 +4,13 @@ import os
 import json
 from math import cos, asin, sqrt
 
+
 # added in this filePath method to find the right path to the pkl files because it couldn't find them before
 def filePath(filename):
     modulePath = os.path.dirname(__file__)  # get current directory
     filePath = os.path.join(modulePath, filename)
     return filePath
 
-
-# start_stop_id = 608
-# end_stop_id = 114
-# temp = 6
-# weather_main = 'Rain'
-
-# currently the route and stops sequence dictionary are hard coded
-# but these will be retrieved from the google response and a static JSON file
 
 f = open(filePath('Full_stops_sequence_merged.json'))
 stops_sequence = json.load(f)
@@ -61,7 +54,6 @@ def distance(lat1, lon1, lat2, lon2):
     p = 0.017453292519943295
     hav = 0.5 - cos((lat2-lat1)*p)/2 + cos(lat1*p)*cos(lat2*p) * (1-cos((lon2-lon1)*p)) / 2
     return 12742 * asin(sqrt(hav))
-
 
 
 def closest(data, v):

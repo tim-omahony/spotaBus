@@ -4,6 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from dublinbusapplication.predictive_model.get_prediction import *
+from dublinbusapplication.predictive_model.Get_Times import *
 from .models import Stop, Bikes, FavouriteJourney
 
 
@@ -18,11 +19,34 @@ def index(request):
 
 # ajax_posting function
 def predict(request):
+
     try:
         stop = Stop.objects.all().values()
         journey_steps = json.loads(request.POST["steps_array"])
+        current_weather = json.loads(request.POST["current_weather"])
+        weather_forecast = json.loads(request.POST["weather_forecast"])
+        date_time = json.loads(request.POST["date_time"])
 
-        print(journey_steps)
+        #dividing by 1000 to convert to same unix format as OpenWeather API
+
+        date_time = int(date_time/1000)
+
+        # merging the weather data
+        full_weather = current_weather + weather_forecast
+
+        print(type(full_weather))
+        print(full_weather)
+        print(date_time)
+
+        # calling the functions that take the full weather forecast and match the users input time with the closest time
+        # and then returns the dictionary of the weather forecast items for that time.
+
+        time_list = get_time_list(full_weather)
+        nearest_time = nearest(date_time, time_list)
+        final_weather_dict = get_time(full_weather, nearest_time)
+
+        print(nearest_time)
+        print(final_weather_dict)
 
         final_estimate = []
         for i in range(0, len(journey_steps)):
@@ -52,10 +76,11 @@ def predict(request):
                     hour = int(float(request.POST.get('hour')))
                     day = int(float(request.POST.get('day')))
                     month = int(float(request.POST.get('month')))
-                    wind_speed = int(float(request.POST.get('wind_speed')))
-                    humidity = int(float(request.POST.get('humidity')))
-                    temp = int(float(request.POST.get('temp')) - 273)
-                    weather_main = (request.POST.get('weather_main'))
+
+                    wind_speed = float(final_weather_dict['wind_speed'])
+                    humidity = float(final_weather_dict['humidity'])
+                    temp = float(final_weather_dict['humidity'] - 273)
+                    weather_main = (final_weather_dict['weather_main'])
 
                     # converting the start and stop ids to the required format
                     start_stop_id = int(start_id_full[len(start_id_full) - 5:])

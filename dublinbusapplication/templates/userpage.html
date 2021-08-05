@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+
+
       {{ favourites | json_script:"fave_routes" }}
 
     <head>
@@ -49,17 +51,12 @@
     </table>
     </div>
 
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    </body>
-
-
-
-
 
 
 
