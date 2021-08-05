@@ -6,6 +6,7 @@
 
     {{ stops | json_script:"stops-data" }}
     {{ stations | json_script:"stations-data" }}
+    {{ favourites | json_script:"fave_routes" }}
 
     <div id="holidayWidget" style="visibility: hidden;"></div>
 
@@ -85,4 +86,5 @@
             </div>
         </div>
     </div>
+
 {% endblock %}

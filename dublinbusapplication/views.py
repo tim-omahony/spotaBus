@@ -8,10 +8,14 @@ from dublinbusapplication.predictive_model.get_prediction import *
 from .models import Stop, Bikes, FavouriteJourney, user
 from django.contrib.auth.models import User
 
+
 def index(request):
-    render_stops = Stop.objects.all().values()
+    stops = Stop.objects.all().values()
     render_bike_stations = Bikes.objects.all().values()
-    return render(request, 'index.html', {'stops': list(render_stops), 'stations': list(render_bike_stations)})
+    fave_routes = FavouriteJourney.objects.all().values()
+
+    return render(request, 'index.html', {'stops': list(stops), 'stations': list(render_bike_stations),
+                                          'fave_routes': list(fave_routes)})
 
 
 # ajax_posting function
@@ -134,3 +138,19 @@ def displayFavRoute(request):
     #  user_routes = FavouriteJourney.objects.all()
 
     return render(request, 'userpage.html', {'user_routes': user_routes})
+
+
+def deleteUserFavJourney(request, id):
+    if FavouriteJourney.objects.filter(id=FavouriteJourney.objects.id).exists():
+        user_records = FavouriteJourney.objects.get(id=FavouriteJourney.objects.id)
+        user_records.delete()
+        messages.success(request, "The favorite journey was successfully deleted")
+        return redirect('userpage.html')
+    else:
+        messages.error(request, "ERROR: the journey was not deleted..")
+        return redirect('userpage.html')
+
+
+
+
+
