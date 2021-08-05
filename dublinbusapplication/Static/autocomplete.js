@@ -54,6 +54,7 @@ class AutocompleteDirectionsHandler {
     }
 
     route() {
+        var input_date = getDateTime();
         if (!this.originPlaceId || !this.destinationPlaceId) {
             return;
         }
@@ -66,7 +67,7 @@ class AutocompleteDirectionsHandler {
                 transitOptions: {
                     modes: ['BUS'],
                     routingPreference: 'FEWER_TRANSFERS',
-
+                    departureTime: new Date(input_date)
                 }
             },
 
@@ -122,4 +123,20 @@ class AutocompleteDirectionsHandler {
             }
         )
     }
+}
+
+//function to take the user input from the date picker to be passed to the google directions service API
+function getDateTime() {
+    var regDate = document.getElementById("predictTime").value;
+    console.log(regDate);
+    unixdate = Date.parse(regDate);
+
+    if (unixdate < Date.now()) {
+        date_picked = Date.now();
+    }else{
+        date_picked = unixdate;
+    }
+    console.log(unixdate);
+
+    return date_picked;
 }

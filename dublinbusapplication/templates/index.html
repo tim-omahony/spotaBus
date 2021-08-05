@@ -4,9 +4,12 @@
 
 {% block content %}
 
+
+
     {{ stops | json_script:"stops-data" }}
     {{ stations | json_script:"stations-data" }}
     {{ favourites | json_script:"fave_routes" }}
+
 
     <script>console.log('user id', {{ request.user.id.stop.users_origin_stop }})</script>
 
@@ -24,7 +27,7 @@
 
     <!-- Button trigger modal -->
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
-            onclick="getWeather()">
+            onclick="Merge_weather();">
         Plan Your Journey
     </button>
 
@@ -71,10 +74,15 @@
                                                                              type="checkbox" data-toggle="toggle"
                                                                              data-style="ios" data-on=""
                                                                              data-off=""></div>
-                <div id="date-toggle">Now or later?<input id="date-toggle-event" type="checkbox"
+                {% comment %}                <div id="date-toggle">Now or later?<input id="date-toggle-event" type="checkbox"
                                                           data-toggle="toggle" data-style="ios"
-                                                          data-on="later" data-off="now"></div>
-                <div id="datetime-toggle"></div>
+                                                          data-on="later" data-off="now"></div>{% endcomment %}
+
+
+                <div id="datetime-toggle">
+                    <input form="form" id="predictTime" class="form-control" type="datetime-local" name="predict"
+                           required onChange="InitialMap.route()">
+                </div>
                 <div class="modal-output">
                     <div id="output"></div>
                 </div>

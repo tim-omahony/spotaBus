@@ -1,3 +1,5 @@
+
+
 // function to return provided details on travel to the prediction model
 $(document).ready(function () {
     $('#form').on('submit', function (e) {
@@ -8,15 +10,12 @@ $(document).ready(function () {
             url: "/predict/",
             data:
                 {
-
+                    date_time: inputTime,
                     route: RouteShortname,
                     hour: inputTime.getHours(),
                     day: inputTime.getDay(),
                     month: inputTime.getMonth(),
-                    temp: currentWeather.responseJSON.main.temp,
-                    wind_speed: currentWeather.responseJSON.wind.speed,
-                    humidity: currentWeather.responseJSON.main.humidity,
-                    weather_main: currentWeather.responseJSON.weather[0].main,
+                    weather_array: Weather_forecast,
                     steps_array: Journey_Steps,
                     csrfmiddlewaretoken,
                     dataType: "json",

@@ -21,8 +21,11 @@ def predict(request):
     try:
         stop = Stop.objects.all().values()
         journey_steps = json.loads(request.POST["steps_array"])
-
+        weather_forecast = json.loads(request.POST["weather_array"])
+        date_time = json.loads(request.POST["date_time"])
         print(journey_steps)
+        print(weather_forecast)
+        print(date_time)
 
         final_estimate = []
         for i in range(0, len(journey_steps)):
