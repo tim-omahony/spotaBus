@@ -46,18 +46,13 @@
                                list="originList"
                                type="text"
                                placeholder="Enter an origin location"/>
-                        <div id="favourite-routes" style="visibility:hidden">
-                            <datalist id="originList">{% for stop in favourites %}
-                                <option value="{{ stop.users_origin_stop }}"/>
-                            {% endfor %}}
+                        <div id="favourite-routes">
+                            <datalist id="originList">
                             </datalist>
-
-                            <datalist id="destinationList"> {% for stop in favourites %}
-                                <option value="{{ stop.users_dest_stop }}"/>
-                            {% endfor %}}
+                            <datalist id="destinationList">
                             </datalist>
                         </div>
-                        <button type="button" onclick="showFavourites()">
+                        <button id="star-btn" type="button" onclick="showFavourites()">
                             <span class="glyphicon glyphicon-star"></span>
                         </button>
 

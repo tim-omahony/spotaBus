@@ -1,6 +1,8 @@
 // this function renders markers on the map based on the location of Dublin Bikes stations contained within the DB
 
 function populateDublinBikes() {
+    stations = loadJson("stations-data")
+
     markers = stations.map(station => {
         return new google.maps.Marker({
             position: {
