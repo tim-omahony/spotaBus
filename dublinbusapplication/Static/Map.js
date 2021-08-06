@@ -63,9 +63,6 @@ function loadJson(selector) {
 // when the main window of the application loads data on Dublin Bus stops and Dublin Bikes stations is loaded
 window.onload = function () {
     stops = loadJson("stops-data")
-    stations = loadJson("stations-data")
-    favourites = loadJson("fave-routes-data")
-    console.log("faves", favourites)
 }
 
 

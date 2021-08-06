@@ -278,6 +278,15 @@ a:focus {
 
 /* Index page css */
 
+#star-btn {
+    width: 10%;
+    height: 10%;
+    color: yellow;
+}
+
+#favourite-routes {
+    display: none;
+}
 
 #holidayWidget {
     color: #fff;
