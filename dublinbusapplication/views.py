@@ -11,10 +11,12 @@ from .models import Stop, Bikes, FavouriteJourney
 def index(request):
     stops = Stop.objects.all().values()
     render_bike_stations = Bikes.objects.all().values()
-    favourites = FavouriteJourney.objects.filter(user=request.user).values()
-
-    return render(request, 'index.html', {'stops': list(stops), 'stations': list(render_bike_stations),
-                                          'favourites': list(favourites)})
+    if request.user.is_authenticated:
+        favourites = FavouriteJourney.objects.filter(user=request.user).values()
+        return render(request, 'index.html', {'stops': list(stops), 'stations': list(render_bike_stations),
+                                              'favourites': list(favourites)})
+    else:
+        return render(request, 'index.html', {'stops': list(stops), 'stations': list(render_bike_stations)})
 
 
 # ajax_posting function
