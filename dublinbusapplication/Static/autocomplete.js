@@ -94,6 +94,10 @@ class AutocompleteDirectionsHandler {
                         }
 
                         if (Transit_Type === "TRANSIT") {
+
+                            tripCO2Details(response.routes[0].legs[0].distance.value/1000)
+
+
                             RouteShortname = [];
                             start_stop_lat_lon = [];
                             end_stop_lat_lon = [];
@@ -178,9 +182,23 @@ class AutocompleteDirectionsHandler {
                 }
             }
         )
-/*        journeyComparerFadeIn();*/
+        displayTransportComparator();
+
 
     }
+}
+
+function tripCO2Details(distance) {
+
+    var tag = document.createElement("hr");
+    var element = document.getElementById("busCO2Details");
+    element.appendChild(tag);
+
+    var tagP = document.createElement("p");
+    var textP = document.createTextNode("Your selected trip is "+ distance + " km long. At 23g CO2 emissions per seat km, your journey would generate "+ Math.round(23*distance) + "g of C02.");
+
+    element.appendChild(textP);
+
 }
 
 //function to take the user input from the date picker to be passed to the google directions service API
@@ -227,9 +245,15 @@ function cyclingComparatorInfoPopulator(duration, distance) {
     document.getElementById("cycleTransitDistance").innerHTML = distance/1000 + " km";
  }
 
-/* function journeyComparerFadeIn(){
-    $("journeyComparer").click(function () {
-  $(this).fadeIn(1000);
-})
-}*/
+ function displayC02Comparator() {
+    document.getElementById("c02Comparator").style.display = "inline";
+    $("#c02Comparator").slideDown();
+ }
+
+ function displayTransportComparator() {
+    document.getElementById("journeyComparer").style.display = "inline";
+    $("#journeyComparer").slideDown();
+ }
+
+
 

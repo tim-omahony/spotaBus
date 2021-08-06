@@ -105,9 +105,34 @@
         </div>
     </div>
 
-    <div id="journeyComparer">
+<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+    Weekly Weather forecast
+</button>
+
+<div class="collapse" id="collapseExample">
+  <div class="card card-body" style="background-color: #e5e6e0;">
+    <a class="weatherwidget-io" href="https://forecast7.com/en/53d35n6d26/dublin/" data-label_1="DUBLIN" data-label_2="Weekly Forecast" data-theme="gray" style="margin: auto;">DUBLIN Weekly Forecast</a>
+  </div>
+</div>
+
+
+<hr/>
+
+
+
+
+<div class="h-100 p-5 text-white bg-dark rounded-3" id="c02Comparator">
+          <h2>Why take the bus?</h2>
+          <p>Small changes can make a big difference. That's why we want to show you the impact of your options. Go ahead, select a journey to find out!</p>
+          <button class="btn btn-outline-light" type="button"  style="display: none" onclick="">Calculate my C02 emission</button>
+        <p id="busCO2Details"></p>
+        </div>
+
+<hr/>
+
+<div id="journeyComparer" style="display: none">
         <div id="JourneyComparerContainer">
-            <h1 class="center">Compare your total journey times:</h1>
+            <h1 class="center">Compare your options:</h1>
             <div id="walkingDiv">
                 <i class="fas fa-walking" class="center"></i>
                 <h2 class="center" >Walking</h2>
@@ -128,4 +153,6 @@
             </div>
         </div>
     </div>
+
+
 {% endblock %}
