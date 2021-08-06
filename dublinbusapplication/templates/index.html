@@ -8,10 +8,8 @@
 
     {{ stops | json_script:"stops-data" }}
     {{ stations | json_script:"stations-data" }}
-    {{ favourites | json_script:"fave_routes" }}
+    {{ favourites | json_script:"fave-routes-data" }}
 
-
-    <script>console.log('user id', {{ request.user.id.stop.users_origin_stop }})</script>
 
     <div id="holidayWidget" style="visibility: hidden;"></div>
 
@@ -48,14 +46,14 @@
                                list="originList"
                                type="text"
                                placeholder="Enter an origin location"/>
-                        <div id="favourite-routes" style="display:none">
+                        <div id="favourite-routes" style="visibility:hidden">
                             <datalist id="originList">{% for stop in favourites %}
-                                <option value="{{ request.user.id.stop.users_origin_stop }}"/>
+                                <option value="{{ favourites.users_origin_stop }}"/>
                             {% endfor %}}
                             </datalist>
 
                             <datalist id="destinationList"> {% for stop in favourites %}
-                                <option value="{{ request.user.id.stop.users_dest_stop }}"/>
+                                <option value="{{ favourites.users_dest_stop }}"/>
                             {% endfor %}}
                             </datalist>
                         </div>
@@ -105,49 +103,53 @@
         </div>
     </div>
 
-<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-    Weekly Weather forecast
-</button>
+    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample"
+            aria-expanded="false" aria-controls="collapseExample">
+        Weekly Weather forecast
+    </button>
 
-<div class="collapse" id="collapseExample">
-  <div class="card card-body" style="background-color: #e5e6e0;">
-    <a class="weatherwidget-io" href="https://forecast7.com/en/53d35n6d26/dublin/" data-label_1="DUBLIN" data-label_2="Weekly Forecast" data-theme="gray" style="margin: auto;">DUBLIN Weekly Forecast</a>
-  </div>
-</div>
-
-
-<hr/>
-
-
-
-
-<div class="h-100 p-5 text-white bg-dark rounded-3" id="c02Comparator">
-          <h2>Why take the bus?</h2>
-          <p>Small changes can make a big difference. That's why we want to show you the impact of your options. Go ahead, select a journey to find out!</p>
-          <button class="btn btn-outline-light" type="button"  style="display: none" onclick="">Calculate my C02 emission</button>
-        <p id="busCO2Details"></p>
+    <div class="collapse" id="collapseExample">
+        <div class="card card-body" style="background-color: #e5e6e0;">
+            <a class="weatherwidget-io" href="https://forecast7.com/en/53d35n6d26/dublin/" data-label_1="DUBLIN"
+               data-label_2="Weekly Forecast" data-theme="gray" style="margin: auto;">DUBLIN Weekly Forecast</a>
         </div>
+    </div>
 
-<hr/>
 
-<div id="journeyComparer" style="display: none">
+    <hr/>
+
+
+
+
+    <div class="h-100 p-5 text-white bg-dark rounded-3" id="c02Comparator">
+        <h2>Why take the bus?</h2>
+        <p>Small changes can make a big difference. That's why we want to show you the impact of your options. Go ahead,
+            select a journey to find out!</p>
+        <button class="btn btn-outline-light" type="button" style="display: none" onclick="">Calculate my C02 emission
+        </button>
+        <p id="busCO2Details"></p>
+    </div>
+
+    <hr/>
+
+    <div id="journeyComparer" style="display: none">
         <div id="JourneyComparerContainer">
             <h1 class="center">Compare your options:</h1>
             <div id="walkingDiv">
                 <i class="fas fa-walking" class="center"></i>
-                <h2 class="center" >Walking</h2>
+                <h2 class="center">Walking</h2>
                 <h4 class="center" id="walkingTransitTime"></h4>
                 <h4 class="center" id="walkingTransitDistance"></h4>
             </div>
             <div id="transitDiv">
                 <i class="fas fa-bicycle"></i>
                 <h2 class="center">Cycling</h2>
-                <h4 class="center"id="cycleTransitTime"></h4>
+                <h4 class="center" id="cycleTransitTime"></h4>
                 <h4 class="center" id="cycleTransitDistance"></h4>
             </div>
             <div id="drivingDiv">
                 <i class="fas fa-car center"></i>
-                <h2 class="center" >Driving</h2>
+                <h2 class="center">Driving</h2>
                 <h4 class="center" id="drivingTransitTime"></h4>
                 <h4 class="center" id="drivingTransitDistance"></h4>
             </div>

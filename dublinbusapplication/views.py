@@ -11,15 +11,14 @@ from .models import Stop, Bikes, FavouriteJourney
 def index(request):
     stops = Stop.objects.all().values()
     render_bike_stations = Bikes.objects.all().values()
-    fave_routes = FavouriteJourney.objects.all().values()
+    favourites = FavouriteJourney.objects.filter(user=request.user).values()
 
     return render(request, 'index.html', {'stops': list(stops), 'stations': list(render_bike_stations),
-                                          'fave_routes': list(fave_routes)})
+                                          'favourites': list(favourites)})
 
 
 # ajax_posting function
 def predict(request):
-
     try:
         stop = Stop.objects.all().values()
         journey_steps = json.loads(request.POST["steps_array"])
@@ -27,9 +26,9 @@ def predict(request):
         weather_forecast = json.loads(request.POST["weather_forecast"])
         date_time = json.loads(request.POST["date_time"])
 
-        #dividing by 1000 to convert to same unix format as OpenWeather API
+        # dividing by 1000 to convert to same unix format as OpenWeather API
 
-        date_time = int(date_time/1000)
+        date_time = int(date_time / 1000)
 
         # merging the weather data
         full_weather = current_weather + weather_forecast
@@ -182,6 +181,7 @@ def add_favourite_route(request):
 def userPage(request):
     return render(request, 'userpage.html')
 
+
 # stop = Stop.objects.all.values()
 # v = {'lat': start_stop_lat, 'lon': start_stop_lon}
 #
@@ -196,7 +196,6 @@ def displayFavRoute(request):
     #  user_routes = FavouriteJourney.objects.all()
 
     return render(request, 'userpage.html', {'user_routes': user_routes})
-
 
 
 def deleteUserFavJourney(request, id):

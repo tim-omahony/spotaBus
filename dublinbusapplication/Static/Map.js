@@ -18,6 +18,7 @@ let Journey_Steps;
 let Google_Journey_time;
 let InitialMap;
 let weatherForecast;
+let favourites;
 
 
 // function to render the map on the main application page
@@ -63,6 +64,8 @@ function loadJson(selector) {
 window.onload = function () {
     stops = loadJson("stops-data")
     stations = loadJson("stations-data")
+    favourites = loadJson("fave-routes-data")
+    console.log("faves", favourites)
 }
 
 

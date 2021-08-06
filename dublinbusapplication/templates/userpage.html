@@ -3,7 +3,8 @@
 {% block content %}
 
 
-      {{ favourites | json_script:"fave_routes" }}
+    {{ favourites | json_script:"fave-routes-data" }}
+
 
     <head>
         <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet"
@@ -38,19 +39,23 @@
                             <p><small>Snippets</small></p>
 
                         </div>
-                            <div>
-    <table>
-        <p><b>Favorite Routes</b></p>
-          {% csrf_token %}
-        {% for routes in user_routes %}
-            <tr>
-                <td>{{ routes.users_origin_stop }}</td>
-                <td> {{ routes.users_dest_stop }} </td>
-                <td><button type="button" class="btn btn-danger" onclick="removeFav('{{request.user.username}}')">Remove Route</button></td>
-            </tr>
-        {% endfor %}
-    </table>
-    </div>
+                        <div>
+                            <table>
+                                <p><b>Favorite Routes</b></p>
+                                {% csrf_token %}
+                                {% for routes in user_routes %}
+                                    <tr>
+                                        <td>{{ routes.users_origin_stop }}</td>
+                                        <td> {{ routes.users_dest_stop }} </td>
+                                        <td>
+                                            <button type="button" class="btn btn-danger"
+                                                    onclick="removeFav('{{ request.user.username }}')">Remove Route
+                                            </button>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </table>
+                        </div>
 
 
                     </div>

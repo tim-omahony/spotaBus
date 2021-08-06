@@ -279,7 +279,7 @@ a:focus {
 /* Index page css */
 
 
-#holidayWidget{
+#holidayWidget {
     color: #fff;
     background-color: #ffcd4f;
     margin-left: 12px;
@@ -375,6 +375,8 @@ a:focus {
 
 #predictTime {
     margin-bottom: 10px;
+    margin-left: 5%;
+    width: 40%;
 }
 
 #output {
@@ -418,14 +420,13 @@ a:focus {
 }
 
 #slideSource {
-  opacity: 1;
-  transition: opacity 1s;
+    opacity: 1;
+    transition: opacity 1s;
 }
 
 #slideSource.fade {
-  opacity: 0;
+    opacity: 0;
 }
-
 
 
 /* ------------------------------------------------------------------------------------------------------------- */
@@ -520,73 +521,69 @@ a:focus {
 
 }
 
-#origin-toggle, #date-toggle, #bike-toggle{
-    margin-top:20px;
-    margin-bottom:5px;
-    margin-left:20px;
+#origin-toggle, #date-toggle, #bike-toggle {
+    margin-top: 20px;
+    margin-bottom: 5px;
+    margin-left: 20px;
 }
-
-
-
 
 
 /*User Page from https://bootsnipp.com/snippets/xRMX*/
 
 @import url(http://fonts.googleapis.com/css?family=Lato:400,700);
-body
-{
+body {
     font-family: 'Lato', 'sans-serif';
-    }
-.profile
-{
+}
+
+.profile {
     min-height: 355px;
     display: inline-block;
-    }
-figcaption.ratings
-{
-    margin-top:20px;
-    }
-figcaption.ratings a
-{
-    color:#f1c40f;
-    font-size:11px;
-    }
-figcaption.ratings a:hover
-{
-    color:#f39c12;
-    text-decoration:none;
-    }
-.divider
-{
-    border-top:1px solid rgba(0,0,0,0.1);
-    }
-.emphasis
-{
+}
+
+figcaption.ratings {
+    margin-top: 20px;
+}
+
+figcaption.ratings a {
+    color: #f1c40f;
+    font-size: 11px;
+}
+
+figcaption.ratings a:hover {
+    color: #f39c12;
+    text-decoration: none;
+}
+
+.divider {
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.emphasis {
     border-top: 4px solid transparent;
-    }
-.emphasis:hover
-{
+}
+
+.emphasis:hover {
     border-top: 4px solid #1abc9c;
-    }
-.emphasis h2
-{
-    margin-bottom:0;
-    }
+}
+
+.emphasis h2 {
+    margin-bottom: 0;
+}
 
 /*Table in Userpage styling*/
 table {
-  font-family: arial, sans-serif;
-  border-collapse: collapse;
-  width: 100%;
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
 }
 
 td, th {
-  border: 1px solid #dddddd;
-  text-align: left;
-  padding: 8px;
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
 }
 
 tr:nth-child(even) {
-  background-color: #dddddd;
+    background-color: #dddddd;
 }
 
