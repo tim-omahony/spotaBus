@@ -48,12 +48,12 @@
                                placeholder="Enter an origin location"/>
                         <div id="favourite-routes" style="visibility:hidden">
                             <datalist id="originList">{% for stop in favourites %}
-                                <option value="{{ favourites.users_origin_stop }}"/>
+                                <option value="{{ stop.users_origin_stop }}"/>
                             {% endfor %}}
                             </datalist>
 
                             <datalist id="destinationList"> {% for stop in favourites %}
-                                <option value="{{ favourites.users_dest_stop }}"/>
+                                <option value="{{ stop.users_dest_stop }}"/>
                             {% endfor %}}
                             </datalist>
                         </div>
