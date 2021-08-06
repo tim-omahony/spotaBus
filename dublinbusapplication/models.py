@@ -14,12 +14,6 @@ class Stop(models.Model):
         return dict(stop_id=self.stop_id, stop_name=self.stop_name, stop_lat=self.stop_lat, stop_lon=self.stop_lon)
 
 
-class Weather(models.Model):
-    description = models.CharField(max_length=250)
-    temp = models.FloatField()
-    last_update = models.DateTimeField()
-
-
 class Bikes(models.Model):
     Number = models.IntegerField()
     Name = models.CharField(max_length=250)
@@ -69,7 +63,6 @@ class user(AbstractBaseUser):
     total_distance_travelled = models.FloatField(default=0)
     total_trips_planned = models.IntegerField(default=0)
 
-
     USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = ['email']
 
@@ -90,7 +83,7 @@ class FavouriteJourney(models.Model):
     users_origin_stop = models.CharField(max_length=200)
     users_dest_stop = models.CharField(max_length=200)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    username = models.CharField(max_length=200, primary_key=True)
+    username = models.CharField(max_length=200)
 
     def __str__(self):
         return f"Route: {self.users_origin_stop} to stop {self.users_dest_stop}"
