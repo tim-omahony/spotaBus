@@ -52,15 +52,18 @@
                             <datalist id="destinationList">
                             </datalist>
                         </div>
-                        <button id="star-btn" type="button" onclick="showFavourites()">
-                            <span class="glyphicon glyphicon-star"></span>
-                        </button>
+
 
                         <input id="destination-input"
                                class="controls"
                                list="destinationList"
                                type="text"
                                placeholder="Enter a destination location"/>
+
+                        <button type="button" onclick="showFavourites(); changeColor()">
+                            <i id="star-btn" class="fas fa-star"></i>
+                        </button>
+
                     </div>
                 </div>
 

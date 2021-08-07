@@ -274,14 +274,14 @@ a:focus {
 }
 
 
+
 /* ------------------------------------------------------------------------------------------------------------- */
 
 /* Index page css */
 
-#star-btn {
-    width: 10%;
-    height: 10%;
-    color: yellow;
+#star-btn  {
+    background-color:white;
+
 }
 
 #favourite-routes {
