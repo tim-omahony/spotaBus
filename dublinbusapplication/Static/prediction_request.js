@@ -22,16 +22,15 @@ $(document).ready(function () {
 
             // if the function properly sends data to the predictive model the estimated travel time is returned
             success: function (result) {
-                console.log(steps_array)
+                console.log("that worked")
+                console.log("steps", steps_array)
                 $('#output').html("<p>Instructions:" + results_display(Journey_Steps) + "</p>" +
                     "<p>Estimated Bus Journey Time: " + result + " minutes</p>"
-                    );
+                );
             },
 
             failure: function (result) {
                 console.log(result)
-
-
             }
         })
     });

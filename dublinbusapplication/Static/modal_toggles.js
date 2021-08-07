@@ -1,15 +1,9 @@
-/*// function to provide date time picker if the user wants to plan a journey in the future
-/!*$(function () {
-    $('#date-toggle-event').change(function () {
-        if ($(this).prop('checked') == true) {
-            $('#datetime-toggle').html('<input form = "form" id="predictTime" class="form-control" ' +
-                'type="datetime-local" name="predict" value="'+Date.now+'" required onChange="AutocompleteDirectionsHandler.route()">');
-        } else {
-            $('#datetime-toggle').html('');
-        }
-    })
-})*!/*/
-
+function changeButtonValue() {
+    const planButton = document.getElementById("planButton");
+    if (planButton.innerHTML === "Plan Another Journey") planButton.innerHTML = "Plan Your Journey";
+    else planButton.innerHTML = "Plan Another Journey";
+    Merge_weather();
+}
 
 $(function () {
     $('#origin-toggle-event').change(function () {
