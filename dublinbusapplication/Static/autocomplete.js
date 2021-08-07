@@ -1,3 +1,6 @@
+let step_distance;
+let arrival_stop;
+
 class AutocompleteDirectionsHandler {
     map;
     originPlaceId;
@@ -84,29 +87,40 @@ class AutocompleteDirectionsHandler {
                         var Transit_Type = response.routes[0].legs[0].steps[y].travel_mode;
 
                         Direction_Steps = [];
+                        departure_time = []
+                        step_distance = [];
                         Direction_Steps = response.routes[0].legs[0].steps[y].instructions;
-
                         route_dict['instructions'] = Direction_Steps;
 
 
                         if (Transit_Type === "WALKING") {
                             route_dict['transit_type'] = Transit_Type;
+                            departure_time = response.routes[0].legs[0].departure_time['text'];
+                            step_distance = response.routes[0].legs[0].steps[y].distance['text'];
+                            route_dict['departure_time'] = departure_time;
+                            route_dict['step_distance'] = step_distance;
                         }
 
                         if (Transit_Type === "TRANSIT") {
 
-                            tripCO2Details(response.routes[0].legs[0].distance.value/1000)
+                            tripCO2Details(response.routes[0].legs[0].distance.value / 1000)
 
-
+                            arrival_stop = []
                             RouteShortname = [];
                             start_stop_lat_lon = [];
                             end_stop_lat_lon = [];
 
+                            arrival_stop = response.routes[0].legs[0].steps[y].transit.arrival_stop['name'];
+                            step_distance = response.routes[0].legs[0].steps[y].distance['text'];
+                            departure_time = response.routes[0].legs[0].departure_time['text'];
                             RouteShortname = response.routes[0].legs[0].steps[y].transit.line.short_name;
                             start_stop_lat_lon = response.routes[0].legs[0].steps[y].start_location.lat() + ',' + response.routes[0].legs[0].steps[y].start_location.lng();
                             end_stop_lat_lon = response.routes[0].legs[0].steps[y].end_location.lat() + ',' + response.routes[0].legs[0].steps[y].end_location.lng();
-                            Google_Journey_time = response.routes[0].legs[0].steps[y].duration['value']
+                            Google_Journey_time = response.routes[0].legs[0].steps[y].duration['value'];
 
+                            route_dict['arrival_stop'] = arrival_stop;
+                            route_dict['step_distance'] = step_distance;
+                            route_dict['departure_time'] = departure_time;
                             route_dict['route'] = RouteShortname;
                             route_dict['start_stop_lat_lon'] = start_stop_lat_lon;
                             route_dict['end_stop_lat_lon'] = end_stop_lat_lon;
@@ -115,17 +129,16 @@ class AutocompleteDirectionsHandler {
                         }
                         steps_array.push(route_dict);
                     }
-
                     console.log(response)
                     console.log(steps_array)
 
                 } else {
                     window.alert("Directions request failed due to " + status);
                 }
-
                 Journey_Steps = JSON.stringify(steps_array);
             }
         )
+
 
         this.directionsService.route(
             {
@@ -136,7 +149,7 @@ class AutocompleteDirectionsHandler {
 
             (response, status) => {
                 //passing response to the populator function to update html divs
-                drivingComparatorInfoPopulator(response.routes[0].legs[0].duration.value,response.routes[0].legs[0].distance.value);
+                drivingComparatorInfoPopulator(response.routes[0].legs[0].duration.value, response.routes[0].legs[0].distance.value);
                 if (status === "OK") {
 
 
@@ -155,7 +168,7 @@ class AutocompleteDirectionsHandler {
 
             (response, status) => {
                 //passing response to the populator function to update html divs
-                cyclingComparatorInfoPopulator(response.routes[0].legs[0].duration.value,response.routes[0].legs[0].distance.value);
+                cyclingComparatorInfoPopulator(response.routes[0].legs[0].duration.value, response.routes[0].legs[0].distance.value);
                 if (status === "OK") {
 
 
@@ -174,7 +187,7 @@ class AutocompleteDirectionsHandler {
 
             (response, status) => {
                 if (status === "OK") {
-                    walkingComparatorInfoPopulator(response.routes[0].legs[0].duration.value,response.routes[0].legs[0].distance.value);
+                    walkingComparatorInfoPopulator(response.routes[0].legs[0].duration.value, response.routes[0].legs[0].distance.value);
 
 
                 } else {
@@ -188,6 +201,7 @@ class AutocompleteDirectionsHandler {
     }
 }
 
+
 function tripCO2Details(distance) {
 
     var tag = document.createElement("hr");
@@ -195,7 +209,7 @@ function tripCO2Details(distance) {
     element.appendChild(tag);
 
     var tagP = document.createElement("p");
-    var textP = document.createTextNode("Your selected trip is "+ distance + " km long. At 23g CO2 emissions per seat km, your journey would generate "+ Math.round(23*distance) + "g of C02.");
+    var textP = document.createTextNode("Your selected trip is " + distance + " km long. At 23g CO2 emissions per seat km, your journey would generate " + Math.round(23 * distance) + "g of C02.");
 
     element.appendChild(textP);
 
@@ -209,7 +223,7 @@ function getDateTime() {
 
     if (unixdate < Date.now()) {
         date_picked = Date.now();
-    }else{
+    } else {
         date_picked = unixdate;
     }
     console.log(unixdate);
@@ -221,39 +235,35 @@ function getDateTime() {
 function drivingComparatorInfoPopulator(duration, distance) {
     //populates information fields for various journey transit methods
 
-    document.getElementById("drivingTransitTime").innerHTML = Math.round(duration/60) + " minute(s)";
-    document.getElementById("drivingTransitDistance").innerHTML = distance/1000 + " km";
-
-
+    document.getElementById("drivingTransitTime").innerHTML = Math.round(duration / 60) + " minute(s)";
+    document.getElementById("drivingTransitDistance").innerHTML = distance / 1000 + " km";
 
 }
 
 function walkingComparatorInfoPopulator(duration, distance) {
     //populates information fields for various journey transit methods
 
-    document.getElementById("walkingTransitTime").innerHTML = Math.round(duration/60) + " minute(s)";
-    document.getElementById("walkingTransitDistance").innerHTML = distance/1000 + " km";
-
-
+    document.getElementById("walkingTransitTime").innerHTML = Math.round(duration / 60) + " minute(s)";
+    document.getElementById("walkingTransitDistance").innerHTML = distance / 1000 + " km";
 
 }
 
 function cyclingComparatorInfoPopulator(duration, distance) {
     //populates information fields for various journey transit methods
 
-    document.getElementById("cycleTransitTime").innerHTML = Math.round(duration/60) + " minute(s)";
-    document.getElementById("cycleTransitDistance").innerHTML = distance/1000 + " km";
- }
+    document.getElementById("cycleTransitTime").innerHTML = Math.round(duration / 60) + " minute(s)";
+    document.getElementById("cycleTransitDistance").innerHTML = distance / 1000 + " km";
+}
 
- function displayC02Comparator() {
+function displayC02Comparator() {
     document.getElementById("c02Comparator").style.display = "inline";
     $("#c02Comparator").slideDown();
- }
+}
 
- function displayTransportComparator() {
+function displayTransportComparator() {
     document.getElementById("journeyComparer").style.display = "inline";
     $("#journeyComparer").slideDown();
- }
+}
 
 
 

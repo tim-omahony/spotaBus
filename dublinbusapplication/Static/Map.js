@@ -19,6 +19,7 @@ let Google_Journey_time;
 let InitialMap;
 let weatherForecast;
 let favourites;
+let departure_time;
 
 
 // function to render the map on the main application page
@@ -65,13 +66,3 @@ window.onload = function () {
     stops = loadJson("stops-data")
 }
 
-
-function instructions_display(array) {
-    var Steps = array.length;
-    var str = '<ul>'
-    for (var y = 0; y <= Steps; y++) {
-        str += '<li>' + array[y].instructions + '</li>';
-    }
-    str += '</ul>';
-    document.getElementById('slideContainer').innerHTML = str;
-}
