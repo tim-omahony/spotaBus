@@ -22,134 +22,123 @@
                                                                           data-style="ios" data-on="" data-off=""></div>
 
     </div>
+    <hr/>
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="card" style="background-color: rgba(245, 245, 245, 0.4); ">
+                <div class="card-body">
+                    <h5 class="card-title">Click below to plan your journey!</h5>
 
-    <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"
-            onclick="Merge_weather();">
-        Plan Your Journey
-    </button>
-
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Dublin Bus Journey Planner</h5>
-                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+                    <!-- Button trigger modal -->
+                    <button type="button" id="planButton" class="btn btn-primary" data-toggle="modal"
+                            data-target="#exampleModal"
+                            onclick="changeButtonValue();">
+                        Plan Your Journey
                     </button>
-                </div>
-                <div class="modal-body">
-                    <div id="dbAutocomplete">
-                        <input id="origin-input"
-                               class="controls"
-                               list="originList"
-                               type="text"
-                               placeholder="Enter an origin location"/>
-                        <div id="favourite-routes">
-                            <datalist id="originList">
-                            </datalist>
-                            <datalist id="destinationList">
-                            </datalist>
-                        </div>
-                        <button id="star-btn" type="button" onclick="showFavourites()">
-                            <span class="glyphicon glyphicon-star"></span>
-                        </button>
 
-                        <input id="destination-input"
-                               class="controls"
-                               list="destinationList"
-                               type="text"
-                               placeholder="Enter a destination location"/>
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+                         aria-labelledby="exampleModalLabel"
+                         aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Dublin Bus Journey Planner</h5>
+                                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close">
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div id="dbAutocomplete">
+                                        <input id="origin-input"
+                                               class="controls"
+                                               list="originList"
+                                               type="text"
+                                               placeholder="Enter an origin location"/>
+                                        <div id="favourite-routes">
+                                            <datalist id="originList">
+                                            </datalist>
+                                            <datalist id="destinationList">
+                                            </datalist>
+                                        </div>
+                                        <button type="button" onclick="showFavourites()">
+                                            <i id="star-btn" class="fas fa-star"></i>
+                                        </button>
+
+                                        <input id="destination-input"
+                                               class="controls"
+                                               list="destinationList"
+                                               type="text"
+                                               placeholder="Enter a destination location"/>
+                                    </div>
+                                </div>
+
+                                <div id="origin-toggle">Set origin as current location<input id="origin-toggle-event"
+                                                                                             type="checkbox"
+                                                                                             data-toggle="toggle"
+                                                                                             data-style="ios" data-on=""
+                                                                                             data-off=""></div>
+
+                                <div id="datetime-toggle">
+                                    <input form="form" id="predictTime" class="form-control" type="datetime-local"
+                                           name="predict"
+                                           required onChange="InitialMap.route()">
+                                </div>
+                                <div class="modal-footer">
+                                    <form id="form" method="POST">
+                                        {% csrf_token %}
+                                        <button form="form" type="submit" class="btn btn-primary" name="submit"
+                                        >Plan
+                                            Journey
+                                        </button>
+                                    </form>
+                                    {% if user.is_authenticated %}
+                                        {% csrf_token %}
+                                        <button class="btn btn-secondary" type="button" value="Save Route"
+                                                onclick="saveRoute()">Save Route
+                                        </button>
+                                    {% endif %}
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="output"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-6">
+            <div class="card" style="background-color: rgba(245, 245, 245, 0.4); ">
+                <div class="card-body">
+                    <h5 class="card-title">Why take the bus?</h5>
+                    <p class="card-text">Small changes can make a big difference. That's why we want to show you the
+                        impact of your options. Go ahead,
+                        select a journey to find out!</p>
+
+                    <hr/>
+
+                    <div id="journeyComparer" style="display: none">
+                        <div id="JourneyComparerContainer">
+                            <h1 class="center">Compare your options:</h1>
+                            <div id="walkingDiv">
+                                <i class="fas fa-walking center"></i>
+                                <h4 class="center" id="walkingTransitTime"></h4>
+                            </div>
+                            <div id="transitDiv">
+                                <i class="fas fa-bicycle"></i>
+                                <h4 class="center" id="cycleTransitTime"></h4>
+                            </div>
+                            <div id="drivingDiv">
+                                <i class="fas fa-car center"></i>
+                                <h4 class="center" id="drivingTransitTime"></h4>
+                            </div>
+                        </div>
                     </div>
                 </div>
-
-                <div id="origin-toggle">Set origin as current location<input id="origin-toggle-event"
-                                                                             type="checkbox" data-toggle="toggle"
-                                                                             data-style="ios" data-on=""
-                                                                             data-off=""></div>
-
-                {% comment %}                <div id="date-toggle">Now or later?<input id="date-toggle-event" type="checkbox"
-                                                          data-toggle="toggle" data-style="ios"
-                                                          data-on="later" data-off="now"></div>{% endcomment %}
-
-                <div id="datetime-toggle">
-                    <input form="form" id="predictTime" class="form-control" type="datetime-local" name="predict"
-                           required onChange="InitialMap.route()">
-                </div>
-
-                <div class="modal-output">
-                    <div id="output"></div>
-                </div>
-                <div class="modal-footer">
-                    <div id="output"></div>
-                    <form id="form" method="POST">
-                        {% csrf_token %}
-                        <button form="form" type="submit" class="btn btn-primary" name="submit">Plan Journey
-                        </button>
-                    </form>
-                    {% if user.is_authenticated %}
-                        {% csrf_token %}
-                        <button type="button" value="Save Route" onclick="saveRoute()">Save Route</button>
-                    {% endif %}
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
             </div>
         </div>
     </div>
 
-    <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample"
-            aria-expanded="false" aria-controls="collapseExample">
-        Weekly Weather forecast
-    </button>
-
-    <div class="collapse" id="collapseExample">
-        <div class="card card-body" style="background-color: #e5e6e0;">
-            <a class="weatherwidget-io" href="https://forecast7.com/en/53d35n6d26/dublin/" data-label_1="DUBLIN"
-               data-label_2="Weekly Forecast" data-theme="gray" style="margin: auto;">DUBLIN Weekly Forecast</a>
-        </div>
-    </div>
-
-
-    <hr/>
-
-
-
-
-    <div class="h-100 p-5 text-white bg-dark rounded-3" id="c02Comparator">
-        <h2>Why take the bus?</h2>
-        <p>Small changes can make a big difference. That's why we want to show you the impact of your options. Go ahead,
-            select a journey to find out!</p>
-        <button class="btn btn-outline-light" type="button" style="display: none" onclick="">Calculate my C02 emission
-        </button>
-        <p id="busCO2Details"></p>
-    </div>
-
-    <hr/>
-
-    <div id="journeyComparer" style="display: none">
-        <div id="JourneyComparerContainer">
-            <h1 class="center">Compare your options:</h1>
-            <div id="walkingDiv">
-                <i class="fas fa-walking" class="center"></i>
-                <h2 class="center">Walking</h2>
-                <h4 class="center" id="walkingTransitTime"></h4>
-                <h4 class="center" id="walkingTransitDistance"></h4>
-            </div>
-            <div id="transitDiv">
-                <i class="fas fa-bicycle"></i>
-                <h2 class="center">Cycling</h2>
-                <h4 class="center" id="cycleTransitTime"></h4>
-                <h4 class="center" id="cycleTransitDistance"></h4>
-            </div>
-            <div id="drivingDiv">
-                <i class="fas fa-car center"></i>
-                <h2 class="center">Driving</h2>
-                <h4 class="center" id="drivingTransitTime"></h4>
-                <h4 class="center" id="drivingTransitDistance"></h4>
-            </div>
-        </div>
-    </div>
 
 
 {% endblock %}

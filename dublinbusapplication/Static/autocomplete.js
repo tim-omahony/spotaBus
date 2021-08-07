@@ -103,7 +103,7 @@ class AutocompleteDirectionsHandler {
 
                         if (Transit_Type === "TRANSIT") {
 
-                            tripCO2Details(response.routes[0].legs[0].distance.value / 1000)
+                            // tripCO2Details(response.routes[0].legs[0].distance.value / 1000)
 
                             arrival_stop = []
                             RouteShortname = [];
@@ -202,18 +202,18 @@ class AutocompleteDirectionsHandler {
 }
 
 
-function tripCO2Details(distance) {
-
-    var tag = document.createElement("hr");
-    var element = document.getElementById("busCO2Details");
-    element.appendChild(tag);
-
-    var tagP = document.createElement("p");
-    var textP = document.createTextNode("Your selected trip is " + distance + " km long. At 23g CO2 emissions per seat km, your journey would generate " + Math.round(23 * distance) + "g of C02.");
-
-    element.appendChild(textP);
-
-}
+// function tripCO2Details(distance) {
+//
+//     var tag = document.createElement("hr");
+//     var element = document.getElementById("busCO2Details");
+//     element.appendChild(tag);
+//
+//     var tagP = document.createElement("p");
+//     var textP = document.createTextNode("Your selected trip is " + distance + " km long. At 23g CO2 emissions per seat km, your journey would generate " + Math.round(23 * distance) + "g of C02.");
+//
+//     element.appendChild(textP);
+//
+// }
 
 //function to take the user input from the date picker to be passed to the google directions service API
 function getDateTime() {
@@ -231,33 +231,21 @@ function getDateTime() {
     return date_picked;
 }
 
+const lotsOfMins = (mins) => mins / 60 > 1
 
-function drivingComparatorInfoPopulator(duration, distance) {
+function drivingComparatorInfoPopulator(duration) {
     //populates information fields for various journey transit methods
-
-    document.getElementById("drivingTransitTime").innerHTML = Math.round(duration / 60) + " minute(s)";
-    document.getElementById("drivingTransitDistance").innerHTML = distance / 1000 + " km";
-
+    document.getElementById("drivingTransitTime").innerHTML = Math.round(duration / 60) + ` minute${lotsOfMins(duration) ? 's' : ''}`;
 }
 
-function walkingComparatorInfoPopulator(duration, distance) {
+function walkingComparatorInfoPopulator(duration) {
     //populates information fields for various journey transit methods
-
-    document.getElementById("walkingTransitTime").innerHTML = Math.round(duration / 60) + " minute(s)";
-    document.getElementById("walkingTransitDistance").innerHTML = distance / 1000 + " km";
-
+    document.getElementById("walkingTransitTime").innerHTML = Math.round(duration / 60) + ` minute${lotsOfMins(duration) ? 's' : ''}`;
 }
 
-function cyclingComparatorInfoPopulator(duration, distance) {
+function cyclingComparatorInfoPopulator(duration) {
     //populates information fields for various journey transit methods
-
-    document.getElementById("cycleTransitTime").innerHTML = Math.round(duration / 60) + " minute(s)";
-    document.getElementById("cycleTransitDistance").innerHTML = distance / 1000 + " km";
-}
-
-function displayC02Comparator() {
-    document.getElementById("c02Comparator").style.display = "inline";
-    $("#c02Comparator").slideDown();
+    document.getElementById("cycleTransitTime").innerHTML = Math.round(duration / 60) + ` minute${lotsOfMins(duration) ? 's' : ''}`;
 }
 
 function displayTransportComparator() {

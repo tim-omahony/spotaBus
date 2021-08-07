@@ -277,12 +277,22 @@ a:focus {
 /* ------------------------------------------------------------------------------------------------------------- */
 
 /* Index page css */
+.card {
+    background-color: rgba(245, 245, 245, 1);
+    /*opacity: .4;*/
+}
 
 #star-btn {
-    width: 10%;
-    height: 10%;
-    color: yellow;
+    background-color: white;
 }
+
+#c02Comparator {
+    display: flex;
+    border: solid 1px #000;
+    height: 200px;
+    margin-right: auto;
+}
+
 
 #favourite-routes {
     display: none;
@@ -595,15 +605,6 @@ td, th {
 tr:nth-child(even) {
     background-color: #dddddd;
 }
-
-
-
-
-
-
-
-
-
 
 
 /* ------------------------------------------------------------------------------------------------------------- */
