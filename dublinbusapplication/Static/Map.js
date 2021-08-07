@@ -19,7 +19,7 @@ let Google_Journey_time;
 let InitialMap;
 let weatherForecast;
 let favourites;
-let departure_time;
+
 
 
 // function to render the map on the main application page
