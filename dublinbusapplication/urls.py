@@ -13,7 +13,8 @@ urlpatterns = [
     path('predict/', predict, name='predict'),
     path('add_favourite_route/', add_favourite_route, name="add_favourite_route"),
   #  path('userPage/', views.userPage, name="userPage"),
-    path('userPage/', views.displayFavRoute, name='displayFavRoute'),
+    #path('userPage/', views.displayFavRoute, name='displayFavRoute'),
     path('dist/', distance, name='distance'),
-    path('delete_fav_route/', views.deleteUserFavJourney, name='deleteUserFavJourney')
+    #path('delete_fav_route/', views.displayFavRoute, name='deleteUserFavJourney')
+    path('delete_fav_route/', displayFavRoute.as_view(), name='deleteUserFavJourney')
 ]
