@@ -22,6 +22,7 @@ $(document).ready(function () {
 
             // if the function properly sends data to the predictive model the estimated travel time is returned
             success: function (result) {
+
                 var response = {
                             'JourneyTime': result.JourneyTime,
                             'Weather': result.Weather,
@@ -33,12 +34,11 @@ $(document).ready(function () {
                     "<p>Estimated Bus Journey Time: " + response.JourneyTime + " minutes</p>"+
                     " <div id='icon'><p>Weather Forecast:</p><img id='wicon' src=" +iconurl+"></div>"
                     );
+
             },
 
             failure: function (result) {
                 console.log(result)
-
-
             }
         })
     });
