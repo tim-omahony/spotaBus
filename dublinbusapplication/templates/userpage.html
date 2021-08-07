@@ -44,17 +44,23 @@
                                 <p><b>Favorite Routes</b></p>
                                 {% csrf_token %}
                                 {% for routes in user_routes %}
-                                    <tr>
-                                        <td>{{ routes.users_origin_stop }}</td>
-                                        <td> {{ routes.users_dest_stop }} </td>
-                                        <td>
+                                    <tr id="{{ routes.id }}">
+                                    <td>{{ routes.users_origin_stop }}</td>
+                                    <td> {{ routes.users_dest_stop }} </td>
+                                     <td><input type="checkbox" name="route_id[]" value="{{ routes.id }}"></td>
+                                    {% comment %}        <td>
                                             <button type="button" class="btn btn-danger"
                                                     onclick="removeFav('{{ request.user.username }}')">Remove Route
                                             </button>
-                                        </td>
+                                        </td>{% endcomment %}
+
                                     </tr>
+
                                 {% endfor %}
+
                             </table>
+                         <button type="submit" id="delete_btn" class="btn btn-secondary">Remove Route</button>
+
                         </div>
 
 

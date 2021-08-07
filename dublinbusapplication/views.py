@@ -6,6 +6,8 @@ from django.contrib.auth import authenticate, login, logout
 from dublinbusapplication.predictive_model.get_prediction import *
 from dublinbusapplication.predictive_model.Get_Times import *
 from .models import Stop, Bikes, FavouriteJourney
+from django.views.generic import View
+from dublinbusapplication.models import FavouriteJourney
 
 
 def index(request):
@@ -189,23 +191,36 @@ def userPage(request):
 #
 # print(JsonResponse(closest(stop, v)))
 
-def displayFavRoute(request):
-    # user_id = user.user_id.get()
-    # current_user = request.user
-    # user_id = request.session['_auth_user_id']
-    # user_routes = FavouriteJourney.objects.get(pk=6)
-    user_routes = FavouriteJourney.objects.filter(user_id=request.user)
-    #  user_routes = FavouriteJourney.objects.all()
+# def displayFavRoute(request):
+#     # user_id = user.user_id.get()
+#     # current_user = request.user
+#     # user_id = request.session['_auth_user_id']
+#     # user_routes = FavouriteJourney.objects.get(pk=6)
+#     user_routes = FavouriteJourney.objects.filter(user_id=request.user)
+#     #  user_routes = FavouriteJourney.objects.all()
+#
+#     return render(request, 'userpage.html', {'user_routes': user_routes})
 
-    return render(request, 'userpage.html', {'user_routes': user_routes})
+class displayFavRoute(View):
+    def get(self, request):
+        user_routes = FavouriteJourney.objects.filter(user_id=request.user)
+        return render(request, 'userpage.html', {'user_routes': user_routes})
+
+    def post(self, request, *args, **kwargs):
+        if request.method == "POST":
+            route_ids = request.POST.getlist('id[]')
+            for id in route_ids:
+                fav_route = FavouriteJourney.objects.get(pk=id)
+                fav_route.delete()
+            return redirect('deleteUserFavJourney')
 
 
-def deleteUserFavJourney(request, id):
-    if FavouriteJourney.objects.filter(id=FavouriteJourney.objects.id).exists():
-        user_records = FavouriteJourney.objects.get(id=FavouriteJourney.objects.id)
-        user_records.delete()
-        messages.success(request, "The favorite journey was successfully deleted")
-        return redirect('userpage.html')
-    else:
-        messages.error(request, "ERROR: the journey was not deleted..")
-        return redirect('userpage.html')
+# def deleteUserFavJourney(request, id):
+#     if FavouriteJourney.objects.filter(id=FavouriteJourney.objects.id).exists():
+#         user_records = FavouriteJourney.objects.get(id=FavouriteJourney.objects.id)
+#         user_records.delete()
+#         messages.success(request, "The favorite journey was successfully deleted")
+#         return redirect('userpage.html')
+#     else:
+#         messages.error(request, "ERROR: the journey was not deleted..")
+#         return redirect('userpage.html')
