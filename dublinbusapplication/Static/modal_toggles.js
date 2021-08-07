@@ -1,7 +1,10 @@
 function changeButtonValue() {
     const planButton = document.getElementById("planButton");
-    if (planButton.innerHTML === "Plan Another Journey") planButton.innerHTML = "Plan Your Journey";
-    else planButton.innerHTML = "Plan Another Journey";
+    if (planButton.innerHTML === "Plan Your Journey") {
+        planButton.innerHTML = "Plan Another Journey";
+    } else {
+        planButton.innerHTML = "Plan Another Journey";
+    }
     Merge_weather();
 }
 
