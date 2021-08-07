@@ -26,3 +26,4 @@ function showFavourites() {
         destList.innerHTML = ""
     }
 }
+
