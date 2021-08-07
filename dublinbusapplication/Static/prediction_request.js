@@ -22,9 +22,16 @@ $(document).ready(function () {
 
             // if the function properly sends data to the predictive model the estimated travel time is returned
             success: function (result) {
-                console.log(steps_array)
-                $('#output').html("<p>Instructions:" + results_display(Journey_Steps) + "</p>" +
-                    "<p>Estimated Bus Journey Time: " + result + " minutes</p>"
+                var response = {
+                            'JourneyTime': result.JourneyTime,
+                            'Weather': result.Weather,
+                        };
+
+                var iconurl = "http://openweathermap.org/img/wn/" + response.Weather.icon + "@2x.png";
+
+                $('#output').html("<p>" + results_display(Journey_Steps) + "</p>" +
+                    "<p>Estimated Bus Journey Time: " + response.JourneyTime + " minutes</p>"+
+                    " <div id='icon'><p>Weather Forecast:</p><img id='wicon' src=" +iconurl+"></div>"
                     );
             },
 

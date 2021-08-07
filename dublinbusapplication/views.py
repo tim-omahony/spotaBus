@@ -96,8 +96,13 @@ def predict(request):
                                    stops_dict))
 
                     final_estimate.append(result)
+                    result = sum(final_estimate)
+                    response = {
+                        'JourneyTime': result,
+                        'Weather': final_weather_dict,
+                    }
 
-        return JsonResponse(sum(final_estimate), safe=False)
+        return JsonResponse(response, safe=False)
         # return response as JSON
 
     except Exception as e:

@@ -22,6 +22,4 @@ function showFavourites() {
     }
 }
 
-function changeColor() {
 
-}
