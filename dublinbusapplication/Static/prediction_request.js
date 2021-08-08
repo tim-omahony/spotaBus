@@ -23,12 +23,14 @@ $(document).ready(function () {
             // if the function properly sends data to the predictive model the estimated travel time is returned
             success: function (result) {
 
-                var response = {
+
+                const response = {
+
                     'JourneyTime': result.JourneyTime,
                     'Weather': result.Weather,
                 };
 
-                var iconurl = "http://openweathermap.org/img/wn/" + response.Weather.icon + "@2x.png";
+                const iconurl = "http://openweathermap.org/img/wn/" + response.Weather.icon + "@2x.png";
                 var temperature = (response.Weather.temp - 273).toFixed(1);
                 $('#output').html("<p>" + results_display(Journey_Steps) + "</p>" +
                     "<p>Estimated Bus Journey Time: " + response.JourneyTime + " minutes</p>" +
@@ -44,13 +46,13 @@ $(document).ready(function () {
     });
 })
 
-
 function results_display(array) {
 
     const response_array = JSON.parse(array)
 
+    console.log(hello)
+    let journey_instructions = `<div class="vertical-timeline vertical-timeline--animate vertical-timeline--one-column">`;
     console.log(response_array)
-    var journey_instructions = `<div class="vertical-timeline vertical-timeline--animate vertical-timeline--one-column">` +
         '<div class="vertical-timeline-item vertical-timeline-element">' +
         `<div class="vertical-timeline-element-content bounce-in">` +
         `<h3 class="timeline-title">${response_array[0].departure_time}</h3></div></div>`;
@@ -93,9 +95,9 @@ function results_display(array) {
     const hello = JSON.parse(array)
     console.log(hello)
     console.log(hello[0].instructions)
-    var Steps = array.length;
+    const Steps = array.length;
     route_instructions = []
-    for (var y = 0; y <= Steps; y++) {
+    for (let y = 0; y <= Steps; y++) {
            route_instructions.push(hello[y].instructions);
     }
     return route_instructions;

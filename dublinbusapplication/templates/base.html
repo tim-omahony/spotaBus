@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     {% load static %}
-    <script> var csrfmiddlewaretoken = '{{ csrf_token }}'; </script>
+    <script> const csrfmiddlewaretoken = '{{ csrf_token }}'; </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://kit.fontawesome.com/ac046bec8d.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"
@@ -28,6 +28,7 @@
     <script src=" {% static '/remove_fav_route.js' %}"></script>
     <script src="{% static '/prediction_request.js' %}"></script>
     <script src="{% static '/geolocation.js' %}"></script>
+    <script src="{% static '/comparators.js' %}"></script>
     <script src="{% static '/autocomplete.js' %}"></script>
     <script src=" {% static '/Map.js' %}"></script>
 
@@ -136,7 +137,7 @@
         });
 
         //get class on load
-        var active = localStorage.getItem("clicked")
+        const active = localStorage.getItem("clicked")
         active ? $("#" + active).addClass("active") : $('#home').addClass("active")
     })
 

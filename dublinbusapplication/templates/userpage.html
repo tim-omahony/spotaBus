@@ -35,9 +35,6 @@
                             <p><small>Journeys Planned</small></p>
                         </div>
                         <div class="col-xs-12 col-sm-4 emphasis">
-                            <h2><strong>43</strong></h2>
-                            <p><small>Snippets</small></p>
-
                         </div>
                         <div>
                             <table>
@@ -45,31 +42,17 @@
                                 {% csrf_token %}
                                 {% for routes in user_routes %}
                                     <tr id="{{ routes.id }}">
-                                    <td>{{ routes.users_origin_stop }}</td>
-                                    <td> {{ routes.users_dest_stop }} </td>
-                                     <td><input type="checkbox" name="route_id[]" value="{{ routes.id }}"></td>
-                                    {% comment %}        <td>
-                                            <button type="button" class="btn btn-danger"
-                                                    onclick="removeFav('{{ request.user.username }}')">Remove Route
-                                            </button>
-                                        </td>{% endcomment %}
-
+                                        <td>{{ routes.users_origin_stop }}</td>
+                                        <td> {{ routes.users_dest_stop }} </td>
+                                        <td><input type="checkbox" name="route_id[]" value="{{ routes.id }}"></td>
                                     </tr>
-
                                 {% endfor %}
-
                             </table>
-                         <button type="submit" id="delete_btn" class="btn btn-secondary">Remove Route</button>
-
+                            <button type="submit" id="delete_btn" class="btn btn-secondary">Remove Route</button>
                         </div>
-
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-
-
 {% endblock %}

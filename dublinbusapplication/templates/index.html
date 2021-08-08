@@ -4,12 +4,9 @@
 
 {% block content %}
 
-
-
     {{ stops | json_script:"stops-data" }}
     {{ stations | json_script:"stations-data" }}
     {{ favourites | json_script:"fave-routes-data" }}
-
 
     <div id="holidayWidget" style="visibility: hidden;"></div>
 
@@ -32,7 +29,7 @@
                     <!-- Button trigger modal -->
                     <button type="button" id="planButton" class="btn btn-primary" data-toggle="modal"
                             data-target="#exampleModal"
-                            onclick="changeButtonValue();">
+                            onclick="Merge_weather();">
                         Plan Your Journey
                     </button>
 
@@ -74,11 +71,12 @@
                                     </div>
                                 </div>
 
-                                <div id="origin-toggle">Set origin as current location<input id="origin-toggle-event"
-                                                                                             type="checkbox"
-                                                                                             data-toggle="toggle"
-                                                                                             data-style="ios" data-on=""
-                                                                                             data-off=""></div>
+                                <div id="origin-toggle">Set my location as origin: <input id="origin-toggle-event"
+                                                                                          type="checkbox"
+                                                                                          data-toggle="toggle"
+                                                                                          data-style="ios"
+                                                                                          data-on="on"
+                                                                                          data-off="off"></div>
 
                                 <div id="datetime-toggle">
                                     <input form="form" id="predictTime" class="form-control" type="datetime-local"
@@ -89,8 +87,7 @@
                                     <form id="form" method="POST">
                                         {% csrf_token %}
                                         <button form="form" type="submit" class="btn btn-primary" name="submit"
-                                        >Plan
-                                            Journey
+                                                onclick="changeButtonValue()">Plan Journey
                                         </button>
                                     </form>
                                     {% if user.is_authenticated %}
@@ -142,7 +139,4 @@
         </div>
     </div>
 
-
-
 {% endblock %}
-

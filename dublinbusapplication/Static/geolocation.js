@@ -1,5 +1,4 @@
 // this function returns the location of the user as a point on the map
-
 function Geolocation() {
 
     navigator.geolocation.getCurrentPosition(
@@ -15,7 +14,7 @@ function Geolocation() {
 }
 
 function find_address(pos) {
-    var geocoder = new google.maps.Geocoder();
+    const geocoder = new google.maps.Geocoder();
     geocoder.geocode({location: pos})
         .then((response) => {
             if (response.results[0]) {
