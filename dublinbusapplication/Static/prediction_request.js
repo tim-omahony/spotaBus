@@ -49,9 +49,7 @@ function results_display(array) {
 
     const response_array = JSON.parse(array)
 
-    console.log(hello)
-    let journey_instructions = `<div class="vertical-timeline vertical-timeline--animate vertical-timeline--one-column">`;
-    console.log(response_array)
+    let journey_instructions = `<div class="vertical-timeline vertical-timeline--animate vertical-timeline--one-column">`+
         '<div class="vertical-timeline-item vertical-timeline-element">' +
         `<div class="vertical-timeline-element-content bounce-in">` +
         `<h3 class="timeline-title">${response_array[0].departure_time}</h3></div></div>`;
