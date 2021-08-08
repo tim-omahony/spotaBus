@@ -98,16 +98,18 @@ def predict(request):
 
                     final_estimate.append(result)
                     result = sum(final_estimate)
+                    type_dict = {'type': 'ours'}
                     response = {
                         'JourneyTime': result,
                         'Weather': final_weather_dict,
+                        'prediction_type': type_dict,
                     }
 
         return JsonResponse(response, safe=False)
         # return response as JSON
 
     except Exception as e:
-        print(e)
+        print("getting google result because:", e)
         journey_steps = json.loads(request.POST["steps_array"])
         google_time_result = []
 
@@ -116,10 +118,13 @@ def predict(request):
                 google_time = int(item["Google_Journey_time"] / 60)
                 google_time_result.append(google_time)
                 result = sum(google_time_result)
+                type_dict = {'type': 'google'}
                 response = {
                     'JourneyTime': result,
                     'Weather': final_weather_dict,
+                    'prediction_type': type_dict,
                 }
+                print(response)
 
         return JsonResponse(response, safe=False)
 
