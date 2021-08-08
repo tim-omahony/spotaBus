@@ -1,5 +1,7 @@
 let step_distance;
 let arrival_stop;
+let arrival_time;
+let departure_time;
 
 class AutocompleteDirectionsHandler {
     map;
@@ -87,18 +89,26 @@ class AutocompleteDirectionsHandler {
                         const Transit_Type = response.routes[0].legs[0].steps[y].travel_mode;
 
                         Direction_Steps = [];
-                        departure_time = []
+                        departure_time = [];
+                        arrival_time = [];
                         step_distance = [];
-                        Direction_Steps = response.routes[0].legs[0].steps[y].instructions;
-                        route_dict['instructions'] = Direction_Steps;
 
+                        Direction_Steps = response.routes[0].legs[0].steps[y].instructions;
+                        departure_time = response.routes[0].legs[0].departure_time['text'];
+                        arrival_time = response.routes[0].legs[0].arrival_time['text'];
+
+                        route_dict['instructions'] = Direction_Steps;
+                        route_dict['departure_time'] = departure_time;
+                        route_dict['arrival_time'] = arrival_time;
 
                         if (Transit_Type === "WALKING") {
-                            route_dict['transit_type'] = Transit_Type;
-                            departure_time = response.routes[0].legs[0].departure_time['text'];
+
+
                             step_distance = response.routes[0].legs[0].steps[y].distance['text'];
-                            route_dict['departure_time'] = departure_time;
+
+
                             route_dict['step_distance'] = step_distance;
+                            route_dict['transit_type'] = Transit_Type;
                         }
 
                         if (Transit_Type === "TRANSIT") {
@@ -112,7 +122,6 @@ class AutocompleteDirectionsHandler {
 
                             arrival_stop = response.routes[0].legs[0].steps[y].transit.arrival_stop['name'];
                             step_distance = response.routes[0].legs[0].steps[y].distance['text'];
-                            departure_time = response.routes[0].legs[0].departure_time['text'];
                             RouteShortname = response.routes[0].legs[0].steps[y].transit.line.short_name;
                             start_stop_lat_lon = response.routes[0].legs[0].steps[y].start_location.lat() + ',' + response.routes[0].legs[0].steps[y].start_location.lng();
                             end_stop_lat_lon = response.routes[0].legs[0].steps[y].end_location.lat() + ',' + response.routes[0].legs[0].steps[y].end_location.lng();

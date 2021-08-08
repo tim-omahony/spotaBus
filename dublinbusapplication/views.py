@@ -23,31 +23,30 @@ def index(request):
 
 # ajax_posting function
 def predict(request):
+    current_weather = json.loads(request.POST["current_weather"])
+    weather_forecast = json.loads(request.POST["weather_forecast"])
+    date_time = json.loads(request.POST["date_time"])
+    # dividing by 1000 to convert to same unix format as OpenWeather API
+
+    date_time = int(date_time / 1000)
+
+    # merging the weather data
+    full_weather = current_weather + weather_forecast
+
+    print(type(full_weather))
+    print(full_weather)
+    print(date_time)
+
+    # calling the functions that take the full weather forecast and match the users input time with the closest time
+    # and then returns the dictionary of the weather forecast items for that time.
+
+    time_list = get_time_list(full_weather)
+    nearest_time = nearest(date_time, time_list)
+    final_weather_dict = get_time(full_weather, nearest_time)
+
     try:
         stop = Stop.objects.all().values()
         journey_steps = json.loads(request.POST["steps_array"])
-        current_weather = json.loads(request.POST["current_weather"])
-        weather_forecast = json.loads(request.POST["weather_forecast"])
-        date_time = json.loads(request.POST["date_time"])
-
-        # dividing by 1000 to convert to same unix format as OpenWeather API
-
-        date_time = int(date_time / 1000)
-
-        # merging the weather data
-        full_weather = current_weather + weather_forecast
-
-        print(type(full_weather))
-        print(full_weather)
-        print(date_time)
-
-        # calling the functions that take the full weather forecast and match the users input time with the closest time
-        # and then returns the dictionary of the weather forecast items for that time.
-
-        time_list = get_time_list(full_weather)
-        nearest_time = nearest(date_time, time_list)
-        final_weather_dict = get_time(full_weather, nearest_time)
-
         print(nearest_time)
         print(final_weather_dict)
 
@@ -116,8 +115,13 @@ def predict(request):
             if item["transit_type"] == "TRANSIT":
                 google_time = int(item["Google_Journey_time"] / 60)
                 google_time_result.append(google_time)
+                result = sum(google_time_result)
+                response = {
+                    'JourneyTime': result,
+                    'Weather': final_weather_dict,
+                }
 
-        return JsonResponse(sum(google_time_result), safe=False)
+        return JsonResponse(response, safe=False)
 
 
 def about(request):
@@ -218,7 +222,6 @@ class displayFavRoute(View):
                 fav_route = FavouriteJourney.objects.get(pk=id)
                 fav_route.delete()
             return redirect('deleteUserFavJourney')
-
 
 # def deleteUserFavJourney(request, id):
 #     if FavouriteJourney.objects.filter(id=FavouriteJourney.objects.id).exists():

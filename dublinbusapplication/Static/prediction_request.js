@@ -23,16 +23,17 @@ $(document).ready(function () {
             // if the function properly sends data to the predictive model the estimated travel time is returned
             success: function (result) {
 
+
                 const response = {
                     'JourneyTime': result.JourneyTime,
                     'Weather': result.Weather,
                 };
 
                 const iconurl = "http://openweathermap.org/img/wn/" + response.Weather.icon + "@2x.png";
-
+                var temperature = (response.Weather.temp - 273).toFixed(1);
                 $('#output').html("<p>" + results_display(Journey_Steps) + "</p>" +
                     "<p>Estimated Bus Journey Time: " + response.JourneyTime + " minutes</p>" +
-                    " <div id='icon'><p>Weather Forecast:</p><img id='wicon' src=" + iconurl + "></div>"
+                    " <div id='icon'><p>Weather Forecast:</p><p>" + temperature + "<span>&#176;</span><img id='wicon' src=" + iconurl + "></p></div>"
                 );
 
             },
@@ -46,12 +47,16 @@ $(document).ready(function () {
 
 function results_display(array) {
 
-    const hello = JSON.parse(array)
+    const response_array = JSON.parse(array)
 
     console.log(hello)
     let journey_instructions = `<div class="vertical-timeline vertical-timeline--animate vertical-timeline--one-column">`;
+    console.log(response_array)
+        '<div class="vertical-timeline-item vertical-timeline-element">' +
+        `<div class="vertical-timeline-element-content bounce-in">` +
+        `<h3 class="timeline-title">${response_array[0].departure_time}</h3></div></div>`;
 
-    hello.forEach(function (step) {
+    response_array.forEach(function (step) {
         console.log('step', step)
         if (step.transit_type == "WALKING") {
             journey_instructions +=
@@ -73,7 +78,11 @@ function results_display(array) {
                 `</div></div></div>`;
         }
     });
-    journey_instructions += `</div>`;
+
+    journey_instructions +=  '<div class="vertical-timeline-item vertical-timeline-element">' +
+        `<div class="vertical-timeline-element-content bounce-in">` +
+        `<h3 class="timeline-title">${response_array[0].arrival_time}</h3>` +
+        `</div></div></div>`;
 
     // Add the timeline to the page
     return journey_instructions;
