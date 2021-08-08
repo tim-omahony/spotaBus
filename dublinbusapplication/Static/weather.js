@@ -13,11 +13,11 @@ function getForecast() {
         .then(response => {
             forecast_weather_array = [];
 
-            var interval = response.list.length;
+            const interval = response.list.length;
             console.log(response);
             console.log(interval);
-            for (var y = 0; y < interval; y++) {
-                var weather_dict = {};
+            for (let y = 0; y < interval; y++) {
+                const weather_dict = {};
                 date_time = [];
                 temp = [];
                 humidity = [];
@@ -56,7 +56,7 @@ function getWeather() {
         .then(response => {
             console.log(response);
             current_weather_array = [];
-            var weather_dict = {};
+            const weather_dict = {};
 
             date_time = [];
             temp = [];

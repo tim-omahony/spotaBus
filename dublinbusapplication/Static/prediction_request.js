@@ -23,17 +23,17 @@ $(document).ready(function () {
             // if the function properly sends data to the predictive model the estimated travel time is returned
             success: function (result) {
 
-                var response = {
-                            'JourneyTime': result.JourneyTime,
-                            'Weather': result.Weather,
-                        };
+                const response = {
+                    'JourneyTime': result.JourneyTime,
+                    'Weather': result.Weather,
+                };
 
-                var iconurl = "http://openweathermap.org/img/wn/" + response.Weather.icon + "@2x.png";
+                const iconurl = "http://openweathermap.org/img/wn/" + response.Weather.icon + "@2x.png";
 
                 $('#output').html("<p>" + results_display(Journey_Steps) + "</p>" +
-                    "<p>Estimated Bus Journey Time: " + response.JourneyTime + " minutes</p>"+
-                    " <div id='icon'><p>Weather Forecast:</p><img id='wicon' src=" +iconurl+"></div>"
-                    );
+                    "<p>Estimated Bus Journey Time: " + response.JourneyTime + " minutes</p>" +
+                    " <div id='icon'><p>Weather Forecast:</p><img id='wicon' src=" + iconurl + "></div>"
+                );
 
             },
 
@@ -44,13 +44,12 @@ $(document).ready(function () {
     });
 })
 
-
 function results_display(array) {
 
     const hello = JSON.parse(array)
 
     console.log(hello)
-    var journey_instructions = `<div class="vertical-timeline vertical-timeline--animate vertical-timeline--one-column">`;
+    let journey_instructions = `<div class="vertical-timeline vertical-timeline--animate vertical-timeline--one-column">`;
 
     hello.forEach(function (step) {
         console.log('step', step)
@@ -86,9 +85,9 @@ function results_display(array) {
     const hello = JSON.parse(array)
     console.log(hello)
     console.log(hello[0].instructions)
-    var Steps = array.length;
+    const Steps = array.length;
     route_instructions = []
-    for (var y = 0; y <= Steps; y++) {
+    for (let y = 0; y <= Steps; y++) {
            route_instructions.push(hello[y].instructions);
     }
     return route_instructions;

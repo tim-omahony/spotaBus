@@ -65,4 +65,3 @@ function loadJson(selector) {
 window.onload = function () {
     stops = loadJson("stops-data")
 }
-
