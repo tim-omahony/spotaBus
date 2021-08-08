@@ -25,7 +25,6 @@ $(document).ready(function () {
 
 
                 const response = {
-
                     'JourneyTime': result.JourneyTime,
                     'Weather': result.Weather,
                 };
