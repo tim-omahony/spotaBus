@@ -2,6 +2,7 @@ let step_distance;
 let arrival_stop;
 let arrival_time;
 let departure_time;
+let transit_departure_time;
 
 class AutocompleteDirectionsHandler {
     map;
@@ -119,10 +120,12 @@ class AutocompleteDirectionsHandler {
                             RouteShortname = [];
                             start_stop_lat_lon = [];
                             end_stop_lat_lon = [];
+                            transit_departure_time = []
 
                             arrival_stop = response.routes[0].legs[0].steps[y].transit.arrival_stop['name'];
                             step_distance = response.routes[0].legs[0].steps[y].distance['text'];
                             RouteShortname = response.routes[0].legs[0].steps[y].transit.line.short_name;
+                            transit_departure_time = response.routes[0].legs[0].steps[y].transit.departure_time['text'];
                             start_stop_lat_lon = response.routes[0].legs[0].steps[y].start_location.lat() + ',' + response.routes[0].legs[0].steps[y].start_location.lng();
                             end_stop_lat_lon = response.routes[0].legs[0].steps[y].end_location.lat() + ',' + response.routes[0].legs[0].steps[y].end_location.lng();
                             Google_Journey_time = response.routes[0].legs[0].steps[y].duration['value'];
@@ -131,6 +134,7 @@ class AutocompleteDirectionsHandler {
                             route_dict['step_distance'] = step_distance;
                             route_dict['departure_time'] = departure_time;
                             route_dict['route'] = RouteShortname;
+                            route_dict['transit_departure_time'] = transit_departure_time;
                             route_dict['start_stop_lat_lon'] = start_stop_lat_lon;
                             route_dict['end_stop_lat_lon'] = end_stop_lat_lon;
                             route_dict['transit_type'] = Transit_Type;
