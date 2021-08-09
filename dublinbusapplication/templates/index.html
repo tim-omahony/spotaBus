@@ -91,7 +91,7 @@
                                 <div class="modal-footer">
                                     <form id="form" method="POST">
                                         {% csrf_token %}
-                                        <button form="form" type="submit" class="btn btn-primary" name="submit"
+                                        <button id = "plan_journey_btn" form="form" type="submit" class="btn btn-primary" name="submit"
                                                 onclick="changeButtonValue()">Plan Journey
                                         </button>
                                     </form>
@@ -106,6 +106,10 @@
                             </div>
                         </div>
                     </div>
+                    <script>
+
+                    </script>
+
                     <div id="output"></div>
                 </div>
             </div>
