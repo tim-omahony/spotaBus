@@ -29,3 +29,14 @@ $(function () {
         }
     })
 })
+
+// function to hide modal box when plan journey is clicked and scroll down to output
+$(function () {
+    $('#plan_journey_btn').click(function () {
+        $('#exampleModal').modal('hide');
+        $('html,body').animate({
+                scrollTop: $("#output").offset().top
+            },
+            'slow');
+    });
+})
