@@ -30,21 +30,22 @@ function getDateTime() {
 const lotsOfMins = (mins) => mins / 60 > 1
 
 function drivingComparatorInfoPopulator(duration) {
-    //populates information fields for constious journey transit methods
+    //populates information fields for driving comparator div
     document.getElementById("drivingTransitTime").innerHTML = Math.round(duration / 60) + ` minute${lotsOfMins(duration) ? 's' : ''}`;
 }
 
 function walkingComparatorInfoPopulator(duration) {
-    //populates information fields for constious journey transit methods
+    //populates information fields for walking comparator div
     document.getElementById("walkingTransitTime").innerHTML = Math.round(duration / 60) + ` minute${lotsOfMins(duration) ? 's' : ''}`;
 }
 
 function cyclingComparatorInfoPopulator(duration) {
-    //populates information fields for constious journey transit methods
+    //populates information fields for cycling comparator div
     document.getElementById("cycleTransitTime").innerHTML = Math.round(duration / 60) + ` minute${lotsOfMins(duration) ? 's' : ''}`;
 }
 
 function displayTransportComparator() {
+    //displays the transport comparator div (triggers when journey planner is executed)
     document.getElementById("journeyComparer").style.display = "inline";
     $("#journeyComparer").slideDown();
 }
