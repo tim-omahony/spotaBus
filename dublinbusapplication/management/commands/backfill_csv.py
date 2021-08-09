@@ -1,3 +1,5 @@
+"""this file is used to populate the database with static information on bus stops and dublin bikes stations by
+backfilling static csv files into the database"""
 from django.core.management.base import BaseCommand
 from django.apps import AppConfig, apps
 import csv
@@ -7,12 +9,13 @@ import csv
 # python manage.py backfill_csv --path="path_to_file" --model_name="model_class_name" --app_name="dublinbusapplication"
 
 class Command(BaseCommand):
-    help = 'Creating model objects according the file path specified'
+    help = 'Creating model objects for the specified file path'
 
+    # adding arguments to the function when it is called directing it to the csv file, the model name and the app name
     def add_arguments(self, parser):
-        parser.add_argument('--path', type=str, help="file path")
-        parser.add_argument('--model_name', type=str, help="model name")
-        parser.add_argument('--app_name', type=str, help="django app name that the model is connected to")
+        parser.add_argument('--path', type=str, help="path to file")
+        parser.add_argument('--model_name', type=str, help="name of model")
+        parser.add_argument('--app_name', type=str, help="django app name")
 
     def handle(self, *args, **options):
         file_path = options['path']

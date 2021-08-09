@@ -8,9 +8,11 @@ from dublinbusapplication.predictive_model.Get_Times import *
 from .models import Stop, Bikes, FavouriteJourney
 from django.views.generic import View
 from dublinbusapplication.models import FavouriteJourney
-import datetime
+
 from django.http import HttpResponse, HttpResponseRedirect
 
+
+# stops, render_bike_stations and favourites are parsed as JSON to allow them to be used in HTML
 def index(request):
     stops = Stop.objects.all().values()
     render_bike_stations = Bikes.objects.all().values()
@@ -194,19 +196,19 @@ def logoutUser(request):
     return redirect('login')
 
 
-# @login_required
+# this function allows for routes to be saved to the user's favourite routes
 def add_favourite_route(request):
     for key, value in request.session.items():
         print('{} => {}'.format(key, value))
     print('request is', request)
     if request.method == 'POST':
+        # if the request is a POST request and the user has entered a start and end point, the function saves
+        # the start and end point as origin and destination in the favourite routes table
         if request.POST.get('users_origin_stop') and request.POST.get('users_dest_stop'):
-            # user = User.objects.get(id=request.session['_auth_user_id'])
             fav_journey = FavouriteJourney()
             fav_journey.users_origin_stop = request.POST.get('users_origin_stop')
             fav_journey.users_dest_stop = request.POST.get('users_dest_stop')
             fav_journey.user_id = request.session['_auth_user_id']
-            # fav_journey.user = request.user.username
             fav_journey.save()
 
         return JsonResponse({'message': 'Successfully saved you beautiful human being'})
@@ -215,21 +217,6 @@ def add_favourite_route(request):
 def userPage(request):
     return render(request, 'userpage.html')
 
-
-# stop = Stop.objects.all.values()
-# v = {'lat': start_stop_lat, 'lon': start_stop_lon}
-#
-# print(JsonResponse(closest(stop, v)))
-
-# def displayFavRoute(request):
-#     # user_id = user.user_id.get()
-#     # current_user = request.user
-#     # user_id = request.session['_auth_user_id']
-#     # user_routes = FavouriteJourney.objects.get(pk=6)
-#     user_routes = FavouriteJourney.objects.filter(user_id=request.user)
-#     #  user_routes = FavouriteJourney.objects.all()
-#
-#     return render(request, 'userpage.html', {'user_routes': user_routes})
 
 class displayFavRoute(View):
     def get(self, request):
@@ -242,15 +229,4 @@ class displayFavRoute(View):
             for id in route_ids:
                 fav_route = FavouriteJourney.objects.get(pk=id)
                 fav_route.delete()
-                #return HttpResponseRedirect('deleteUserFavJourney')
                 return redirect('deleteUserFavJourney')
-
-# def deleteUserFavJourney(request, id):
-#     if FavouriteJourney.objects.filter(id=FavouriteJourney.objects.id).exists():
-#         user_records = FavouriteJourney.objects.get(id=FavouriteJourney.objects.id)
-#         user_records.delete()
-#         messages.success(request, "The favorite journey was successfully deleted")
-#         return redirect('userpage.html')
-#     else:
-#         messages.error(request, "ERROR: the journey was not deleted..")
-#         return redirect('userpage.html')

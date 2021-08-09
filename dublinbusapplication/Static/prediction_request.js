@@ -3,6 +3,7 @@ $(document).ready(function () {
     $('#form').on('submit', function (e) {
         e.preventDefault();
         const inputTime = new Date($('#predictTime').val())
+        // ajax post request takes the date, time info on the stops and the weather and passes this to the backend
         $.ajax({
             type: 'POST',
             url: "/predict/",
@@ -32,12 +33,14 @@ $(document).ready(function () {
 
 
                 const iconurl = "http://openweathermap.org/img/wn/" + response.Weather.icon + "@2x.png";
+
                 var temperature = (response.Weather.temp - 273).toFixed(1);
                 console.log(response.journey_steps_response)
                 var journey_response = response.journey_steps_response
 
                 $('#output').html("<p>" + results_display(journey_response) + "</p>" +
                     "<div>"+google_or_us(response)+"<p>Estimated Bus Journey Time: " + (response.JourneyTime/60).toFixed(0) + " minutes</p>" +
+
                     " </div><div id='icon'><p>Weather Forecast:</p><p>" + temperature + "<span>&#176;</span><img id='wicon' src=" + iconurl + "></p></div>"
                 );
 
@@ -49,5 +52,3 @@ $(document).ready(function () {
         })
     });
 })
-
-
