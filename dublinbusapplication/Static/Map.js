@@ -47,6 +47,7 @@ function initMap() {
     InitialMap = new AutocompleteDirectionsHandler(map);
 }
 
+
 function attachInstructionText(stepDisplay, marker, text, map) {
     google.maps.event.addListener(marker, "click", () => {
         // Open an info window when the marker is clicked on, containing the text
@@ -63,5 +64,6 @@ function loadJson(selector) {
 
 // when the main window of the application loads data on Dublin Bus stops and Dublin Bikes stations is loaded
 window.onload = function () {
+    todays_date();
     stops = loadJson("stops-data")
 }

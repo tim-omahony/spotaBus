@@ -11,21 +11,6 @@
 //
 // }
 
-//function to take the user input from the date picker to be passed to the google directions service API
-function getDateTime() {
-    const regDate = document.getElementById("predictTime").value;
-    console.log(regDate);
-    unixdate = Date.parse(regDate);
-
-    if (unixdate < Date.now()) {
-        date_picked = Date.now();
-    } else {
-        date_picked = unixdate;
-    }
-    console.log(unixdate);
-
-    return date_picked;
-}
 
 const lotsOfMins = (mins) => mins / 60 > 1
 

@@ -2,7 +2,10 @@ let step_distance;
 let arrival_stop;
 let arrival_time;
 let departure_time;
+let departure_time_text;
 let transit_departure_time;
+let walking_time_text;
+let walking_time_value;
 
 class AutocompleteDirectionsHandler {
     map;
@@ -91,25 +94,34 @@ class AutocompleteDirectionsHandler {
 
                         Direction_Steps = [];
                         departure_time = [];
+                        departure_time_text = [];
                         arrival_time = [];
                         step_distance = [];
+                        walking_time_text = []
+                        walking_time_value = []
 
                         Direction_Steps = response.routes[0].legs[0].steps[y].instructions;
-                        departure_time = response.routes[0].legs[0].departure_time['text'];
+                        departure_time = response.routes[0].legs[0].departure_time.value.getTime()
+                        departure_time_text = response.routes[0].legs[0].departure_time['text'];
                         arrival_time = response.routes[0].legs[0].arrival_time['text'];
 
                         route_dict['instructions'] = Direction_Steps;
                         route_dict['departure_time'] = departure_time;
+                        route_dict['departure_time_text'] = departure_time_text;
                         route_dict['arrival_time'] = arrival_time;
 
                         if (Transit_Type === "WALKING") {
 
 
                             step_distance = response.routes[0].legs[0].steps[y].distance['text'];
-
+                            walking_time_text = response.routes[0].legs[0].steps[y].duration['text'];
+                            walking_time_value = response.routes[0].legs[0].steps[y].duration['value'];
 
                             route_dict['step_distance'] = step_distance;
+                            route_dict['walking_time_text'] = walking_time_text;
+                            route_dict['walking_time_value'] = walking_time_value;
                             route_dict['transit_type'] = Transit_Type;
+
                         }
 
                         if (Transit_Type === "TRANSIT") {

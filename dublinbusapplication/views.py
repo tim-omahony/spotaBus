@@ -8,6 +8,7 @@ from dublinbusapplication.predictive_model.Get_Times import *
 from .models import Stop, Bikes, FavouriteJourney
 from django.views.generic import View
 from dublinbusapplication.models import FavouriteJourney
+import datetime
 from django.http import HttpResponse, HttpResponseRedirect
 
 def index(request):
@@ -26,15 +27,13 @@ def predict(request):
     current_weather = json.loads(request.POST["current_weather"])
     weather_forecast = json.loads(request.POST["weather_forecast"])
     date_time = json.loads(request.POST["date_time"])
-    # dividing by 1000 to convert to same unix format as OpenWeather API
 
+    # dividing by 1000 to convert to same unix format as OpenWeather API
     date_time = int(date_time / 1000)
 
     # merging the weather data
     full_weather = current_weather + weather_forecast
 
-    print(type(full_weather))
-    print(full_weather)
     print(date_time)
 
     # calling the functions that take the full weather forecast and match the users input time with the closest time
@@ -43,15 +42,20 @@ def predict(request):
     time_list = get_time_list(full_weather)
     nearest_time = nearest(date_time, time_list)
     final_weather_dict = get_time(full_weather, nearest_time)
+    journey_steps = json.loads(request.POST["steps_array"])
+
 
     try:
         stop = Stop.objects.all().values()
-        journey_steps = json.loads(request.POST["steps_array"])
+
+        print(journey_steps)
         print(nearest_time)
         print(final_weather_dict)
 
         final_estimate = []
         for i in range(0, len(journey_steps)):
+
+
             if journey_steps[i]["transit_type"] == "TRANSIT":
                 start_stop_lat_lon = (journey_steps[i]['start_stop_lat_lon'])
                 end_stop_lat_lon = (journey_steps[i]['end_stop_lat_lon'])
@@ -96,10 +100,15 @@ def predict(request):
                                    weather_main,
                                    stops_dict))
 
+                    journey_steps[i]["transit_time"] = result
+
                     final_estimate.append(result)
+
                     result = sum(final_estimate)
+
                     type_dict = {'type': 'ours'}
                     response = {
+                        'journey_steps_response': journey_steps,
                         'JourneyTime': result,
                         'Weather': final_weather_dict,
                         'prediction_type': type_dict,
@@ -110,21 +119,28 @@ def predict(request):
 
     except Exception as e:
         print("getting google result because:", e)
-        journey_steps = json.loads(request.POST["steps_array"])
+
         google_time_result = []
 
-        for item in journey_steps:
-            if item["transit_type"] == "TRANSIT":
-                google_time = int(item["Google_Journey_time"] / 60)
+        for i in range(0, len(journey_steps)):
+
+            if journey_steps[i]["transit_type"] == "TRANSIT":
+                google_time = int(journey_steps[i]["Google_Journey_time"])
+
+                # item["step_arrival_time"] += (journey_steps[i]["departure_time"] / 1000) + item["Google_Journey_time"]
+                journey_steps[i]["transit_time"] = google_time
+
                 google_time_result.append(google_time)
                 result = sum(google_time_result)
+
                 type_dict = {'type': 'google'}
                 response = {
+                    'journey_steps_response': journey_steps,
                     'JourneyTime': result,
                     'Weather': final_weather_dict,
                     'prediction_type': type_dict,
                 }
-                print(response)
+
 
         return JsonResponse(response, safe=False)
 

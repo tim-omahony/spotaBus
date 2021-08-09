@@ -115,6 +115,6 @@ def prediction(route, hour, day, month, start_stop_id, end_stop_id, wind_speed, 
     average = sum(good_array) / len(good_array)
     good_pred = [average if test > 400 or test < 0 else test for test in y_pred_linear]
 
-    final_prediction = sum(good_pred) / 60
+    final_prediction = sum(good_pred)
 
     return final_prediction
