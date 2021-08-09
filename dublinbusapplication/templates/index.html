@@ -78,11 +78,16 @@
                                                                                           data-on="on"
                                                                                           data-off="off"></div>
 
-                                <div id="datetime-toggle">
-                                    <input form="form" id="predictTime" class="form-control" type="datetime-local"
+                                <div id="datetime">
+
+                                    <input form="form" id="predictTime" class="form-control datepicker"
+                                           type="datetime-local"
                                            name="predict"
                                            required onChange="InitialMap.route()">
+
                                 </div>
+
+
                                 <div class="modal-footer">
                                     <form id="form" method="POST">
                                         {% csrf_token %}
@@ -136,5 +141,7 @@
             </div>
         </div>
     </div>
+
+
 
 {% endblock %}
