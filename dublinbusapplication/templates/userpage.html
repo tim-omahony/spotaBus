@@ -19,7 +19,7 @@
                     <div class="col-sm-12">
                         <div class="col-xs-8 col-sm-8">
                             <h2><b>Username:</b> {{ request.user }}</h2>
-                            <p><strong>Favorite Journeys </strong></p>
+                            {#                            <p><strong>Favorite Journeys </strong></p>#}
                         </div>
                     </div>
                     <div class="col-xs-12 divider text-center">
@@ -35,39 +35,28 @@
                         </div>
                         <div>
                             <table class="table table-dark">
-                                <p><b>Favorite Routes</b></p>
+
                                 <thead>
                                 <tr>
                                     <th scope="col">Origin</th>
                                     <th scope="col">Destination</th>
-                                     <th scope="col"></th>
+                                    <th scope="col"></th>
                                 </tr>
                                 </thead>
-                            <tbody>
+                                <tbody>
                                 {% csrf_token %}
                                 {% for routes in user_routes %}
                                     <tr id="{{ routes.id }}">
                                         <td>{{ routes.users_origin_stop }}</td>
                                         <td> {{ routes.users_dest_stop }} </td>
                                         <td><input type="checkbox" name="route_id[]" value="{{ routes.id }}"></td>
-
-                                        {% comment %}        <td>
-                                            <button type="button" class="btn btn-danger"
-                                                    onclick="removeFav('{{ request.user.username }}')">Remove Route
-                                            </button>
-                                        </td>{% endcomment %}
-
-
                                     </tr>
                                 {% endfor %}
-
-                            </tbody>
+                                </tbody>
                             </table>
                             {% if user_routes %}
                                 <button type="submit" id="delete_btn" class="btn btn-danger">Remove Route</button>
                             {% endif %}
-
-
                         </div>
                     </div>
                 </div>

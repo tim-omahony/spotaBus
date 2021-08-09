@@ -79,6 +79,7 @@ class user(AbstractBaseUser):
         return True
 
 
+# this class takes the user's origin and destination stops, the user and the username and returns them as a string
 class FavouriteJourney(models.Model):
     users_origin_stop = models.CharField(max_length=200)
     users_dest_stop = models.CharField(max_length=200)
