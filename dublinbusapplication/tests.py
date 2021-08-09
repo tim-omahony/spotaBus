@@ -1,3 +1,5 @@
+#Importing Django BuiltIn modules for testing along with custom models and views
+
 from django.test import TestCase, Client
 from django.http import JsonResponse
 from django.urls import reverse, resolve
@@ -12,6 +14,7 @@ class TestViews(TestCase):
 # Testing URLs
 class TestUrls(TestCase):
 
+    #setting up test URL variables
     def setUp(self):
         self.client = Client()
         self.home_url = '/'
@@ -141,6 +144,7 @@ class StopTestCase(TestCase):
         self.assertIsInstance(self.stop.stop_lat, float)
         self.assertIsInstance(self.stop.stop_lon, float)
 
+    #testing return type of to-json function
     def test_to_json_information_type(self):
         self.assertIsInstance(self.stop_to_json, dict)
 
