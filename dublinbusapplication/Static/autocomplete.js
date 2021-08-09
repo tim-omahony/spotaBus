@@ -1,5 +1,8 @@
 let step_distance;
 let arrival_stop;
+let arrival_time;
+let departure_time;
+let transit_departure_time;
 
 class AutocompleteDirectionsHandler {
     map;
@@ -57,7 +60,7 @@ class AutocompleteDirectionsHandler {
     }
 
     route() {
-        var input_date = getDateTime();
+        const input_date = getDateTime();
         if (!this.originPlaceId || !this.destinationPlaceId) {
             return;
         }
@@ -79,26 +82,34 @@ class AutocompleteDirectionsHandler {
                 if (status === "OK") {
                     me.directionsRenderer.setDirections(response);
 
-                    var Steps = response.routes[0].legs[0].steps.length;
+                    const Steps = response.routes[0].legs[0].steps.length;
                     steps_array = [];
 
-                    for (var y = 0; y < Steps; y++) {
-                        var route_dict = {};
-                        var Transit_Type = response.routes[0].legs[0].steps[y].travel_mode;
+                    for (let y = 0; y < Steps; y++) {
+                        const route_dict = {};
+                        const Transit_Type = response.routes[0].legs[0].steps[y].travel_mode;
 
                         Direction_Steps = [];
-                        departure_time = []
+                        departure_time = [];
+                        arrival_time = [];
                         step_distance = [];
-                        Direction_Steps = response.routes[0].legs[0].steps[y].instructions;
-                        route_dict['instructions'] = Direction_Steps;
 
+                        Direction_Steps = response.routes[0].legs[0].steps[y].instructions;
+                        departure_time = response.routes[0].legs[0].departure_time['text'];
+                        arrival_time = response.routes[0].legs[0].arrival_time['text'];
+
+                        route_dict['instructions'] = Direction_Steps;
+                        route_dict['departure_time'] = departure_time;
+                        route_dict['arrival_time'] = arrival_time;
 
                         if (Transit_Type === "WALKING") {
-                            route_dict['transit_type'] = Transit_Type;
-                            departure_time = response.routes[0].legs[0].departure_time['text'];
+
+
                             step_distance = response.routes[0].legs[0].steps[y].distance['text'];
-                            route_dict['departure_time'] = departure_time;
+
+
                             route_dict['step_distance'] = step_distance;
+                            route_dict['transit_type'] = Transit_Type;
                         }
 
                         if (Transit_Type === "TRANSIT") {
@@ -109,11 +120,12 @@ class AutocompleteDirectionsHandler {
                             RouteShortname = [];
                             start_stop_lat_lon = [];
                             end_stop_lat_lon = [];
+                            transit_departure_time = []
 
                             arrival_stop = response.routes[0].legs[0].steps[y].transit.arrival_stop['name'];
                             step_distance = response.routes[0].legs[0].steps[y].distance['text'];
-                            departure_time = response.routes[0].legs[0].departure_time['text'];
                             RouteShortname = response.routes[0].legs[0].steps[y].transit.line.short_name;
+                            transit_departure_time = response.routes[0].legs[0].steps[y].transit.departure_time['text'];
                             start_stop_lat_lon = response.routes[0].legs[0].steps[y].start_location.lat() + ',' + response.routes[0].legs[0].steps[y].start_location.lng();
                             end_stop_lat_lon = response.routes[0].legs[0].steps[y].end_location.lat() + ',' + response.routes[0].legs[0].steps[y].end_location.lng();
                             Google_Journey_time = response.routes[0].legs[0].steps[y].duration['value'];
@@ -122,6 +134,7 @@ class AutocompleteDirectionsHandler {
                             route_dict['step_distance'] = step_distance;
                             route_dict['departure_time'] = departure_time;
                             route_dict['route'] = RouteShortname;
+                            route_dict['transit_departure_time'] = transit_departure_time;
                             route_dict['start_stop_lat_lon'] = start_stop_lat_lon;
                             route_dict['end_stop_lat_lon'] = end_stop_lat_lon;
                             route_dict['transit_type'] = Transit_Type;
@@ -138,8 +151,6 @@ class AutocompleteDirectionsHandler {
                 Journey_Steps = JSON.stringify(steps_array);
             }
         )
-
-
         this.directionsService.route(
             {
                 origin: {placeId: this.originPlaceId},
@@ -196,62 +207,5 @@ class AutocompleteDirectionsHandler {
             }
         )
         displayTransportComparator();
-
-
     }
 }
-
-
-// function tripCO2Details(distance) {
-//
-//     var tag = document.createElement("hr");
-//     var element = document.getElementById("busCO2Details");
-//     element.appendChild(tag);
-//
-//     var tagP = document.createElement("p");
-//     var textP = document.createTextNode("Your selected trip is " + distance + " km long. At 23g CO2 emissions per seat km, your journey would generate " + Math.round(23 * distance) + "g of C02.");
-//
-//     element.appendChild(textP);
-//
-// }
-
-//function to take the user input from the date picker to be passed to the google directions service API
-function getDateTime() {
-    var regDate = document.getElementById("predictTime").value;
-    console.log(regDate);
-    unixdate = Date.parse(regDate);
-
-    if (unixdate < Date.now()) {
-        date_picked = Date.now();
-    } else {
-        date_picked = unixdate;
-    }
-    console.log(unixdate);
-
-    return date_picked;
-}
-
-const lotsOfMins = (mins) => mins / 60 > 1
-
-function drivingComparatorInfoPopulator(duration) {
-    //populates information fields for various journey transit methods
-    document.getElementById("drivingTransitTime").innerHTML = Math.round(duration / 60) + ` minute${lotsOfMins(duration) ? 's' : ''}`;
-}
-
-function walkingComparatorInfoPopulator(duration) {
-    //populates information fields for various journey transit methods
-    document.getElementById("walkingTransitTime").innerHTML = Math.round(duration / 60) + ` minute${lotsOfMins(duration) ? 's' : ''}`;
-}
-
-function cyclingComparatorInfoPopulator(duration) {
-    //populates information fields for various journey transit methods
-    document.getElementById("cycleTransitTime").innerHTML = Math.round(duration / 60) + ` minute${lotsOfMins(duration) ? 's' : ''}`;
-}
-
-function displayTransportComparator() {
-    document.getElementById("journeyComparer").style.display = "inline";
-    $("#journeyComparer").slideDown();
-}
-
-
-

@@ -1,9 +1,9 @@
 function formattedDate() {
-    var currentDate = new Date();
-    var day = String(currentDate.getDate()).padStart(2, '0');
-    var month = String(currentDate.getMonth() + 1).padStart(2, '0');
-    var year = currentDate.getFullYear();
-    var today = year + '-' + month + '-' + day;
+    const currentDate = new Date();
+    const day = String(currentDate.getDate()).padStart(2, '0');
+    const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+    const year = currentDate.getFullYear();
+    const today = year + '-' + month + '-' + day;
     console.log('formatted date is ' + today);
     return today;
 }
@@ -19,10 +19,9 @@ function publicHolidayChecker() {
     })
         .then((responseJson) => {
             // Do something with the response
-            var holidays = [];
+            const holidays = [];
 
-
-            for (var i = 0; i < responseJson.items.length; i++) {
+            for (let i = 0; i < responseJson.items.length; i++) {
                 holidays.push([responseJson.items[i].start.date, responseJson.items[i].summary]);
             }
 

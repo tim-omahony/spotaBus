@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     {% load static %}
-    <script> var csrfmiddlewaretoken = '{{ csrf_token }}'; </script>
+    <script> const csrfmiddlewaretoken = '{{ csrf_token }}'; </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://kit.fontawesome.com/ac046bec8d.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"
@@ -22,14 +22,18 @@
     <script src="{% static '/show_favourite_routes.js' %}"></script>
     <script src="{% static '/dublin_bikes.js' %}"></script>
     <script src="{% static '/modal_toggles.js' %}"></script>
+    <script src="{% static '/hideCard.js' %}"></script>
     <script src="{% static '/weather.js' %}"></script>
     <script src="{% static '/holiday_checker.js' %}"></script>
     <script src="{% static '/save_route.js' %}"></script>
     <script src=" {% static '/remove_fav_route.js' %}"></script>
     <script src="{% static '/prediction_request.js' %}"></script>
     <script src="{% static '/geolocation.js' %}"></script>
+    <script src="{% static '/comparators.js' %}"></script>
     <script src="{% static '/autocomplete.js' %}"></script>
+    <script src=" {% static '/Journey_planner_output.js' %}"></script>
     <script src=" {% static '/Map.js' %}"></script>
+
 
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -136,7 +140,7 @@
         });
 
         //get class on load
-        var active = localStorage.getItem("clicked")
+        const active = localStorage.getItem("clicked")
         active ? $("#" + active).addClass("active") : $('#home').addClass("active")
     })
 

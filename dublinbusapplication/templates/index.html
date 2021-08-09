@@ -4,12 +4,9 @@
 
 {% block content %}
 
-
-
     {{ stops | json_script:"stops-data" }}
     {{ stations | json_script:"stations-data" }}
     {{ favourites | json_script:"fave-routes-data" }}
-
 
     <div id="holidayWidget" style="visibility: hidden;"></div>
 
@@ -32,7 +29,7 @@
                     <!-- Button trigger modal -->
                     <button type="button" id="planButton" class="btn btn-primary" data-toggle="modal"
                             data-target="#exampleModal"
-                            onclick="changeButtonValue();">
+                            onclick="hideCard();">
                         Plan Your Journey
                     </button>
 
@@ -60,23 +57,26 @@
                                             <datalist id="destinationList">
                                             </datalist>
                                         </div>
-                                        <button type="button" onclick="showFavourites()">
-                                            <i id="star-btn" class="fas fa-star"></i>
-                                        </button>
+
 
                                         <input id="destination-input"
                                                class="controls"
                                                list="destinationList"
                                                type="text"
                                                placeholder="Enter a destination location"/>
+
+                                        <button type="button" onclick="showFavourites()">
+                                            <i id="star-btn" class="fas fa-star"></i>
+                                        </button>
                                     </div>
                                 </div>
 
-                                <div id="origin-toggle">Set origin as current location<input id="origin-toggle-event"
-                                                                                             type="checkbox"
-                                                                                             data-toggle="toggle"
-                                                                                             data-style="ios" data-on=""
-                                                                                             data-off=""></div>
+                                <div id="origin-toggle">Set my location as origin: <input id="origin-toggle-event"
+                                                                                          type="checkbox"
+                                                                                          data-toggle="toggle"
+                                                                                          data-style="ios"
+                                                                                          data-on="on"
+                                                                                          data-off="off"></div>
 
                                 <div id="datetime-toggle">
                                     <input form="form" id="predictTime" class="form-control" type="datetime-local"
@@ -87,8 +87,7 @@
                                     <form id="form" method="POST">
                                         {% csrf_token %}
                                         <button form="form" type="submit" class="btn btn-primary" name="submit"
-                                        >Plan
-                                            Journey
+                                                onclick="changeButtonValue()">Plan Journey
                                         </button>
                                     </form>
                                     {% if user.is_authenticated %}
@@ -108,30 +107,28 @@
         </div>
 
         <div class="col-sm-6">
-            <div class="card" style="background-color: rgba(245, 245, 245, 0.4); ">
+            <div class="card" style="background-color: rgba(245, 245, 245, 0.4);">
                 <div class="card-body">
-                    <h5 class="card-title">Why take the bus?</h5>
-                    <p class="card-text">Planning your trip can be hard. That's why we want to show you the
-                        best option to get where you're going. Go ahead,
-                        plan a journey to find out!</p>
-
-
-                    <hr/>
-
+                    <div id="top-card" style="display: block;">
+                        <h5 class="card-title">Why take the bus?</h5>
+                        <p class="card-text">Planning your trip can be hard. That's why we want to show you the
+                            best option to get where you're going. Go ahead,
+                            plan a journey to find out!</p>
+                    </div>
                     <div id="journeyComparer" style="display: none">
                         <div id="JourneyComparerContainer">
                             <h5 class="center">Compare your options:</h5>
                             <div id="walkingDiv">
                                 <i class="fas fa-walking center"></i>
-                                <h4 class="center" id="walkingTransitTime"></h4>
+                                <h4 class="center" id="walkingTransitTime" style="font-size: 90%"></h4>
                             </div>
                             <div id="transitDiv">
                                 <i class="fas fa-bicycle"></i>
-                                <h4 class="center" id="cycleTransitTime"></h4>
+                                <h4 class="center" id="cycleTransitTime" style="font-size: 90%"></h4>
                             </div>
                             <div id="drivingDiv">
                                 <i class="fas fa-car center"></i>
-                                <h4 class="center" id="drivingTransitTime"></h4>
+                                <h4 class="center" id="drivingTransitTime" style="font-size: 90%"></h4>
                             </div>
                         </div>
                     </div>
@@ -140,7 +137,4 @@
         </div>
     </div>
 
-
-
 {% endblock %}
-

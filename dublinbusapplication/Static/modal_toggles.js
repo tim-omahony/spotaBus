@@ -5,7 +5,6 @@ function changeButtonValue() {
     } else {
         planButton.innerHTML = "Plan Another Journey";
     }
-    Merge_weather();
 }
 
 $(function () {
@@ -28,5 +27,3 @@ $(function () {
         }
     })
 })
-
-
