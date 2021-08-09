@@ -11,7 +11,7 @@ $(document).ready(function () {
             } else {
                 console.log(id)
                 $.ajax({
-                    url: ".",
+                    url: "/delete_fav_route/",
                     method: "POST",
                     data: {
                         id,

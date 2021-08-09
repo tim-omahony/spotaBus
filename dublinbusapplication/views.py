@@ -8,7 +8,7 @@ from dublinbusapplication.predictive_model.Get_Times import *
 from .models import Stop, Bikes, FavouriteJourney
 from django.views.generic import View
 from dublinbusapplication.models import FavouriteJourney
-
+from django.http import HttpResponse, HttpResponseRedirect
 
 def index(request):
     stops = Stop.objects.all().values()
@@ -226,7 +226,8 @@ class displayFavRoute(View):
             for id in route_ids:
                 fav_route = FavouriteJourney.objects.get(pk=id)
                 fav_route.delete()
-            return redirect('deleteUserFavJourney')
+                #return HttpResponseRedirect('deleteUserFavJourney')
+                return redirect('deleteUserFavJourney')
 
 # def deleteUserFavJourney(request, id):
 #     if FavouriteJourney.objects.filter(id=FavouriteJourney.objects.id).exists():
