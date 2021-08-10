@@ -1,4 +1,5 @@
-// this function returns the location of the user as a point on the map
+// this function returns the location of the user as a point on the map in lat and long coordinates
+// and calls the find_address function
 function Geolocation() {
 
     navigator.geolocation.getCurrentPosition(
@@ -13,6 +14,8 @@ function Geolocation() {
 
 }
 
+//using reverse geocoding this function takes the current location of the user and converts the lat and long to
+//a location name which is then input into the origin input field
 function find_address(pos) {
     const geocoder = new google.maps.Geocoder();
     geocoder.geocode({location: pos})
@@ -28,16 +31,4 @@ function find_address(pos) {
 }
 
 
-/*
-//this function  handles geolocation errors based on whether the browser supports geolocation or if the service fails
 
-function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-    infoWindow.setPosition(pos);
-    infoWindow.setContent(
-        browserHasGeolocation
-            ? "Error: The Geolocation service failed."
-            : "Error: Your browser doesn't support geolocation."
-    );
-    infoWindow.open(map);
-}
-*/

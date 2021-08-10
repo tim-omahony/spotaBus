@@ -16,6 +16,8 @@ function getForecast() {
             const interval = response.list.length;
             console.log(response);
             console.log(interval);
+
+            //for loop iterates over the response and creates an array with all of the relevant weather details
             for (let y = 0; y < interval; y++) {
                 const weather_dict = {};
                 date_time = [];
@@ -42,8 +44,8 @@ function getForecast() {
                 forecast_weather_array.push(weather_dict);
             }
 
+            //JSON response for views.py
             Forecast_weather = JSON.stringify(forecast_weather_array);
-            /*            console.log('Forecast:', Forecast_weather);*/
 
         })
         .catch(err => {
@@ -51,6 +53,8 @@ function getForecast() {
         });
 }
 
+
+// function to retrieve the current weather forecast from openweatherapi
 function getWeather() {
     currentWeather = ($.getJSON("https://api.openweathermap.org/data/2.5/weather?lat=53.344&lon=-6.2672&appid=37038b4337b3dbf599fe6b12dad969bd"))
         .then(response => {
@@ -58,6 +62,8 @@ function getWeather() {
             current_weather_array = [];
             const weather_dict = {};
 
+
+            //an array of dictionaries is filled with the response of all the relevant weather details
             date_time = [];
             temp = [];
             humidity = [];
@@ -80,9 +86,10 @@ function getWeather() {
             weather_dict['icon'] = icon;
 
             current_weather_array.push(weather_dict);
+
+            //JSON response for views.py
             Current_weather = JSON.stringify(current_weather_array);
 
-            /*            console.log('current:', Current_weather);*/
         })
         .catch(err => {
             console.log(err);
@@ -90,6 +97,8 @@ function getWeather() {
 
 }
 
+
+// function to call the above functions which are then passed to views.py to be merged
 function Merge_weather() {
     getForecast();
     getWeather();
