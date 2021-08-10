@@ -284,7 +284,7 @@ a:focus {
 
 
 #star-btn {
-    background-color: white;
+    background-color: #757575;
 }
 
 #c02Comparator {
@@ -360,10 +360,28 @@ a:focus {
     font-size: 15px;
     font-weight: 300;
     margin-left: 12px;
+    margin-right: 20px;
     padding: 0 11px 0 13px;
     text-overflow: ellipsis;
-    width: 200px;
+    width: 90%;
     margin-bottom: 10px;
+}
+
+#fav-dropdown {
+    border-bottom: 0.5px solid #e5e6e0;
+    display: flex;
+    margin-bottom: 20px;
+    justify-content: center;
+    align-items: stretch;
+}
+
+#star-btn {
+    margin-bottom: 20px
+}
+
+#origin-field, #destination-field {
+    border-bottom: 0.5px solid #e5e6e0;
+    margin-bottom: 20px;
 }
 
 #origin-input:focus,
@@ -394,16 +412,16 @@ a:focus {
 }
 
 #predictTime {
+    background-color: #fff;
+    margin-left: 12px;
+    margin-right: 20px;
+    width: 90%;
     margin-bottom: 10px;
-    margin-left: 5%;
-    width: 80%;
 }
 
 #output {
-
     font-family: Monaco, sans-serif;
     font-size: 20px;
-
 }
 
 
@@ -417,8 +435,6 @@ a:focus {
     float: left;
     width: 33%;
     background-color: #e5e6e0;
-
-
 }
 
 #drivingDiv {
@@ -497,6 +513,7 @@ a:focus {
     color: white !important;
     border: 0 !important;
     border-radius: 0.25rem 0 0 0.25rem !important;
+    font-size: 27px;
 }
 
 .input_user,
@@ -709,7 +726,7 @@ tr:nth-child(even) {
     height: 12.5px;
 }
 
-#google_or_us, #plan-journey-btn, #plan-journey-title, #weather-icon, #instructions-output  {
+#google_or_us, #plan-journey-btn, #plan-journey-title, #weather-icon, #instructions-output {
     margin-bottom: 10px;
     display: flex;
     justify-content: center;
@@ -725,12 +742,7 @@ tr:nth-child(even) {
     margin-bottom: 10px;
 }
 
-#narrow {
-    flex: 1;
-    width: 25%;
-}
-
-#wide {
+#narrow, #wide, #narrowtwo, #widetwo {
     flex: 1;
     width: 25%;
 }
@@ -743,7 +755,11 @@ tr:nth-child(even) {
     font-size: 20px;
 }
 
-#total-estimate, #narrow, #wide, #weather-icon, #instructions-output {
+#parenttwo {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    margin-bottom: 10px;
     border-style: solid;
     background: #e5e6e0;
     padding: 20px;
@@ -753,8 +769,13 @@ tr:nth-child(even) {
 }
 
 
-#bike-toggle{
-    margin-top: 15px;
+#total-estimate, #narrow, #wide, #weather-icon, #instructions-output, #Weather {
+    border-style: solid;
+    background: #e5e6e0;
+    padding: 20px;
+    border-radius: 20px;
+    border-color: #fff;
+    margin-right: 2px;
 }
 
 
