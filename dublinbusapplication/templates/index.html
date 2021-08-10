@@ -44,44 +44,60 @@
                                 </div>
                                 <div class="modal-body">
                                     <div id="dbAutocomplete">
-                                        <input id="origin-input"
-                                               class="controls"
-                                               list="originList"
-                                               type="text"
-                                               placeholder="Enter an origin location"/>
-                                        <div id="favourite-routes">
-                                            <datalist id="originList">
-                                            </datalist>
-                                            <datalist id="destinationList">
-                                            </datalist>
+                                        <div id="origin-field"><p><b>Origin:</b></p>
+                                            <input id="origin-input"
+                                                   class="controls"
+                                                   list="originList"
+                                                   type="text"
+                                                   placeholder="Enter an origin location"/>
+                                            <div id="favourite-routes">
+                                                <datalist id="originList">
+                                                </datalist>
+                                                <datalist id="destinationList">
+                                                </datalist>
+                                            </div>
+
+                                            <div id="origin-toggle">Set my location as origin: <input
+                                                    id="origin-toggle-event"
+                                                    type="checkbox"
+                                                    data-toggle="toggle"
+                                                    data-style="ios"
+                                                    data-on="on"
+                                                    data-off="off"></div>
                                         </div>
 
 
-                                        <input id="destination-input"
-                                               class="controls"
-                                               list="destinationList"
-                                               type="text"
-                                               placeholder="Enter a destination location"/>
+                                        <div id="destination-field"><p><b>Destination:</b></p>
 
-                                        <button type="button" onclick="showFavourites()">
-                                            <i id="star-btn" class="fas fa-star"></i>
-                                        </button>
+                                            <input id="destination-input"
+                                                   class="controls"
+                                                   list="destinationList"
+                                                   type="text"
+                                                   placeholder="Enter a destination location"/>
+
+                                        </div>
+
+
+                                        <div id="fav-dropdown">
+                                            {% if user.is_authenticated %}
+                                                {% csrf_token %}
+                                                <button id="star-btn" class="btn btn-secondary" type="button"
+                                                        onclick="showFavourites()"
+                                                        value="Favourites Dropdown">
+                                                    Favourites Dropdown
+                                                </button>
+                                            {% endif %}
+                                        </div>
+
+                                        <div id="datetime"><p><b>Date and time:</b></p>
+
+                                            <input form="form" id="predictTime" class="form-control datepicker"
+                                                   type="datetime-local"
+                                                   name="predict"
+                                                   required onChange="InitialMap.route()">
+
+                                        </div>
                                     </div>
-                                </div>
-
-                                <div id="origin-toggle">Set my location as origin: <input id="origin-toggle-event"
-                                                                                          type="checkbox"
-                                                                                          data-toggle="toggle"
-                                                                                          data-style="ios"
-                                                                                          data-on="on"
-                                                                                          data-off="off"></div>
-
-                                <div id="datetime">
-
-                                    <input form="form" id="predictTime" class="form-control datepicker"
-                                           type="datetime-local"
-                                           name="predict"
-                                           required onChange="InitialMap.route()">
 
                                 </div>
 
@@ -100,7 +116,7 @@
                                                 onclick="saveRoute()">Save Route
                                         </button>
                                     {% endif %}
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+
                                 </div>
                             </div>
                         </div>
