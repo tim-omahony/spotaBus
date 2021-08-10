@@ -38,10 +38,12 @@ $(document).ready(function () {
                 console.log(response.journey_steps_response)
                 var journey_response = response.journey_steps_response
 
-                $('#output').html("<p>" + results_display(journey_response) + "</p>" +
-                    "<div>"+google_or_us(response)+"<p>Estimated Bus Journey Time: " + (response.JourneyTime/60).toFixed(0) + " minutes</p>" +
-
-                    " </div><div id='icon'><p>Weather Forecast:</p><p>" + temperature + "<span>&#176;</span><img id='wicon' src=" + iconurl + "></p></div>"
+                $('#output').html("<div id = 'instructions-output'>" + results_display(journey_response) + "</div>" +
+                    "<div id = 'parent'><div id='total-estimate'><p>Journey Time: <br><b>" + get_full_journey_time(journey_response) + " mins</b></p></div>" +
+                    "<div id = 'narrow'><i id='estimate-walking-icon' class='fas fa-walking'></i> <br><b>" + get_walking_time(journey_response) + " mins</b></div>" +
+                    "<div id = 'wide'><i id='estimate-bus-icon' class='fas fa-bus'></i> <br><b> " + (response.JourneyTime / 60).toFixed(0) + " mins</b></div></div>" +
+                    "<div id='weather-icon'><p>Weather Forecast:</p><p>" + temperature + "<span>&#176;</span><img id='wicon' src=" + iconurl + "></p></div>" +
+                    "<div>" + google_or_us(response) + "</div>"
                 );
 
             },

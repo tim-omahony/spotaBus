@@ -8,6 +8,17 @@ function changeButtonValue() {
     }
 }
 
+// this function checks the text in the Plan Journey button and changes it if a trip has already been planned
+
+$(function () {
+    $('#plan_journey_btn').click(function () {
+
+        const title = document.getElementById("card-title");
+        title.innerHTML = "See your journey details below!";
+
+    })
+})
+
 //this function toggles between using the user's location as origin point or not
 $(function () {
     $('#origin-toggle-event').change(function () {
