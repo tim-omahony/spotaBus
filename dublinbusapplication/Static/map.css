@@ -401,7 +401,6 @@ a:focus {
 
 #output {
 
-    margin-left: 40px;
     font-family: Monaco, sans-serif;
     font-size: 20px;
 
@@ -678,7 +677,7 @@ tr:nth-child(even) {
 }
 
 .vertical-timeline-element-content .timeline-title {
-    font-size: .8rem;
+    font-size: .9rem;
     text-transform: uppercase;
     margin: 0 0 .5rem;
     padding: 2px 0 0;
@@ -692,8 +691,8 @@ tr:nth-child(even) {
     top: 0;
     padding-right: 10px;
     text-align: right;
-    color: #adb5bd;
-    font-size: .7619rem;
+    color: #212529FF;
+    font-size: .9rem;
     white-space: nowrap
 }
 
@@ -702,5 +701,57 @@ tr:nth-child(even) {
     display: table;
     clear: both
 }
+
+
+/*CSS for google pop up message and other journey planner output*/
+#google_maps_logo {
+    width: 60px;
+    height: 12.5px;
+}
+
+#google_or_us, #plan-journey-btn, #plan-journey-title, #weather-icon, #instructions-output  {
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+}
+
+#google_container {
+    font-size: .8rem;
+}
+
+#parent {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+#narrow {
+    flex: 1;
+    width: 25%;
+}
+
+#wide {
+    flex: 1;
+    width: 25%;
+}
+
+#total-estimate {
+    width: 50%;
+}
+
+#estimate-walking-icon, #estimate-bus-icon, #narrow, #wide {
+    font-size: 20px;
+}
+
+#total-estimate, #narrow, #wide, #weather-icon, #instructions-output {
+    border-style: solid;
+    background: #e5e6e0;
+    padding: 20px;
+    border-radius: 20px;
+    border-color: #fff;
+    margin-right: 2px;
+}
+
+
 
 

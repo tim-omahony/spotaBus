@@ -24,14 +24,16 @@
         <div class="col-sm-6">
             <div class="card" style="background-color: rgba(245, 245, 245, 0.4); ">
                 <div class="card-body">
-                    <h5 class="card-title">Click below to plan your journey!</h5>
+                    <div id = "plan-journey-title"><h5 id = "card-title" class="card-title">Click below to plan your journey!</h5></div>
+
+                    <div id="output"></div>
 
                     <!-- Button trigger modal -->
-                    <button type="button" id="planButton" class="btn btn-primary" data-toggle="modal"
+                    <div id = "plan-journey-btn"><button type="button" id="planButton" class="btn btn-primary" data-toggle="modal"
                             data-target="#exampleModal"
                             onclick="hideCard();">
                         Plan Your Journey
-                    </button>
+                    </button></div>
 
                     <!-- Modal -->
                     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
@@ -106,11 +108,6 @@
                             </div>
                         </div>
                     </div>
-                    <script>
-
-                    </script>
-
-                    <div id="output"></div>
                 </div>
             </div>
         </div>
