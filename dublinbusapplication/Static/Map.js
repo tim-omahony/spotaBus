@@ -47,22 +47,13 @@ function initMap() {
     InitialMap = new AutocompleteDirectionsHandler(map);
 }
 
-
-function attachInstructionText(stepDisplay, marker, text, map) {
-    google.maps.event.addListener(marker, "click", () => {
-        // Open an info window when the marker is clicked on, containing the text
-        // of the step.
-        stepDisplay.setContent(text);
-        stepDisplay.open(map, marker);
-    });
-}
-
 // this function is used to parse JSON (used for the data on stops and Dublin Bikes stations
 function loadJson(selector) {
     return JSON.parse(document.getElementById(selector).textContent);
 }
 
 // when the main window of the application loads data on Dublin Bus stops and Dublin Bikes stations is loaded
+// as well as this todays_date() is called to retrieve info for the date time picker
 window.onload = function () {
     todays_date();
     stops = loadJson("stops-data")

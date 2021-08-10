@@ -12,28 +12,24 @@
 
     <div id="MapView" class="z-depth-1-half map-container-4" style="height: 500px"></div>
 
-    <div id="bikes_button">
-
-        <div id="bike-toggle">Display Dublin Bikes Stations: &nbsp <input id="bike-toggle-event" type="checkbox"
-                                                                          data-toggle="toggle"
-                                                                          data-style="ios" data-on="" data-off=""></div>
-
-    </div>
     <hr/>
     <div class="row">
         <div class="col-sm-6">
             <div class="card" style="background-color: rgba(245, 245, 245, 0.4); ">
                 <div class="card-body">
-                    <div id = "plan-journey-title"><h5 id = "card-title" class="card-title">Click below to plan your journey!</h5></div>
+                    <div id="plan-journey-title"><h5 id="card-title" class="card-title">Click below to plan your
+                        journey!</h5></div>
 
                     <div id="output"></div>
 
                     <!-- Button trigger modal -->
-                    <div id = "plan-journey-btn"><button type="button" id="planButton" class="btn btn-primary" data-toggle="modal"
-                            data-target="#exampleModal"
-                            onclick="hideCard();">
-                        Plan Your Journey
-                    </button></div>
+                    <div id="plan-journey-btn">
+                        <button type="button" id="planButton" class="btn btn-primary" data-toggle="modal"
+                                data-target="#exampleModal"
+                                onclick="hideCard();">
+                            Plan Your Journey
+                        </button>
+                    </div>
 
                     <!-- Modal -->
                     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
@@ -93,7 +89,8 @@
                                 <div class="modal-footer">
                                     <form id="form" method="POST">
                                         {% csrf_token %}
-                                        <button id = "plan_journey_btn" form="form" type="submit" class="btn btn-primary" name="submit"
+                                        <button id="plan_journey_btn" form="form" type="submit" class="btn btn-primary"
+                                                name="submit"
                                                 onclick="changeButtonValue()">Plan Journey
                                         </button>
                                     </form>
@@ -121,8 +118,8 @@
                             best option to get where you're going. Go ahead,
                             plan a journey to find out!</p>
                     </div>
-                    <div id="journeyComparer" style="display: none">
-                        <div id="JourneyComparerContainer">
+                    <div id="journeyComparer" style="display: none;">
+                        <div id="JourneyComparerContainer" style="margin-bottom:100px">
                             <h5 class="center">Compare your options:</h5>
                             <div id="walkingDiv">
                                 <i class="fas fa-walking center"></i>
@@ -137,7 +134,20 @@
                                 <h4 class="center" id="drivingTransitTime" style="font-size: 90%"></h4>
                             </div>
                         </div>
+
+                        <div id="bikes_button">
+                            <div id="bike-toggle">Display Dublin Bikes Stations: &nbsp <input id="bike-toggle-event"
+                                                                                              type="checkbox"
+                                                                                              data-toggle="toggle"
+                                                                                              data-style="ios"
+                                                                                              data-on="on"
+                                                                                              data-off="off">
+                            </div>
+                        </div>
+
+
                     </div>
+
                 </div>
             </div>
         </div>
