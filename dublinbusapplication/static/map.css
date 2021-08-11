@@ -428,7 +428,9 @@ a:focus {
 /* ------------------------------------------------------------------------------------------------------------- */
 /* Transport comparator widget */
 
+
 #drivingDiv, #walkingDiv {
+
     border-top-right-radius: 25px;
     border-bottom-right-radius: 25px;
     padding: 1em;
@@ -570,6 +572,8 @@ body {
 
 .profile {
     min-height: 355px;
+    display: inline-block;
+
 }
 
 figcaption.ratings {
@@ -595,7 +599,10 @@ figcaption.ratings a:hover {
 }
 
 .emphasis:hover {
+
     border-top: 4px solid #f39c12;
+
+
 }
 
 .emphasis h2 {
@@ -605,6 +612,7 @@ figcaption.ratings a:hover {
 /*Table in Userpage styling*/
 #table {
     width: 100%;
+
     border-radius: 10px;
     overflow: hidden;
     border: 1px solid #212529FF;
@@ -628,6 +636,7 @@ th {
 
 tr, td, th {
     border: 1px solid #212529FF !important;
+
     text-align: left;
     padding: 8px;
 }
@@ -635,6 +644,7 @@ tr, td, th {
 tr:nth-child(even) {
     background-color: #dddddd;
 }
+
 
 #user-page-item-container {
     width: 100%;
@@ -645,6 +655,7 @@ tr:nth-child(even) {
     align-items: center;
     justify-content: center;
 }
+
 
 
 /* ------------------------------------------------------------------------------------------------------------- */

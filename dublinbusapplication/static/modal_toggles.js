@@ -40,7 +40,9 @@ $(function () {
 })
 
 // function to hide modal box when plan journey is clicked and scroll down to output
+
 function hidemodal() {
+
     $('#plan_journey_btn').click(function () {
         $('#exampleModal').modal('hide');
         $('html,body').animate({
@@ -48,6 +50,7 @@ function hidemodal() {
             },
             'slow');
     });
+
 }
 
 // this function ensures that all input fields have been field before proceeding with
@@ -69,3 +72,4 @@ function validateForm() {
 function JSalert(){
 	swal("Please fill out the required fields ");
 }
+
