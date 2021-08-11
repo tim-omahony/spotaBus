@@ -40,7 +40,9 @@ $(function () {
 })
 
 // function to hide modal box when plan journey is clicked and scroll down to output
-$(function () {
+
+function hidemodal() {
+
     $('#plan_journey_btn').click(function () {
         $('#exampleModal').modal('hide');
         $('html,body').animate({
@@ -48,4 +50,26 @@ $(function () {
             },
             'slow');
     });
-})
+
+}
+
+// this function ensures that all input fields have been field before proceeding with
+// the button change and the hiding of the modal box
+function validateForm() {
+    var a = document.getElementById("origin-input").value;
+    var b = document.getElementById("destination-input").value;
+    var c = document.getElementById("predictTime").value;
+
+    if (a == null || a == "" || b == null || b == "" || c == null || c == "") {
+        JSalert()
+
+    } else {
+        changeButtonValue();
+        hidemodal();
+    }
+}
+
+function JSalert(){
+	swal("Please fill out the required fields ");
+}
+

@@ -3429,8 +3429,10 @@
                     data.children = children;
                 }
 
+
                 data = this._normalizeItem(data);
                 data.element = $option[0];
+
 
                 Utils.StoreData($option[0], 'data', data);
 

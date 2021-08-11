@@ -4,6 +4,8 @@
 
 {% block content %}
 
+
+
     {{ stops | json_script:"stops-data" }}
     {{ stations | json_script:"stations-data" }}
     {{ favourites | json_script:"fave-routes-data" }}
@@ -94,7 +96,7 @@
                                             <input form="form" id="predictTime" class="form-control datepicker"
                                                    type="datetime-local"
                                                    name="predict"
-                                                   required onChange="InitialMap.route()">
+                                                   onChange="InitialMap.route()">
 
                                         </div>
                                     </div>
@@ -107,7 +109,7 @@
                                         {% csrf_token %}
                                         <button id="plan_journey_btn" form="form" type="submit" class="btn btn-primary"
                                                 name="submit"
-                                                onclick="changeButtonValue()">Plan Journey
+                                                onclick="validateForm()">Plan Journey
                                         </button>
                                     </form>
                                     {% if user.is_authenticated %}
