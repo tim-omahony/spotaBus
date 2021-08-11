@@ -1,0 +1,785 @@
+* {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    text-decoration: none;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+
+/* ------------------------------------------------------------------------------------------------------------- */
+/* base CSS, template retrieved from codepen */
+body {
+
+    padding-bottom: 30px;
+    position: relative;
+    min-height: 100%;
+    background: #d8d8d8 !important;
+}
+
+a {
+    transition: background 0.2s, color 0.2s;
+}
+
+a:hover,
+a:focus {
+    text-decoration: none;
+}
+
+#wrapper {
+    padding-left: 0;
+    transition: all 0.5s ease;
+    position: relative;
+}
+
+#sidebar-wrapper {
+    z-index: 1000;
+    position: fixed;
+    left: 250px;
+    width: 0;
+    height: 100%;
+    margin-left: -250px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background: #222;
+    transition: all 0.5s ease;
+}
+
+#wrapper.toggled #sidebar-wrapper {
+    width: 250px;
+}
+
+.sidebar-brand {
+    position: absolute;
+    top: 0;
+    width: 250px;
+    text-align: center;
+    padding: 20px 0;
+}
+
+.sidebar-brand h2 {
+    margin: 0;
+    font-weight: 600;
+    font-size: 24px;
+    color: #fff;
+}
+
+.sidebar-nav {
+    position: absolute;
+    top: 75px;
+    width: 250px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.sidebar-nav > li {
+    text-indent: 10px;
+    line-height: 42px;
+}
+
+.sidebar-nav > li a {
+    display: block;
+    text-decoration: none;
+    color: #757575;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+.sidebar-nav > li > a:hover,
+.sidebar-nav > li.active > a {
+    text-decoration: none;
+    color: #fff;
+    background: #FFA500;
+}
+
+
+.sidebar-nav > li > a i.fa {
+    font-size: 24px;
+    width: 60px;
+}
+
+.sidebar-nav > li > a i.fas {
+    font-size: 24px;
+    width: 60px;
+}
+
+#navbar-wrapper {
+    width: 100%;
+    position: absolute;
+    z-index: 2;
+}
+
+#wrapper.toggled #navbar-wrapper {
+    position: absolute;
+    margin-right: -250px;
+}
+
+#navbar-wrapper .navbar {
+    border-width: 0 0 0 0;
+    background-color: rgba(0, 0, 0, 0.71);
+    font-size: 24px;
+    margin-bottom: 0;
+    border-radius: 0;
+}
+
+#navbar-wrapper .navbar a {
+    color: #fff;
+}
+
+#navbar-wrapper .navbar a:hover {
+    color: #FFA500;
+}
+
+#content-wrapper {
+    width: 100%;
+    position: absolute;
+    padding: 15px;
+    top: 100px;
+}
+
+#wrapper.toggled #content-wrapper {
+    position: absolute;
+    margin-right: -250px;
+}
+
+@media (min-width: 992px) {
+    #wrapper {
+        padding-left: 250px;
+    }
+
+    #wrapper.toggled {
+        padding-left: 60px;
+    }
+
+    #sidebar-wrapper {
+        width: 250px;
+    }
+
+    #wrapper.toggled #sidebar-wrapper {
+        width: 60px;
+    }
+
+    #wrapper.toggled #navbar-wrapper {
+        position: absolute;
+        margin-right: -190px;
+    }
+
+    #wrapper.toggled #content-wrapper {
+        position: absolute;
+        margin-right: -190px;
+    }
+
+    #navbar-wrapper {
+        position: relative;
+    }
+
+    #wrapper.toggled {
+        padding-left: 60px;
+    }
+
+    #content-wrapper {
+        position: relative;
+        top: 0;
+    }
+
+    #wrapper.toggled #navbar-wrapper,
+    #wrapper.toggled #content-wrapper {
+        position: relative;
+        margin-right: 60px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    #wrapper {
+        padding-left: 60px;
+    }
+
+    #sidebar-wrapper {
+        width: 60px;
+    }
+
+    #wrapper.toggled #navbar-wrapper {
+        position: absolute;
+        margin-right: -250px;
+    }
+
+    #wrapper.toggled #content-wrapper {
+        position: absolute;
+        margin-right: -250px;
+    }
+
+    #navbar-wrapper {
+        position: relative;
+    }
+
+    #wrapper.toggled {
+        padding-left: 250px;
+    }
+
+    #content-wrapper {
+        position: relative;
+        top: 0;
+    }
+
+    #wrapper.toggled #navbar-wrapper,
+    #wrapper.toggled #content-wrapper {
+        position: relative;
+        margin-right: 250px;
+    }
+}
+
+@media (max-width: 767px) {
+    #wrapper {
+        padding-left: 0;
+    }
+
+    #sidebar-wrapper {
+        width: 0;
+    }
+
+    #wrapper.toggled #sidebar-wrapper {
+        width: 250px;
+    }
+
+    #wrapper.toggled #navbar-wrapper {
+        position: absolute;
+        margin-right: -250px;
+    }
+
+    #wrapper.toggled #content-wrapper {
+        position: absolute;
+        margin-right: -250px;
+    }
+
+    #navbar-wrapper {
+        position: relative;
+    }
+
+    #wrapper.toggled {
+        padding-left: 250px;
+    }
+
+    #content-wrapper {
+        position: relative;
+        top: 0;
+    }
+
+    #wrapper.toggled #navbar-wrapper,
+    #wrapper.toggled #content-wrapper {
+        position: relative;
+        margin-right: 250px;
+    }
+}
+
+
+/* ------------------------------------------------------------------------------------------------------------- */
+
+/* Index page css */
+.card {
+    background-color: rgba(245, 245, 245, 1);
+    /*opacity: .4;*/
+}
+
+
+#star-btn {
+    background-color: #757575;
+}
+
+#c02Comparator {
+    display: flex;
+    border: solid 1px #000;
+    height: 200px;
+    margin-right: auto;
+}
+
+
+#favourite-routes {
+    display: none;
+}
+
+#holidayWidget {
+    color: #fff;
+    background-color: #ffcd4f;
+    margin-left: 12px;
+    padding: 5px 11px 0px 11px;
+}
+
+#MapView {
+    width: auto;
+    height: auto;
+}
+
+.weatherwidget-io {
+    width: 250px;
+    height: 10px;
+    float: right;
+}
+
+/* Optional: Makes the sample page fill the window. */
+
+.weather {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.weatherwidget-io {
+    width: 500px;
+}
+
+.controls {
+    margin-top: 10px;
+    border: 1px solid transparent;
+    border-radius: 2px 0 0 2px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    height: 32px;
+    outline: none;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+#autocompleteDiv {
+    position: absolute;
+}
+
+#bikeButton {
+    font-family: Roboto, serif;
+    border-radius: 6px;
+    margin-left: 10px;
+    width: 20%;
+    margin-bottom: 10px;
+}
+
+#origin-input,
+#destination-input {
+    background-color: #fff;
+    font-family: Roboto, sans-serif;
+    font-size: 15px;
+    font-weight: 300;
+    margin-left: 12px;
+    margin-right: 20px;
+    padding: 0 11px 0 13px;
+    text-overflow: ellipsis;
+    width: 90%;
+    margin-bottom: 10px;
+}
+
+#fav-dropdown {
+    border-bottom: 0.5px solid #e5e6e0;
+    display: flex;
+    margin-bottom: 20px;
+    justify-content: center;
+    align-items: stretch;
+}
+
+#star-btn {
+    margin-bottom: 20px
+}
+
+#origin-field, #destination-field {
+    border-bottom: 0.5px solid #e5e6e0;
+    margin-bottom: 20px;
+}
+
+#origin-input:focus,
+#destination-input:focus {
+    border-color: #4d90fe;
+}
+
+.pac-container {
+    z-index: 10000 !important;
+}
+
+#mode-selector {
+    color: #fff;
+    background-color: #4d90fe;
+    margin-left: 12px;
+    padding: 5px 11px 0px 11px;
+}
+
+#mode-selector label {
+    font-family: Roboto, sans-serif;
+    font-size: 13px;
+    font-weight: 300;
+}
+
+.form-inline {
+    margin-left: 2px;
+    width: 30%;
+}
+
+#predictTime {
+    background-color: #fff;
+    margin-left: 12px;
+    margin-right: 20px;
+    width: 90%;
+    margin-bottom: 10px;
+}
+
+#output {
+    font-family: Monaco, sans-serif;
+    font-size: 20px;
+}
+
+
+/* ------------------------------------------------------------------------------------------------------------- */
+/* Transport comparator widget */
+
+#drivingDiv, #walkingDiv  {
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+    padding: 1em;
+    float: left;
+    width: 33%;
+    background-color: #e5e6e0;
+    border-color: #fff;
+    border-radius: 20px;
+    border-style: solid;
+}
+
+#transitDiv {
+    padding: 1em;
+    float: left;
+    width: 33%;
+    background-color: #37383b;
+    color: #fffeff;
+    border-color: #fff;
+    border-radius: 20px;
+    border-style: solid;
+}
+
+#slideSource {
+    opacity: 1;
+    transition: opacity 1s;
+}
+
+#slideSource.fade {
+    opacity: 0;
+}
+
+
+/* ------------------------------------------------------------------------------------------------------------- */
+
+
+/* ------------------------------------------------------------------------------------------------------------- */
+
+/*register/login css*/
+.user_card {
+    width: 350px;
+    margin-top: 20%;
+    margin-bottom: auto;
+    background: #222;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 10px;
+    border-radius: 5px;
+
+}
+
+.form_container {
+    margin-top: 20px;
+}
+
+#form-title {
+    color: #fff;
+
+}
+
+.login_btn {
+    width: 100%;
+    background: #FFA500 !important;
+    color: white !important;
+}
+
+.login_btn:focus {
+    box-shadow: none !important;
+    outline: 0px !important;
+}
+
+.login_container {
+    padding: 0 2rem;
+}
+
+.input-group-text {
+    background: #FFA500 !important;
+    color: white !important;
+    border: 0 !important;
+    border-radius: 0.25rem 0 0 0.25rem !important;
+    font-size: 27px;
+}
+
+.input_user,
+.input_pass:focus {
+    box-shadow: none !important;
+    outline: 0 !important;
+}
+
+
+#messages {
+    background-color: grey;
+    color: #fff;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+.fa {
+    font-size: 30px;
+}
+
+/*NAME FIELD "HELLO, USER*/
+.nav-link {
+    color: #ffffff;
+}
+
+.nav-link:hover {
+    color: #e8e8e8;
+}
+
+
+/*toggle buttons CSS*/
+.toggle.ios, .toggle-on.ios, .toggle-off.ios {
+    border-radius: 20px;
+    border-color: #222222;
+
+}
+
+.toggle.ios .toggle-handle {
+    border-radius: 20px;
+    border-color: #757575;
+
+}
+
+#origin-toggle, #bike-toggle {
+    margin-top: 20px;
+    margin-bottom: 5px;
+    margin-left: 20px;
+}
+
+
+/*User Page from https://bootsnipp.com/snippets/xRMX*/
+
+@import url(http://fonts.googleapis.com/css?family=Lato:400,700);
+body {
+    font-family: 'Lato', 'sans-serif';
+}
+
+.profile {
+    min-height: 355px;
+    display: inline-block;
+}
+
+figcaption.ratings {
+    margin-top: 20px;
+}
+
+figcaption.ratings a {
+    color: #f1c40f;
+    font-size: 11px;
+}
+
+figcaption.ratings a:hover {
+    color: #f39c12;
+    text-decoration: none;
+}
+
+.divider {
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.emphasis {
+    border-top: 4px solid transparent;
+}
+
+.emphasis:hover {
+    border-top: 4px solid #1abc9c;
+}
+
+.emphasis h2 {
+    margin-bottom: 0;
+}
+
+/*Table in Userpage styling*/
+#table {
+    width: 100%;
+    border-radius:10px;
+    overflow:hidden;
+    background-color:#212529FF;
+    border: 1px solid #212529FF;
+    padding: 10px;
+}
+
+th {
+    color: white;
+}
+
+td, th {
+    border: 1px solid #212529FF;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+
+/* ------------------------------------------------------------------------------------------------------------- */
+/* Journey planner instruction text CSS  https://bbbootstrap.com/snippets/user-business-timeline-32289439 */
+
+
+.vertical-timeline {
+    width: 100%;
+    position: relative;
+    padding: 1.5rem 0 1rem
+}
+
+.vertical-timeline::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 67px;
+    height: 100%;
+    width: 4px;
+    background: #e9ecef;
+    border-radius: .25rem
+}
+
+.vertical-timeline-element {
+    position: relative;
+    margin: 0 0 1rem
+}
+
+.vertical-timeline--animate .vertical-timeline-element-icon.bounce-in {
+    visibility: visible;
+    animation: cd-bounce-1 .8s
+}
+
+.vertical-timeline-element-icon {
+    position: absolute;
+    top: 0;
+    left: 60px
+}
+
+.vertical-timeline-element-icon .badge-dot-xl {
+    box-shadow: 0 0 0 5px #fff
+}
+
+.badge-dot-xl {
+    width: 18px;
+    height: 18px;
+    position: relative
+}
+
+.badge:empty {
+    display: none
+}
+
+.badge-dot-xl::before {
+    content: '';
+    width: 10px;
+    height: 10px;
+    border-radius: .25rem;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin: -5px 0 0 -5px;
+    background: #fff
+}
+
+.vertical-timeline-element-content {
+    position: relative;
+    margin-left: 90px;
+    font-size: .8rem
+}
+
+.vertical-timeline-element-content .timeline-title {
+    font-size: .9rem;
+    text-transform: uppercase;
+    margin: 0 0 .5rem;
+    padding: 2px 0 0;
+    font-weight: bold
+}
+
+.vertical-timeline-element-content .vertical-timeline-element-date {
+    display: block;
+    position: absolute;
+    left: -90px;
+    top: 0;
+    padding-right: 10px;
+    text-align: right;
+    color: #212529FF;
+    font-size: .9rem;
+    white-space: nowrap
+}
+
+.vertical-timeline-element-content:after {
+    content: "";
+    display: table;
+    clear: both
+}
+
+
+/*CSS for google pop up message and other journey planner output*/
+#google_maps_logo {
+    width: 60px;
+    height: 12.5px;
+}
+
+#google_or_us, #plan-journey-btn, #plan-journey-title, #weather-icon, #instructions-output {
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
+}
+
+#google_container {
+    font-size: .8rem;
+}
+
+#parent {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+#narrow, #wide, #narrowtwo, #widetwo {
+    flex: 1;
+    width: 30%;
+}
+
+#total-estimate {
+    width: 40%;
+}
+
+#estimate-walking-icon, #estimate-bus-icon, #narrow, #wide {
+    font-size: 20px;
+}
+
+#parenttwo {
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    margin-bottom: 10px;
+    border-style: solid;
+    background: #e5e6e0;
+    padding: 20px;
+    border-radius: 20px;
+    border-color: #fff;
+    margin-right: 2px;
+}
+
+
+#total-estimate, #narrow, #wide, #weather-icon, #instructions-output, #Weather {
+    border-style: solid;
+    background: #e5e6e0;
+    padding: 10px;
+    border-radius: 20px;
+    border-color: #fff;
+
+}
+
+
