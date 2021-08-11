@@ -1,1 +1,1 @@
-web: gunicorn dublinbusapplication.wsgi
+web: gunicorn dublinbusesproject.wsgi
