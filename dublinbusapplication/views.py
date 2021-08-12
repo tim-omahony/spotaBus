@@ -111,10 +111,9 @@ def predict(request):
                     stops_dict = get_route(stops_sequence, route)
 
                     # calling the prediction function to get the final prediction
-                    result = int(
-                        prediction(route, hour, day, month, start_stop_id, end_stop_id, wind_speed, temp, humidity,
-                                   weather_main,
-                                   stops_dict))
+                    result = prediction(route, hour, day, month, start_stop_id, end_stop_id, wind_speed, temp, humidity,
+                                        weather_main,
+                                        stops_dict)
 
                     # creating the transit time key for the journey steps to be passed pack in the AJAX response
                     journey_steps[i]["transit_time"] = result
