@@ -44,7 +44,7 @@
                                     <th scope="col"></th>
                                 </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="tbody">
                                 {% csrf_token %}
                                 {% for routes in user_routes %}
                                     <tr id="{{ routes.id }}">
