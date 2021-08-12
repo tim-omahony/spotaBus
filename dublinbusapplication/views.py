@@ -54,8 +54,10 @@ def predict(request):
     try:
         # retrieving the stops data such that the latitude and longitude coordinates can be matched up
         # with the closest stop id
-        stop = Stop.objects.all().values()
+        stop_ids = open(filePath('Stop_IDs.json'))
+        stop = json.load(stop_ids)
 
+        # array to hold the final estimate
         final_estimate = []
 
         # iterating over the steps array
