@@ -66,13 +66,24 @@ WSGI_APPLICATION = 'dublinbusesproject.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 #
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'dublinbus',
+#         'USER': 'CiansDB',
+#         'PASSWORD': 'DBG18_2021',
+#         'HOST': 'dublinbus.cmxnicqe342l.eu-west-1.rds.amazonaws.com',
+#         'PORT': '3306',
+#     }
+# }
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'dublinbus',
-        'USER': 'CiansDB',
-        'PASSWORD': 'DBG18_2021',
-        'HOST': 'dublinbus.cmxnicqe342l.eu-west-1.rds.amazonaws.com',
+        'NAME': 'heroku_9517535f5cb5823',
+        'USER': 'b3b693985c5133',
+        'PASSWORD': '0be1e6a7',
+        'HOST': 'eu-cdbr-west-01.cleardb.com',
         'PORT': '3306',
     }
 }
