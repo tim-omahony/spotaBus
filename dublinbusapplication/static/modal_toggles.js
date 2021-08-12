@@ -61,11 +61,13 @@ function validateForm() {
     var c = document.getElementById("predictTime").value;
 
     if (a == null || a == "" || b == null || b == "" || c == null || c == "") {
-        JSalert()
+        JSalert();
 
     } else {
+
         changeButtonValue();
         hidemodal();
+        submit_form();
     }
 }
 
