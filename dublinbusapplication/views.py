@@ -5,11 +5,9 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from dublinbusapplication.predictive_model.get_prediction import *
 from dublinbusapplication.predictive_model.Get_Times import *
-from .models import Stop, Bikes, FavouriteJourney
+from .models import Stop, Bikes
 from django.views.generic import View
 from dublinbusapplication.models import FavouriteJourney
-
-from django.http import HttpResponse, HttpResponseRedirect
 
 
 # stops, render_bike_stations and favourites are parsed as JSON to allow them to be used in HTML
@@ -25,9 +23,9 @@ def index(request):
 
 
 def predict(request):
-    """ The main prediction function that makes an AJAX post request to retrieve the paramters needed in order to
+    """ The main prediction function that takes an AJAX post request to retrieve the parameters needed in order to
     produce a prediction for the user on the front end, along with the journey step response, the weather response
-    and the predcition type which are then all sent back in the AJAX response"""
+    and the prediction type which are then all sent back in the AJAX response"""
 
     # getting the current and forecasted weather along with the date chosen by the user
     current_weather = json.loads(request.POST["current_weather"])

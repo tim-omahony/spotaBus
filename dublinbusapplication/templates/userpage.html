@@ -14,7 +14,6 @@
                     <div class="col-sm-12">
                         <div class="col-xs-8 col-sm-8">
                             <h2><b>Username:</b> {{ request.user }}</h2>
-                            {#                            <p><strong>Favorite Journeys </strong></p>#}
                         </div>
                     </div>
                     <div class="col-xs-12 divider text-center">
@@ -29,7 +28,7 @@
                             </div>
                         </div>
 
-                        <div id ="fav-journey-title">
+                        <div id="fav-journey-title">
                             <h2><b>Favourite Journeys</b></h2>
                         </div>
 
@@ -42,21 +41,30 @@
                                     <th scope="col">Origin</th>
                                     <th scope="col">Destination</th>
                                     <th scope="col"></th>
+                                    <th scope="col"></th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 {% csrf_token %}
                                 {% for routes in user_routes %}
                                     <tr id="{{ routes.id }}">
-                                        <td>{{ routes.users_origin_stop }}</td>
-                                        <td> {{ routes.users_dest_stop }} </td>
+                                        <td id="origin-fav-{{ routes.id }}">{{ routes.users_origin_stop }}</td>
+                                        <td id="dest-fav-{{ routes.id }}"> {{ routes.users_dest_stop }} </td>
+                                        <td>
+                                            <button type="button" id="takeTripButton" class="btn btn-success"
+                                                    onclick="takeTrip('{{ routes.users_origin_stop | escapejs }}', '{{ routes.users_dest_stop | escapejs }}')">
+                                                take trip
+                                            </button>
+                                        </td>
                                         <td><input type="checkbox" name="route_id[]" value="{{ routes.id }}"></td>
                                     </tr>
                                 {% endfor %}
                                 </tbody>
                             </table>
                             {% if user_routes %}
-                                <button type="submit" id="delete_btn" class="btn btn-danger" onclick="RemoveFavRouteAlert()">Remove Route</button>
+                                <button type="submit" id="delete_btn" class="btn btn-danger"
+                                        onclick="RemoveFavRouteAlert()">Remove Route
+                                </button>
                             {% endif %}
                         </div>
                     </div>
