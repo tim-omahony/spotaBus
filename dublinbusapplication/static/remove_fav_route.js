@@ -5,7 +5,7 @@ function remove_route() {
         id[i] = $(this).val()
     })
     if (id.length === 0) {
-        swal("You gotta select one (or more) first!");
+        swal("You've got to select one (or more) routes first!");
     } else {
         console.log(id)
         $.ajax({
@@ -34,7 +34,7 @@ function RemoveFavRouteAlert() {
     })
         .then((willDelete) => {
             if (willDelete) {
-                swal("Favourite Route Removed!", "", "success");
+                swal("Route Removed!", "", "success");
                 remove_route();
             } else {
                 swal("Pheew", "Route has not been removed!", "error");
