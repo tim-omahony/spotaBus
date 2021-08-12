@@ -75,8 +75,6 @@ def prediction(route, hour, day, month, start_stop_id, end_stop_id, wind_speed, 
 
     dir = direction(start_stop_id, end_stop_id, stops)
 
-    print(dir)
-
     # a list of journey stops is retrieved for the chosen route using the JSON file and the directions function
     journey_stops = stops[direction(start_stop_id, end_stop_id, stops)]
 
@@ -84,7 +82,6 @@ def prediction(route, hour, day, month, start_stop_id, end_stop_id, wind_speed, 
     # start stop id and the end stop id and getting a list of the stops in between
     stop_sequence = journey_stops[journey_stops.index(start_stop_id):journey_stops.index(end_stop_id) + 1]
 
-    print(stop_sequence)
 
     # a dataframe is created with the stop IDs and the next stop ID, creating a dataframe of stop-wise pairs
     prediction_df = pd.DataFrame(stop_sequence, columns=['STOPPOINTID'])

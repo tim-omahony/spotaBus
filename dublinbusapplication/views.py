@@ -38,8 +38,6 @@ def predict(request):
     # merging the weather data
     full_weather = current_weather + weather_forecast
 
-    print(date_time)
-
     # calling the functions that takes the full weather forecast and match the users input time with the closest time
     # and then returns the dictionary of the weather forecast items for that time.
     time_list = get_time_list(full_weather)
