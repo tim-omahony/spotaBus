@@ -21,7 +21,6 @@ let weatherForecast;
 let favourites;
 
 
-
 // function to render the map on the main application page
 function initMap() {
     map = new google.maps.Map(document.getElementById("MapView"), {
@@ -43,7 +42,6 @@ function initMap() {
         },
         fullscreenControl: true,
     });
-
     InitialMap = new AutocompleteDirectionsHandler(map);
 }
 

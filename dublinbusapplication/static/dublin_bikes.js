@@ -9,7 +9,8 @@ function populateDublinBikes() {
                 lng: Number.parseFloat(station.Longitude)
             },
             title: station.Address,
-            map: map
+            map: map,
+            icon: "https://img.icons8.com/windows/32/000000/bicycle.png"
         });
     });
     //marker clusters used to reduce clutter on map
