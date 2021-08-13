@@ -42,6 +42,7 @@ function initMap() {
         },
         fullscreenControl: true,
     });
+
     InitialMap = new AutocompleteDirectionsHandler(map);
 }
 
@@ -55,6 +56,7 @@ function loadJson(selector) {
 window.onload = function () {
     todays_date();
     stops = loadJson("stops-data")
+
     const searchParams = new URLSearchParams(window.location.search);
     const params = Object.fromEntries(searchParams.entries());
     console.log({params})

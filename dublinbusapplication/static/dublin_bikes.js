@@ -9,6 +9,7 @@ function populateDublinBikes() {
                 lng: Number.parseFloat(station.Longitude)
             },
             title: station.Address,
+
             map: map,
             icon: "https://img.icons8.com/windows/32/000000/bicycle.png"
         });

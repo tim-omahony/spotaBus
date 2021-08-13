@@ -7,6 +7,7 @@
     font-family: 'Montserrat', sans-serif;
 }
 
+
 /* ------------------------------------------------------------------------------------------------------------- */
 /* base CSS, template retrieved from codepen */
 
@@ -279,6 +280,7 @@ a:focus {
     /*opacity: .4;*/
 }
 
+
 #star-btn {
     background-color: #757575;
 }
@@ -290,6 +292,7 @@ a:focus {
     margin-right: auto;
 }
 
+
 #favourite-routes {
     display: none;
 }
@@ -298,6 +301,7 @@ a:focus {
     color: #fff;
     background-color: #ffcd4f;
     margin-left: 12px;
+
     padding: 5px 11px 11px;
 }
 
@@ -313,6 +317,7 @@ a:focus {
     width: auto;
     height: auto;
 }
+
 
 .controls {
     margin-top: 10px;
@@ -377,7 +382,9 @@ a:focus {
     color: #fff;
     background-color: #4d90fe;
     margin-left: 12px;
+
     padding: 5px 11px 11px;
+
 }
 
 #mode-selector label {
@@ -418,6 +425,7 @@ a:focus {
     float: left;
     width: 33%;
     background-color: #e5e6e0;
+
     border-color: #fff;
     border-style: solid;
 }
@@ -431,6 +439,7 @@ a:focus {
     border-color: #fff;
     border-radius: 20px;
     border-style: solid;
+
 }
 
 #slideSource {
@@ -464,6 +473,7 @@ a:focus {
 
 #form-title {
     color: #fff;
+
 }
 
 .login_btn {
@@ -494,6 +504,7 @@ a:focus {
     outline: 0 !important;
 }
 
+
 #messages {
     background-color: grey;
     color: #fff;
@@ -519,11 +530,13 @@ a:focus {
 .toggle.ios, .toggle-on.ios, .toggle-off.ios {
     border-radius: 20px;
     border-color: #222222;
+
 }
 
 .toggle.ios .toggle-handle {
     border-radius: 20px;
     border-color: #757575;
+
 }
 
 #origin-toggle, #bike-toggle {
@@ -574,6 +587,7 @@ figcaption.ratings a:hover {
     margin-bottom: 0;
 }
 
+
 /* ------------------------------------------------------------------------------------------------------------- */
 /*Table on User page styling*/
 #table {
@@ -612,6 +626,7 @@ tr, td, th {
 tr:nth-child(even) {
     background-color: #dddddd;
 }
+
 
 #user-page-item-container {
     width: 100%;
@@ -720,7 +735,9 @@ tr:nth-child(even) {
 }
 
 
+
 /* ------------------------------------------------------------------------------------------------------------- */
+
 /*CSS for google pop up message and other journey planner output*/
 #google_maps_logo {
     width: 60px;
@@ -745,11 +762,13 @@ tr:nth-child(even) {
 
 #narrow, #wide, #narrowtwo, #widetwo {
     flex: 1;
+
     width: 30%;
 }
 
 #total-estimate {
     width: 40%;
+
 }
 
 #estimate-walking-icon, #estimate-bus-icon, #narrow, #wide {
@@ -769,12 +788,14 @@ tr:nth-child(even) {
     margin-right: 2px;
 }
 
+
 #total-estimate, #narrow, #wide, #weather-icon, #instructions-output, #Weather, #analytics-output {
     border-style: solid;
     background: #e5e6e0;
     padding: 10px;
     border-radius: 20px;
     border-color: #fff;
+
 }
 
 #analytics-output{

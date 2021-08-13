@@ -7,7 +7,11 @@ from dublinbusapplication.predictive_model.get_prediction import *
 from dublinbusapplication.predictive_model.Get_Times import *
 from .models import Stop, Bikes
 from django.views.generic import View
+from django.views.generic.edit import DeleteView
 from dublinbusapplication.models import FavouriteJourney
+from django.contrib.auth.models import User
+from django.http import HttpResponse, HttpResponseRedirect
+
 
 
 # stops, render_bike_stations and favourites are parsed as JSON to allow them to be used in HTML
@@ -187,20 +191,23 @@ def predict(request):
             # returning the JSON response
         return JsonResponse(response, safe=False)
 
-
+#function to render about.html as a landing page
 def about(request):
     return render(request, 'about.html')
 
-
+#function to render contact.html as a landing page
 def contact(request):
     return render(request, 'contact.html')
 
-
+#this function allows users to register their own account
 def registerPage(request):
+    #only allows users that are not logged in to be able to view the register page, if not they are redirected to homepage
     if request.user.is_authenticated:
         return redirect('home')
     else:
+        #using djangos built in Form to get username and password as input from the user
         form = UserCreationForm()
+        #if the request is a POST request and the form is filled in correctly, the user is saved to the database
         if request.method == 'POST':
             form = UserCreationForm(request.POST)
             if form.is_valid():
@@ -212,15 +219,16 @@ def registerPage(request):
         context = {'form': form}
         return render(request, 'register.html', context)
 
-
+#function to view the login page for useres that are not logged in
 def loginPage(request):
     if request.user.is_authenticated:
         return redirect('home')
     else:
+        #if its a POST request, the username and password is retrivied from the Form and checked against the database
         if request.method == 'POST':
             username = request.POST.get('username')
             password = request.POST.get('password')
-
+            #checking if username and password is correct
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
@@ -231,7 +239,7 @@ def loginPage(request):
     context = {}
     return render(request, 'login.html', context)
 
-
+#function that logs user out and returns to login page
 def logoutUser(request):
     logout(request)
     return redirect('login')
@@ -239,9 +247,6 @@ def logoutUser(request):
 
 # this function allows for routes to be saved to the user's favourite routes
 def add_favourite_route(request):
-    for key, value in request.session.items():
-        print('{} => {}'.format(key, value))
-    print('request is', request)
     if request.method == 'POST':
         # if the request is a POST request and the user has entered a start and end point, the function saves
         # the start and end point as origin and destination in the favourite routes table
@@ -255,15 +260,18 @@ def add_favourite_route(request):
         return JsonResponse({'message': 'Successfully saved you beautiful human being'})
 
 
-def userPage(request):
-    return render(request, 'userpage.html')
+#def userPage(request):
+#    return render(request, 'userpage.html')
 
 
+# function to display and delete favorite route using djangos built in View module
 class displayFavRoute(View):
+    #function to retrieve user specific favorite routes from the database and display them
     def get(self, request):
         user_routes = FavouriteJourney.objects.filter(user_id=request.user)
         return render(request, 'userpage.html', {'user_routes': user_routes})
-
+    #function to get the specific chosen favroite route IDs from the user on the userpage, and finding them in the
+    #database before deleting them from the database
     def post(self, request, *args, **kwargs):
         if request.method == "POST":
             route_ids = request.POST.getlist('id[]')
@@ -271,3 +279,16 @@ class displayFavRoute(View):
                 fav_route = FavouriteJourney.objects.get(pk=id)
                 fav_route.delete()
                 return redirect('deleteUserFavJourney')
+
+
+#function to delete user from the database
+def del_user(request):
+    if request.method == "POST":
+        user_id = request.user.id
+        user_account = User.objects.get(pk=user_id)
+        user_account.delete()
+        return redirect('home')
+
+
+
+
