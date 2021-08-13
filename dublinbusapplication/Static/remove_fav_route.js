@@ -1,3 +1,6 @@
+
+/*function that is executed when the delete button is clicked with the checkboxes filled out.
+* The IDs of favorite routes for the users are extracted and deleted from the DB and UI*/
 $(document).ready(function () {
     $('#delete_btn').click(function () {
         if (confirm("Are you sure you want to delete this routes?")) {
