@@ -1,7 +1,6 @@
 //This function checks the response type and returns a HTML div with a message indicating that the
 //journey time estimates have been retrieved from the google maps API
 function google_or_us(response) {
-    console.log(response)
     let response_type = '<div id = "google_or_us"><div id ="google_container">';
 
     if (response.prediction_type['type'] == "google") {
@@ -18,7 +17,6 @@ function get_arrival_time(array) {
     const response_array = array
     journey_time_array = []
     response_array.forEach(function (step) {
-        console.log('step', step)
         if (step.transit_type == "WALKING") {
             journey_time_array.push(step.walking_time_value)
         } else if (step.transit_type == "TRANSIT") {
@@ -47,7 +45,6 @@ function get_walking_time(array) {
 
     //for loop iterates over the AJAX response and adds the walking time to an array
     response_array.forEach(function (step) {
-        console.log('step', step)
         if (step.transit_type == "WALKING") {
             walking_time_array.push(step.walking_time_value)
         }
@@ -65,7 +62,6 @@ function get_transit_time(array) {
 
     //for loop iterates over the AJAX response and adds the walking time to an array
     response_array.forEach(function (step) {
-        console.log('step', step)
         if (step.transit_type == "TRANSIT") {
             transit_time_array.push(step.transit_time)
         }
