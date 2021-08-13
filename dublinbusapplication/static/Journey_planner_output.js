@@ -97,7 +97,6 @@ function results_display(array) {
 
     //for each loop iterates over the AJAX response and retrieves the relevant elements at each step
     response_array.forEach(function (step) {
-        console.log('step', step)
         if (step.transit_type == "WALKING") {
             journey_instructions +=
                 '<div class="vertical-timeline-item vertical-timeline-element">' +

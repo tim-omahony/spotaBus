@@ -51,6 +51,9 @@ def predict(request):
     # sending a post request for the journey steps array
     journey_steps = json.loads(request.POST["steps_array"])
 
+    journey = open(filePath('all_routes_dict_new_key.json'))
+    journey_analytics = json.load(journey)
+
     try:
         # retrieving the stops data such that the latitude and longitude coordinates can be matched up
         # with the closest stop id
@@ -68,6 +71,8 @@ def predict(request):
                 start_stop_lat_lon = (journey_steps[i]['start_stop_lat_lon'])
                 end_stop_lat_lon = (journey_steps[i]['end_stop_lat_lon'])
                 route = (journey_steps[i]['route'])
+
+                analytics = journey_analytics[route]
 
                 # splitting the coordinates into a comma seperated list of strings
                 start_stop_lat_lon_split = start_stop_lat_lon.split(",")
@@ -119,6 +124,7 @@ def predict(request):
 
                     # creating the transit time key for the journey steps to be passed pack in the AJAX response
                     journey_steps[i]["transit_time"] = result
+                    journey_steps[i]["analytics"] = analytics
 
                     # appending the result to the final estimate array
                     final_estimate.append(result)
@@ -153,10 +159,18 @@ def predict(request):
         # iterating over the steps array
         for i in range(0, len(journey_steps)):
             if journey_steps[i]["transit_type"] == "TRANSIT":
-                #
-                google_time = int(journey_steps[i]["Google_Journey_time"])
 
-                # item["step_arrival_time"] += (journey_steps[i]["departure_time"] / 1000) + item["Google_Journey_time"]
+                google_time = int(journey_steps[i]["Google_Journey_time"])
+                route = (journey_steps[i]['route'])
+
+                try:
+                    analytics = journey_analytics[route]
+                    journey_steps[i]["analytics"] = analytics
+
+                except:
+                    pass
+
+
 
                 # adding the google time to the journey steps dictionary
                 journey_steps[i]["transit_time"] = google_time
@@ -174,7 +188,7 @@ def predict(request):
                     'prediction_type': type_dict,
                 }
 
-        # returning the JSON response
+            # returning the JSON response
         return JsonResponse(response, safe=False)
 
 #function to render about.html as a landing page
