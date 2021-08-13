@@ -305,6 +305,10 @@ a:focus {
     padding: 5px 11px 11px;
 }
 
+#analytics-container {
+    width: auto;
+}
+
 
 /* ------------------------------------------------------------------------------------------------------------- */
 /* ------Google Maps and modal box Styling------ */
@@ -330,11 +334,7 @@ a:focus {
     position: absolute;
 }
 
-#bikeButton {
-    font-family: Roboto, serif;
-    border-radius: 6px;
-    margin-left: 10px;
-    width: 20%;
+#bikes_button {
     margin-bottom: 10px;
 }
 
@@ -427,7 +427,6 @@ a:focus {
     background-color: #e5e6e0;
 
     border-color: #fff;
-
     border-style: solid;
 }
 
@@ -790,12 +789,18 @@ tr:nth-child(even) {
 }
 
 
-#total-estimate, #narrow, #wide, #weather-icon, #instructions-output, #Weather {
+#total-estimate, #narrow, #wide, #weather-icon, #instructions-output, #Weather, #analytics-output {
     border-style: solid;
     background: #e5e6e0;
     padding: 10px;
     border-radius: 20px;
     border-color: #fff;
+
+}
+
+#analytics-output{
+    height:auto;
+    width: auto;
 
 }
 

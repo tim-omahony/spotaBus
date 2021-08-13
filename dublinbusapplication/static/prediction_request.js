@@ -30,6 +30,7 @@ function submit_form() {
                 'Weather': result.Weather,
                 'prediction_type': result.prediction_type,
             };
+            console.log(response)
 
             //fetching the weather icon form open weather maps API
             const iconurl = "http://openweathermap.org/img/wn/" + response.Weather.icon + "@2x.png";
@@ -37,7 +38,6 @@ function submit_form() {
 
             //converting the temperature from kelvin to degrees celcius
             var temperature = (response.Weather.temp - 273).toFixed(1);
-            console.log(response.journey_steps_response)
             var journey_response = response.journey_steps_response
 
             //sending the journey planner output to the output div
@@ -49,6 +49,8 @@ function submit_form() {
                 "<div id='parenttwo'><div id='narrowtwo'><p>Weather Forecast:</p></div><div id ='widetwo'><img id='wicon' src=" + iconurl + ">" + temperature + "<span>&#176;</span></div></div>" +
                 "<div>" + google_or_us(response) + "</div>"
             );
+
+            $('#analytics-output').html(analytics_display(journey_response));
 
         },
 

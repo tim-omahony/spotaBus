@@ -6,6 +6,7 @@
 
 
 
+
     {{ stops | json_script:"stops-data" }}
     {{ stations | json_script:"stations-data" }}
     {{ favourites | json_script:"fave-routes-data" }}
@@ -132,11 +133,11 @@
                     <div id="top-card" style="display: block;">
                         <h5 class="card-title">Why take the bus?</h5>
                         <p class="card-text">Planning your trip can be hard. That's why we want to show you the
-                            best option to get where you're going. Go ahead,
+                            best option to get you where you're going. Go ahead,
                             plan a journey to find out!</p>
                     </div>
                     <div id="journeyComparer" style="display: none;">
-                        <div id="JourneyComparerContainer" style="margin-bottom:100px">
+                        <div id="JourneyComparerContainer" style="margin-bottom:115px">
                             <h5 class="center">Compare your options:</h5>
                             <div id="walkingDiv">
                                 <i class="fas fa-walking center"></i>
@@ -161,6 +162,9 @@
                                                                                               data-off="off">
                             </div>
                         </div>
+
+                        <h5>Route Analytics</h5>
+                        <div id="analytics-output"></div>
 
 
                     </div>
