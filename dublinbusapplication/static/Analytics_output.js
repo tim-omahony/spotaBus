@@ -31,13 +31,15 @@ function charts(step) {
     google.charts.setOnLoadCallback(drawChart);
 
     function drawChart() {
-        var late = (step.analytics.on_time_percentage['Late'] * 100).toFixed(0)
-        console.log(late)
-        var early = (step.analytics.on_time_percentage['Early'] * 100).toFixed(0)
-        var on_time = (step.analytics.on_time_percentage['On_time'] * 100).toFixed(0)
+        var late = parseInt((step.analytics.on_time_percentage['Late'] * 100).toFixed(0))
+        console.log('late', late)
+        var early = parseInt((step.analytics.on_time_percentage['Early'] * 100).toFixed(0))
+        console.log('early', early)
+        var on_time = parseInt((step.analytics.on_time_percentage['On_time'] * 100).toFixed(0))
+        console.log('on time', on_time)
 
         var data = google.visualization.arrayToDataTable([
-            ['header','header'],
+            ['Status', 'percentage'],
             ['On time', on_time],
             ['Late', late],
             ['Early', early],
@@ -49,7 +51,7 @@ function charts(step) {
             pieHole: 0.4,
         };
 
-        var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
+        var chart = new google.visualization.PieChart(document.getElementById('analytics-output'));
         chart.draw(data, options);
     }
 }

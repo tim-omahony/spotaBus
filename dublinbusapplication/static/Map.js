@@ -58,8 +58,6 @@ window.onload = function () {
     stops = loadJson("stops-data")
 
     const searchParams = new URLSearchParams(window.location.search);
-    const params = Object.fromEntries(searchParams.entries());
-    console.log({params})
     if (searchParams.get('openRoutePlanner') === 'true') {
         $('#exampleModal').modal('show');
         document.getElementById('origin-input').value = searchParams.get('originStop')
