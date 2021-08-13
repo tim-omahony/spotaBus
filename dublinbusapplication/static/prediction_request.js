@@ -1,4 +1,5 @@
 // function to return provided details on travel to the prediction model
+
 function submit_form() {
     const inputTime = new Date($('#predictTime').val())
     // ajax post request takes the date, time, journey steps and weather info and passes it to the views.py
@@ -56,4 +57,5 @@ function submit_form() {
         }
     })
 }
+
 

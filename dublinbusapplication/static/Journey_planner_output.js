@@ -72,6 +72,7 @@ function get_transit_time(array) {
     });
 
     //the summation of the array is retrieved and returned
+
     let time = (transit_time_array.reduce((a, b) => a + b, 0) / 60).toFixed(0)
     return time;
 }

@@ -21,8 +21,9 @@ class Bikes(models.Model):
     Latitude = models.FloatField()
     Longitude = models.FloatField()
 
-
+#using djangos built in manager class
 class UserManager(BaseUserManager):
+    #creates a user with email username and password
     def create_user(self, email, username, password=None):
         if not email:
             raise ValueError("User must have an email")
@@ -33,10 +34,11 @@ class UserManager(BaseUserManager):
             email=self.normalize_email(email),  # making the email input lowercase to the database
             username=username,
         )
+        #saving the user in the db
         user.set_password(password)
         user.save(using=self._db)
         return user
-
+    #function to create a superuser with special permissions
     def create_superuser(self, email, username, password):
         user = self.create_user(
             email=self.normalize_email(email),  # making the email input lowercase to the database
@@ -49,8 +51,9 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-
+#class to create a customer user model with django
 class user(AbstractBaseUser):
+    #fields assosciated with each user
     email = models.EmailField(verbose_name='email', max_length=60, unique=True)
     # fields underneath are required to build a custom form
     username = models.CharField(max_length=30, unique=True)

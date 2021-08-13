@@ -1,3 +1,6 @@
+
+/*function that is executed when the delete button is clicked with the checkboxes filled out.
+* The IDs of favorite routes for the users are extracted and deleted from the DB and UI*/
 function remove_route() {
     const id = [];
     const csrf = $('input[name=csrfmiddlewaretoken]').val();
@@ -43,13 +46,3 @@ function RemoveFavRouteAlert() {
 }
 
 
-// //still working on this
-// $(function () {
-//     var tbl = document.getElementById("tbody").rows.length;
-//     console.log(tbl)
-//     if (tbl.rows.length == 0) {
-//         document.getElementById('delete_btn').style.visibility = 'hidden';
-//     } else {
-//         document.getElementById('delete_btn').style.visibility = 'visible';
-//     }
-// })
