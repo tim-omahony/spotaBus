@@ -58,24 +58,29 @@ function get_walking_time(array) {
     return time;
 }
 
-////function which retrieves the full journey time from the AJAX response
-function get_full_journey_time(array) {
-    const response_array = array
-    full_journey_time_array = []
 
-    //for loop iterates over the AJAX response and adds the transit and walking times to an array
+function get_transit_time(array) {
+    const response_array = array
+    transit_time_array = []
+
+    //for loop iterates over the AJAX response and adds the walking time to an array
     response_array.forEach(function (step) {
         console.log('step', step)
-        if (step.transit_type == "WALKING") {
-            full_journey_time_array.push(step.walking_time_value)
-        } else if (step.transit_type == "TRANSIT") {
-            full_journey_time_array.push(step.transit_time)
+        if (step.transit_type == "TRANSIT") {
+            transit_time_array.push(step.transit_time)
         }
     });
 
     //the summation of the array is retrieved and returned
-    let time = (full_journey_time_array.reduce((a, b) => a + b, 0) / 60).toFixed(0)
+
+    let time = (transit_time_array.reduce((a, b) => a + b, 0) / 60).toFixed(0)
     return time;
+}
+
+////function which retrieves the full journey time from the AJAX response
+function get_full_journey_time(array) {
+    var sum = parseInt(get_walking_time(array)) + parseInt(get_transit_time(array));
+    return sum
 }
 
 

@@ -25,8 +25,8 @@ def get_route(stops_sequence, bus_route):
 
         if (bus_route + "_{}".format(i)) in stops_sequence:
             sequence = stops_sequence[bus_route + "_{}".format(i)]
-            route_dict['d{}'.format(i)] = {}
-            route_dict['d{}'.format(i)] = sequence
+            route_dict['d{}'.format(i + 1)] = {}
+            route_dict['d{}'.format(i + 1)] = sequence
 
         else:
             pass
@@ -73,6 +73,8 @@ def prediction(route, hour, day, month, start_stop_id, end_stop_id, wind_speed, 
     """ this is the main prediction function which takes in the parameters of the machine learning model and returns an
     estimated jourey time in seconds """
 
+    dir = direction(start_stop_id, end_stop_id, stops)
+
     # a list of journey stops is retrieved for the chosen route using the JSON file and the directions function
     journey_stops = stops[direction(start_stop_id, end_stop_id, stops)]
 
@@ -80,7 +82,6 @@ def prediction(route, hour, day, month, start_stop_id, end_stop_id, wind_speed, 
     # start stop id and the end stop id and getting a list of the stops in between
     stop_sequence = journey_stops[journey_stops.index(start_stop_id):journey_stops.index(end_stop_id) + 1]
 
-    print(stop_sequence)
 
     # a dataframe is created with the stop IDs and the next stop ID, creating a dataframe of stop-wise pairs
     prediction_df = pd.DataFrame(stop_sequence, columns=['STOPPOINTID'])
@@ -112,9 +113,17 @@ def prediction(route, hour, day, month, start_stop_id, end_stop_id, wind_speed, 
     # retrieving the dummy variables for this dataframe
     df_dummies = pd.get_dummies(result)
 
-    # retrieving the dummy headers that were created on creation of the specific model
-    with open(filePath('LinRegPickles/LinReg_route_{}_headers.pkl'.format(route)), 'rb') as handle:
-        dummies = pickle.load(handle)
+    try:
+
+        # retrieving the dummy headers that were created on creation of the specific model
+        with open(filePath('Final_LR_DT_Pickles/LinReg_route__{}_{}_headers.pkl'.format(route, dir)), 'rb') as handle:
+            dummies = pickle.load(handle)
+
+    except (OSError, IOError) as e:
+
+        # retrieving the dummy headers that were created on creation of the specific model
+        with open(filePath('Final_LR_DT_Pickles/DecisionTree_route_{}_{}_headers.pkl'.format(route, dir)), 'rb') as handle:
+            dummies = pickle.load(handle)
 
     # creating a dataframe with these headers
     # aligning the two dataframes on their axes and filling all empty entries with zeros
@@ -123,9 +132,16 @@ def prediction(route, hour, day, month, start_stop_id, end_stop_id, wind_speed, 
     df_a, df_b = full_dummies.align(df_dummies, fill_value=0)
     final_df_for_predict = df_b.reindex(full_dummies.columns, axis=1)
 
-    # opening the specific pickle file in order to make the prediction
-    with open(filePath('LinRegPickles/LinReg_Model_route_{}.pkl'.format(route)), 'rb') as handle:
-        model = pickle.load(handle)
+    try:
+        # opening the specific pickle file in order to make the prediction
+        with open(filePath('Final_LR_DT_Pickles/LinReg_Model_route_{}_{}.pkl'.format(route, dir)), 'rb') as handle:
+            model = pickle.load(handle)
+
+    except (OSError, IOError):
+
+        # opening the specific pickle file in order to make the prediction
+        with open(filePath('Final_LR_DT_Pickles/DecisionTree_Model_route_{}_{}.pkl'.format(route, dir)), 'rb') as handle:
+            model = pickle.load(handle)
 
     # making the final prediction
     y_pred_linear = model.predict(final_df_for_predict)
@@ -139,5 +155,5 @@ def prediction(route, hour, day, month, start_stop_id, end_stop_id, wind_speed, 
     # getting the summation of the final array
     final_prediction = sum(good_pred)
 
-    #returning the result
+    # returning the result
     return final_prediction

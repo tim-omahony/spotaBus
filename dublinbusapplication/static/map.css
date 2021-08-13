@@ -10,8 +10,8 @@
 
 /* ------------------------------------------------------------------------------------------------------------- */
 /* base CSS, template retrieved from codepen */
-body {
 
+body {
     padding-bottom: 30px;
     position: relative;
     min-height: 100%;
@@ -93,7 +93,6 @@ a:focus {
     color: #fff;
     background: #FFA500;
 }
-
 
 .sidebar-nav > li > a i.fa {
     font-size: 24px;
@@ -273,10 +272,9 @@ a:focus {
     }
 }
 
-
 /* ------------------------------------------------------------------------------------------------------------- */
-
 /* Index page css */
+
 .card {
     background-color: rgba(245, 245, 245, 1);
     /*opacity: .4;*/
@@ -303,32 +301,19 @@ a:focus {
     color: #fff;
     background-color: #ffcd4f;
     margin-left: 12px;
-    padding: 5px 11px 0px 11px;
+
+    padding: 5px 11px 11px;
 }
+
+
+/* ------------------------------------------------------------------------------------------------------------- */
+/* ------Google Maps and modal box Styling------ */
 
 #MapView {
     width: auto;
     height: auto;
 }
 
-.weatherwidget-io {
-    width: 250px;
-    height: 10px;
-    float: right;
-}
-
-/* Optional: Makes the sample page fill the window. */
-
-.weather {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    z-index: 1000;
-}
-
-.weatherwidget-io {
-    width: 500px;
-}
 
 .controls {
     margin-top: 10px;
@@ -397,7 +382,9 @@ a:focus {
     color: #fff;
     background-color: #4d90fe;
     margin-left: 12px;
-    padding: 5px 11px 0px 11px;
+
+    padding: 5px 11px 11px;
+
 }
 
 #mode-selector label {
@@ -428,22 +415,20 @@ a:focus {
 /* ------------------------------------------------------------------------------------------------------------- */
 /* Transport comparator widget */
 
-#walkingDiv {
-    border-top-left-radius: 25px;
-    border-bottom-left-radius: 25px;
-    padding: 1em;
-    float: left;
-    width: 33%;
-    background-color: #e5e6e0;
-}
 
-#drivingDiv {
+
+#drivingDiv, #walkingDiv {
+
     border-top-right-radius: 25px;
     border-bottom-right-radius: 25px;
     padding: 1em;
     float: left;
     width: 33%;
     background-color: #e5e6e0;
+
+    border-color: #fff;
+
+    border-style: solid;
 }
 
 #transitDiv {
@@ -452,6 +437,10 @@ a:focus {
     width: 33%;
     background-color: #37383b;
     color: #fffeff;
+    border-color: #fff;
+    border-radius: 20px;
+    border-style: solid;
+
 }
 
 #slideSource {
@@ -463,13 +452,9 @@ a:focus {
     opacity: 0;
 }
 
-
 /* ------------------------------------------------------------------------------------------------------------- */
-
-
-/* ------------------------------------------------------------------------------------------------------------- */
-
 /*register/login css*/
+
 .user_card {
     width: 350px;
     margin-top: 20%;
@@ -481,7 +466,6 @@ a:focus {
     flex-direction: column;
     padding: 10px;
     border-radius: 5px;
-
 }
 
 .form_container {
@@ -501,7 +485,6 @@ a:focus {
 
 .login_btn:focus {
     box-shadow: none !important;
-    outline: 0px !important;
 }
 
 .login_container {
@@ -563,10 +546,9 @@ a:focus {
     margin-left: 20px;
 }
 
+/* ------------------------------------------------------------------------------------------------------------- */
+/*User Page styling, template from https://bootsnipp.com/snippets/xRMX*/
 
-/*User Page from https://bootsnipp.com/snippets/xRMX*/
-
-@import url(http://fonts.googleapis.com/css?family=Lato:400,700);
 body {
     font-family: 'Lato', 'sans-serif';
 }
@@ -599,28 +581,62 @@ figcaption.ratings a:hover {
 }
 
 .emphasis:hover {
-    border-top: 4px solid #1abc9c;
+    border-top: 4px solid #f39c12;
 }
 
 .emphasis h2 {
     margin-bottom: 0;
 }
 
-/*Table in Userpage styling*/
-table {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
+
+/* ------------------------------------------------------------------------------------------------------------- */
+/*Table on User page styling*/
+#table {
     width: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid #212529FF;
+    padding: 10px;
+    margin-bottom: 15px;
 }
 
-td, th {
-    border: 1px solid #dddddd;
+#user-metrics-div {
+    border-bottom: 0.5px solid #c2c2c2;
+    margin-bottom: 20px;
+}
+
+#fav-journey-title {
     text-align: left;
-    padding: 8px;
+}
+
+#tbody {
+    border: 7px solid #222222 !important;
+}
+
+th {
+    background-color: #222222;
+    color: white;
+}
+
+tr, td, th {
+    border: 3px solid #222222 !important;
+    text-align: left;
+    padding: 6px;
 }
 
 tr:nth-child(even) {
     background-color: #dddddd;
+}
+
+
+#user-page-item-container {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 
@@ -720,6 +736,9 @@ tr:nth-child(even) {
 }
 
 
+
+/* ------------------------------------------------------------------------------------------------------------- */
+
 /*CSS for google pop up message and other journey planner output*/
 #google_maps_logo {
     width: 60px;
@@ -744,11 +763,13 @@ tr:nth-child(even) {
 
 #narrow, #wide, #narrowtwo, #widetwo {
     flex: 1;
-    width: 25%;
+
+    width: 30%;
 }
 
 #total-estimate {
-    width: 50%;
+    width: 40%;
+
 }
 
 #estimate-walking-icon, #estimate-bus-icon, #narrow, #wide {
@@ -772,10 +793,10 @@ tr:nth-child(even) {
 #total-estimate, #narrow, #wide, #weather-icon, #instructions-output, #Weather {
     border-style: solid;
     background: #e5e6e0;
-    padding: 20px;
+    padding: 10px;
     border-radius: 20px;
     border-color: #fff;
-    margin-right: 2px;
+
 }
 
 

@@ -1,8 +1,9 @@
+import os
 from pathlib import Path
+import django_heroku
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
@@ -14,7 +15,6 @@ SECRET_KEY = 'django-insecure-#+ldavlbggtt%%0#9-^58!v^@+guvaf&h2(f&c^7vbv94jh4r8
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -62,21 +62,31 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'dublinbusesproject.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 #
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'dublinbus',
+#         'USER': 'CiansDB',
+#         'PASSWORD': 'DBG18_2021',
+#         'HOST': 'dublinbus.cmxnicqe342l.eu-west-1.rds.amazonaws.com',
+#         'PORT': '3306',
+#     }
+# }
+
 DATABASES = {
-     'default': {
-         'ENGINE': 'django.db.backends.mysql',
-         'NAME': 'dublinbus',
-         'USER': 'CiansDB',
-         'PASSWORD': 'DBG18_2021',
-         'HOST': 'dublinbus.cmxnicqe342l.eu-west-1.rds.amazonaws.com',
-         'PORT': '3306',
-     }
- }
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'heroku_9517535f5cb5823',
+        'USER': 'b3b693985c5133',
+        'PASSWORD': '0be1e6a7',
+        'HOST': 'eu-cdbr-west-01.cleardb.com',
+        'PORT': '3306',
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -96,7 +106,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
@@ -110,13 +119,13 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
-
+django_heroku.settings(locals())
 # DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+

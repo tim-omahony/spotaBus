@@ -21,7 +21,6 @@ let weatherForecast;
 let favourites;
 
 
-
 // function to render the map on the main application page
 function initMap() {
     map = new google.maps.Map(document.getElementById("MapView"), {
@@ -57,4 +56,13 @@ function loadJson(selector) {
 window.onload = function () {
     todays_date();
     stops = loadJson("stops-data")
+
+    const searchParams = new URLSearchParams(window.location.search);
+    const params = Object.fromEntries(searchParams.entries());
+    console.log({params})
+    if (searchParams.get('openRoutePlanner') === 'true') {
+        $('#exampleModal').modal('show');
+        document.getElementById('origin-input').value = searchParams.get('originStop')
+        document.getElementById('destination-input').value = searchParams.get('destStop')
+    }
 }
