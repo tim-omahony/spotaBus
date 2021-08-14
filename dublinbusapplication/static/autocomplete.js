@@ -54,6 +54,10 @@ class AutocompleteDirectionsHandler {
             this.setupPlaceChangedListener(originAutocomplete, "ORIG");
             this.setupPlaceChangedListener(destinationAutocomplete, "DEST");
         }
+        if (favouriteEnabled) {
+
+        }
+
     }
 
 
@@ -61,19 +65,34 @@ class AutocompleteDirectionsHandler {
     setupPlaceChangedListener(autocomplete, mode) {
         autocomplete.bindTo("bounds", this.map);
         autocomplete.addListener("place_changed", () => {
-            const place = autocomplete.getPlace();
+            if (!favouriteEnabled) {
+                const place = autocomplete.getPlace();
+                console.log({place})
 
-            if (!place.place_id) {
-                window.alert("Please select an option from the dropdown list.");
-                return;
-            }
+                if (!place.place_id) {
+                    window.alert("Please select an option from the dropdown list.");
+                    return;
+                }
 
-            if (mode === "ORIG") {
-                this.originPlaceId = place.place_id;
+                if (mode === "ORIG") {
+                    this.originPlaceId = place.place_id;
+                } else {
+                    this.destinationPlaceId = place.place_id;
+                }
+                this.route();
             } else {
-                this.destinationPlaceId = place.place_id;
+                const place = origin.value
+                if (!place.place_id) {
+                    window.alert("Please select an option from the dropdown list.");
+                    return;
+                }
+                if (mode === "ORIG") {
+                    this.originPlaceId = place.place_id;
+                } else {
+                    this.destinationPlaceId = place.place_id;
+                }
+                this.route();
             }
-            this.route();
         });
     }
 
