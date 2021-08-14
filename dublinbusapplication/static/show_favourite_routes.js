@@ -28,6 +28,10 @@ function showFavourites() {
             destList.appendChild(destOpt);
         })
     } else {
+        origAutocomplete.style.display = "block";
+        origFave.style.display = "none";
+        destAutocomplete.style.display = "block";
+        destFave.style.display = "none";
         // if the button is clicked again the list is wiped
         document.getElementById("star-btn").style.color = '#222';
         originList.innerHTML = ""
