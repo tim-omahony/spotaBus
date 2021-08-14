@@ -62,9 +62,7 @@ function validateForm() {
 
     if (a == null || a == "" || b == null || b == "" || c == null || c == "") {
         JSalert();
-
     } else {
-
         changeButtonValue();
         hidemodal();
         submit_form();

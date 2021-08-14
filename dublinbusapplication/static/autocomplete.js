@@ -28,17 +28,32 @@ class AutocompleteDirectionsHandler {
         const options = {
             componentRestrictions: {country: "ie"}
         };
-        const originInput = document.getElementById("origin-input");
-        const destinationInput = document.getElementById("destination-input");
-        const originAutocomplete = new google.maps.places.Autocomplete(originInput, options);
-        // Specify just the place data fields that you need.
-        originAutocomplete.setFields(["place_id"]);
-        const destinationAutocomplete = new google.maps.places.Autocomplete(
-            destinationInput, options
-        );
+        if (favouriteEnabled === false) {
+            const originInput = document.getElementById("origin-input");
+            const destinationInput = document.getElementById("destination-input");
+            const originAutocomplete = new google.maps.places.Autocomplete(originInput, options);
+            // Specify just the place data fields that you need.
+            originAutocomplete.setFields(["place_id"]);
+            const destinationAutocomplete = new google.maps.places.Autocomplete(
+                destinationInput, options
+            );
 
-        this.setupPlaceChangedListener(originAutocomplete, "ORIG");
-        this.setupPlaceChangedListener(destinationAutocomplete, "DEST");
+            this.setupPlaceChangedListener(originAutocomplete, "ORIG");
+            this.setupPlaceChangedListener(destinationAutocomplete, "DEST");
+        } else {
+            console.log("here")
+            const originInput = document.getElementById("origin-input-fav");
+            const destinationInput = document.getElementById("destination-input-fav");
+            const originAutocomplete = new google.maps.places.Autocomplete(originInput, options);
+            // Specify just the place data fields that you need.
+            originAutocomplete.setFields(["place_id"]);
+            const destinationAutocomplete = new google.maps.places.Autocomplete(
+                destinationInput, options
+            );
+
+            this.setupPlaceChangedListener(originAutocomplete, "ORIG");
+            this.setupPlaceChangedListener(destinationAutocomplete, "DEST");
+        }
     }
 
 
