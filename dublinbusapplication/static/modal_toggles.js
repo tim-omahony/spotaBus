@@ -56,8 +56,8 @@ function hidemodal() {
 // this function ensures that all input fields have been field before proceeding with
 // the button change and the hiding of the modal box
 function validateForm() {
-    var a = document.getElementById("origin-input").value;
-    var b = document.getElementById("destination-input").value;
+    var a = document.getElementById("origin-input").value || document.getElementById("origin-input-fav");
+    var b = document.getElementById("destination-input").value || document.getElementById("destination-input-fav");
     var c = document.getElementById("predictTime").value;
 
     if (a == null || a == "" || b == null || b == "" || c == null || c == "") {
@@ -71,8 +71,8 @@ function validateForm() {
     }
 }
 
-function JSalert(){
-	swal("Please fill out the required fields ");
+function JSalert() {
+    swal("Please fill out the required fields ");
 }
 
 
