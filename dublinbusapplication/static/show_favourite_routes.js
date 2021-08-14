@@ -5,8 +5,16 @@ function showFavourites() {
     favouriteEnabled = !favouriteEnabled
     favourites = loadJson("fave-routes-data");
     const originList = document.getElementById("originList");
-    const destList = document.getElementById("destinationList");
+    const destList = document.getElementById("destinationList")
+    const origAutocomplete = document.getElementById("origin-input")
+    const origFave = document.getElementById("origin-input-fav")
+    const destAutocomplete = document.getElementById("destination-input")
+    const destFave = document.getElementById("destination-input-fav")
     if (favouriteEnabled) {
+        origAutocomplete.style.display = "none";
+        origFave.style.display = "block";
+        destAutocomplete.style.display = "none";
+        destFave.style.display = "block";
         // for each which iterates over the list of user's favourite routes (loaded when index.html is loaded)
         // for each element in their favourite routes it creates a new option tag which is appended to the
         // datalists for the origin or destination

@@ -11,6 +11,7 @@ from django.views.generic.edit import DeleteView
 from dublinbusapplication.models import FavouriteJourney
 from django.contrib.auth.models import User
 from django.http import HttpResponse, HttpResponseRedirect
+import requests
 
 
 # stops, render_bike_stations and favourites are parsed as JSON to allow them to be used in HTML
@@ -197,6 +198,21 @@ def about(request):
 # function to render contact.html as a landing page
 def contact(request):
     return render(request, 'contact.html')
+
+
+def google_api(request):
+    received_json_data = json.loads(request.body)
+    origin_stop = received_json_data['origin_stop']
+    destination_stop = received_json_data['destination_stop']
+    url = 'https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input='
+    query = '&inputtype=textquery&fields=formatted_address&key=AIzaSyBpmxEf_9hpbApu3UhIu8jY41LDdgPFkqc'
+    origin_url = url + origin_stop + query
+    destination_url = url + destination_stop + query
+    origin = requests.get(origin_url)
+    destination = requests.get(destination_url)
+    print(origin)
+    print(destination)
+    return JsonResponse({'origin': origin.json(), 'destination': destination.json()})
 
 
 # this function allows users to register their own account
