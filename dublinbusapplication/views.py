@@ -282,7 +282,7 @@ class displayFavRoute(View):
             for id in route_ids:
                 fav_route = FavouriteJourney.objects.get(pk=id)
                 fav_route.delete()
-        return redirect('deleteUserFavJourney')
+            return redirect('deleteUserFavJourney')
 
 
 # function to delete user from the database

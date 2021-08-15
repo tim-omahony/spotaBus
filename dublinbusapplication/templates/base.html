@@ -94,7 +94,8 @@
 
                 {% comment %}<shows users name when user is logged in ;{% endcomment %}
                 {% if request.user.is_authenticated %}
-                    <span class="nav-link">Hello, {{ request.user }}</span>
+                    <div id="hello-message"><span class="nav-link">Hello, {{ request.user }}</span></div>
+
                 {% endif %}
 
                 {% comment %} Changes login/logout icon accordingly to users status {% endcomment %}
