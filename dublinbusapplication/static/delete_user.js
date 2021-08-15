@@ -1,7 +1,5 @@
+//function that takes the user id and removes it from the database
 function removeUser(user_id) {
-
-   // var user_id = $(this).val();
-
 
         $.ajax({
             url: "delete_user/",
@@ -19,11 +17,12 @@ function removeUser(user_id) {
 
 }
 
-
+//Function to change page once the user is deleted
 function changePage() {
   location.replace("http://127.0.0.1:8000/")
 }
 
+//function to show alerts when delete user button is clicked
 function removeUserAlert(){
     let user_id = document.getElementById("del_user_btn").value;
         swal({
