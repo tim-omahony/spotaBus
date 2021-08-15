@@ -2,7 +2,8 @@ let favouriteEnabled = false
 // this function displays the user's favourite routes when the button is clicked
 // if the button is clicked again it hides the user's favourite routes and defaults to Google's autocompelte functionality
 function showFavourites() {
-    favouriteEnabled = !favouriteEnabled
+    favouriteEnabled = true
+    // favouriteEnabled = !favouriteEnabled
     favourites = loadJson("fave-routes-data");
     const originList = document.getElementById("originList");
     const destList = document.getElementById("destinationList")

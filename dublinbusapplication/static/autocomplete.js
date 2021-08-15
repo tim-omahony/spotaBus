@@ -28,7 +28,22 @@ class AutocompleteDirectionsHandler {
         const options = {
             componentRestrictions: {country: "ie"}
         };
-        if (favouriteEnabled === false) {
+        console.log({favouriteEnabled})
+        if (favouriteEnabled) {
+            console.log("else", {favouriteEnabled})
+            const originInputFav = document.getElementById("origin-input-fav").value;
+            const destinationInputFav = document.getElementById("destination-input-fav").value;
+            console.log({originInputFav}, {destinationInputFav})
+            // const originAutocomplete = new google.maps.places.Autocomplete(originInput, options);
+            // // Specify just the place data fields that you need.
+            // originAutocomplete.setFields(["place_id"]);
+            // const destinationAutocomplete = new google.maps.places.Autocomplete(
+            //     destinationInput, options
+            // );
+            this.setupPlaceChangedListener(originInputFav, "ORIG");
+            this.setupPlaceChangedListener(destinationInputFav, "DEST");
+        } else {
+            console.log("if", {favouriteEnabled})
             const originInput = document.getElementById("origin-input");
             const destinationInput = document.getElementById("destination-input");
             const originAutocomplete = new google.maps.places.Autocomplete(originInput, options);
@@ -37,27 +52,9 @@ class AutocompleteDirectionsHandler {
             const destinationAutocomplete = new google.maps.places.Autocomplete(
                 destinationInput, options
             );
-
-            this.setupPlaceChangedListener(originAutocomplete, "ORIG");
-            this.setupPlaceChangedListener(destinationAutocomplete, "DEST");
-        } else {
-            console.log("here")
-            const originInput = document.getElementById("origin-input-fav");
-            const destinationInput = document.getElementById("destination-input-fav");
-            const originAutocomplete = new google.maps.places.Autocomplete(originInput, options);
-            // Specify just the place data fields that you need.
-            originAutocomplete.setFields(["place_id"]);
-            const destinationAutocomplete = new google.maps.places.Autocomplete(
-                destinationInput, options
-            );
-
             this.setupPlaceChangedListener(originAutocomplete, "ORIG");
             this.setupPlaceChangedListener(destinationAutocomplete, "DEST");
         }
-        if (favouriteEnabled) {
-
-        }
-
     }
 
 
@@ -65,34 +62,21 @@ class AutocompleteDirectionsHandler {
     setupPlaceChangedListener(autocomplete, mode) {
         autocomplete.bindTo("bounds", this.map);
         autocomplete.addListener("place_changed", () => {
-            if (!favouriteEnabled) {
-                const place = autocomplete.getPlace();
-                console.log({place})
 
-                if (!place.place_id) {
-                    window.alert("Please select an option from the dropdown list.");
-                    return;
-                }
+            const place = autocomplete.getPlace();
+            console.log({place})
 
-                if (mode === "ORIG") {
-                    this.originPlaceId = place.place_id;
-                } else {
-                    this.destinationPlaceId = place.place_id;
-                }
-                this.route();
-            } else {
-                const place = origin.value
-                if (!place.place_id) {
-                    window.alert("Please select an option from the dropdown list.");
-                    return;
-                }
-                if (mode === "ORIG") {
-                    this.originPlaceId = place.place_id;
-                } else {
-                    this.destinationPlaceId = place.place_id;
-                }
-                this.route();
+            if (!place.place_id) {
+                window.alert("Please select an option from the dropdown list.");
+                return;
             }
+
+            if (mode === "ORIG") {
+                this.originPlaceId = place.place_id;
+            } else {
+                this.destinationPlaceId = place.place_id;
+            }
+            this.route();
         });
     }
 
