@@ -339,7 +339,9 @@ a:focus {
 }
 
 #origin-input,
-#destination-input {
+#destination-input,
+#origin-input-fav,
+#destination-input-fav {
     background-color: #fff;
     font-family: Roboto, sans-serif;
     font-size: 15px;
@@ -414,7 +416,6 @@ a:focus {
 
 /* ------------------------------------------------------------------------------------------------------------- */
 /* Transport comparator widget */
-
 
 
 #drivingDiv, #walkingDiv {
@@ -735,7 +736,6 @@ tr:nth-child(even) {
 }
 
 
-
 /* ------------------------------------------------------------------------------------------------------------- */
 
 /*CSS for google pop up message and other journey planner output*/
@@ -798,8 +798,8 @@ tr:nth-child(even) {
 
 }
 
-#analytics-output{
-    height:auto;
+#analytics-output {
+    height: auto;
     width: auto;
 
 }

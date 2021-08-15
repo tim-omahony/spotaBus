@@ -77,7 +77,6 @@
                                                    list="destinationList"
                                                    type="text"
                                                    placeholder="Enter a destination location"/>
-
                                         </div>
 
 
@@ -91,6 +90,9 @@
                                                 </button>
                                             {% endif %}
                                         </div>
+                                        <p id="confirmSelection" style="display: none; text-align: center">
+                                            Remember to confirm route from the Google dropdown!
+                                        </p>
 
                                         <div id="datetime"><p><b>Date and time:</b></p>
 
@@ -98,7 +100,6 @@
                                                    type="datetime-local"
                                                    name="predict"
                                                    onChange="InitialMap.route()">
-
                                         </div>
                                     </div>
 
@@ -173,7 +174,6 @@
             </div>
         </div>
     </div>
-
 
 
 {% endblock %}

@@ -7,6 +7,7 @@ let transit_departure_time;
 let walking_time_text;
 let walking_time_value;
 
+
 //creating the AutocompleteDirectionsHandler class to be called in InitMap
 class AutocompleteDirectionsHandler {
     map;
@@ -36,17 +37,18 @@ class AutocompleteDirectionsHandler {
         const destinationAutocomplete = new google.maps.places.Autocomplete(
             destinationInput, options
         );
-
         this.setupPlaceChangedListener(originAutocomplete, "ORIG");
         this.setupPlaceChangedListener(destinationAutocomplete, "DEST");
     }
 
 
-    // provides the route between two given stops
+// provides the route between two given stops
     setupPlaceChangedListener(autocomplete, mode) {
         autocomplete.bindTo("bounds", this.map);
         autocomplete.addListener("place_changed", () => {
+
             const place = autocomplete.getPlace();
+            console.log({place})
 
             if (!place.place_id) {
                 window.alert("Please select an option from the dropdown list.");
