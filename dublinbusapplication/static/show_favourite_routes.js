@@ -2,23 +2,16 @@ let favouriteEnabled = false
 // this function displays the user's favourite routes when the button is clicked
 // if the button is clicked again it hides the user's favourite routes and defaults to Google's autocompelte functionality
 function showFavourites() {
-    favouriteEnabled = true
-    // favouriteEnabled = !favouriteEnabled
+    favouriteEnabled = !favouriteEnabled
     favourites = loadJson("fave-routes-data");
     const originList = document.getElementById("originList");
     const destList = document.getElementById("destinationList")
-    const origAutocomplete = document.getElementById("origin-input")
-    const origFave = document.getElementById("origin-input-fav")
-    const destAutocomplete = document.getElementById("destination-input")
-    const destFave = document.getElementById("destination-input-fav")
+    const confirmSelection = document.getElementById("confirmSelection")
     if (favouriteEnabled) {
-        origAutocomplete.style.display = "none";
-        origFave.style.display = "block";
-        destAutocomplete.style.display = "none";
-        destFave.style.display = "block";
         // for each which iterates over the list of user's favourite routes (loaded when index.html is loaded)
         // for each element in their favourite routes it creates a new option tag which is appended to the
         // datalists for the origin or destination
+        confirmSelection.style.display = "block";
         document.getElementById("star-btn").style.color = '#ffcd4f';
         favourites.forEach(favourite => {
             const originOpt = document.createElement('option');
@@ -29,11 +22,9 @@ function showFavourites() {
             destList.appendChild(destOpt);
         })
     } else {
-        origAutocomplete.style.display = "block";
-        origFave.style.display = "none";
-        destAutocomplete.style.display = "block";
-        destFave.style.display = "none";
-        // if the button is clicked again the list is wiped
+        confirmSelection.style.display = "none";
+        // if the butto
+        // n is clicked again the list is wiped
         document.getElementById("star-btn").style.color = '#222';
         originList.innerHTML = ""
         destList.innerHTML = ""

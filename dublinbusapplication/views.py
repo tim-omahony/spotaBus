@@ -205,7 +205,7 @@ def google_api(request):
     origin_stop = received_json_data['origin_stop']
     destination_stop = received_json_data['destination_stop']
     url = 'https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input='
-    query = '&inputtype=textquery&fields=formatted_address&key=AIzaSyBpmxEf_9hpbApu3UhIu8jY41LDdgPFkqc'
+    query = '&inputtype=textquery&key=AIzaSyBpmxEf_9hpbApu3UhIu8jY41LDdgPFkqc'
     origin_url = url + origin_stop + query
     destination_url = url + destination_stop + query
     origin = requests.get(origin_url)

@@ -53,11 +53,6 @@
                                                    list="originList"
                                                    type="text"
                                                    placeholder="Enter an origin location"/>
-                                            <input id="origin-input-fav"
-                                                   class="controls"
-                                                   list="originList"
-                                                   type="text"
-                                                   placeholder="Enter an origin location" style="display: none"/>
                                             <div id="favourite-routes">
                                                 <datalist id="originList">
                                                 </datalist>
@@ -82,12 +77,6 @@
                                                    list="destinationList"
                                                    type="text"
                                                    placeholder="Enter a destination location"/>
-                                            <input id="destination-input-fav"
-                                                   class="controls"
-                                                   list="destinationList"
-                                                   type="text"
-                                                   placeholder="Enter a destination location" style="display: none"/>
-
                                         </div>
 
 
@@ -101,6 +90,9 @@
                                                 </button>
                                             {% endif %}
                                         </div>
+                                        <p id="confirmSelection" style="display: none; text-align: center">
+                                            Remember to confirm route from the Google dropdown!
+                                        </p>
 
                                         <div id="datetime"><p><b>Date and time:</b></p>
 
@@ -108,7 +100,6 @@
                                                    type="datetime-local"
                                                    name="predict"
                                                    onChange="InitialMap.route()">
-
                                         </div>
                                     </div>
 
@@ -183,8 +174,6 @@
             </div>
         </div>
     </div>
-
-    <button onclick="selectFavourite()">~look at the console for origin and dest urls~</button>
 
 
 {% endblock %}

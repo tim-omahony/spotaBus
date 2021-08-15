@@ -62,5 +62,8 @@ window.onload = function () {
         $('#exampleModal').modal('show');
         document.getElementById('origin-input').value = searchParams.get('originStop')
         document.getElementById('destination-input').value = searchParams.get('destStop')
+        const confirm = document.getElementById("confirmSelection")
+        confirm.style.display = "block"
     }
 }
+
