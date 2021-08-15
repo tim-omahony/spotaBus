@@ -307,4 +307,4 @@ def del_user(request):
         user_id = request.user.id
         user_account = User.objects.get(pk=user_id)
         user_account.delete()
-        return redirect('home')
+    return redirect('home')
