@@ -25,9 +25,10 @@ function remove_route() {
                 }
             }
         })
+        updatePage()
     }
 }
-
+//function that is executed when the remove favorite route button is clicked that shows the alerts
 function RemoveFavRouteAlert() {
     swal({
         title: "You sure about this?",
@@ -45,4 +46,6 @@ function RemoveFavRouteAlert() {
         });
 }
 
-
+function updatePage() {
+  location.replace("http://127.0.0.1:8000/delete_fav_route/")
+}
