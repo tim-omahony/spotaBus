@@ -1,21 +1,43 @@
-$(document).ready(function () {
-    $("#del_user_btn").click(function () {
-        if (confirm("Are you sure you want to delete your user?")) {
-            var user_id = $(this).val();
-            alert(user_id);
+function removeUser(user_id) {
 
-            $.ajax({
-                url: "delete_user/",
-                method: "POST",
-                data: {
-                    user_id : user_id,
-                    csrfmiddlewaretoken
-                },
-                success: function (response) {
-                    console.log('success', response)
-                    alert("user successfully deleted from the database!")
-                }
-            })
-        }
-    });
-})
+   // var user_id = $(this).val();
+
+
+        $.ajax({
+            url: "delete_user/",
+            method: "POST",
+            data: {
+                user_id: user_id,
+                csrfmiddlewaretoken
+            },
+            success: function (response) {
+                console.log('success', response)
+                alert("user successfully deleted from the database!")
+            }
+        })
+        changePage()
+
+}
+
+
+function changePage() {
+  location.replace("http://127.0.0.1:8000/")
+}
+
+function removeUserAlert(){
+    let user_id = document.getElementById("del_user_btn").value;
+        swal({
+        title: "You sure about this?",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    })
+        .then((willDelete) => {
+            if (willDelete) {
+                swal("User is deleted!", "", "success");
+                removeUser(user_id);
+            } else {
+                swal("Pheew", "User has not been deleted!", "error");
+            }
+        });
+}

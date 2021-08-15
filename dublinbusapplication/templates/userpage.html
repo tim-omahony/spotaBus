@@ -71,7 +71,7 @@
                 </div>
             </div>
                 {% csrf_token %}
-           <button type="submit" id="del_user_btn" value="{{ request.user.id }}" class="btn btn-danger">Delete Account</button>
+           <button type="button" id="del_user_btn" value="{{ request.user.id }}" class="btn btn-danger" onclick="removeUserAlert()">Delete Account</button>
         </div>
     </div>
 

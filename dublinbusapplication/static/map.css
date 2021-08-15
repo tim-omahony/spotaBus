@@ -610,7 +610,7 @@ figcaption.ratings a:hover {
 }
 
 #fav-journey-title {
-    text-align: left;
+    text-align: center;
 }
 
 #tbody {
@@ -641,6 +641,10 @@ tr:nth-child(even) {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+#del_user_btn{
+    margin: 10px;
 }
 
 
