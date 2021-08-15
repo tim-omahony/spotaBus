@@ -47,12 +47,7 @@ function charts(late, early, on_time, map_id) {
     google.charts.setOnLoadCallback(drawChart);
 
     function drawChart() {
-        var late = parseInt((step.analytics.on_time_percentage['Late'] * 100).toFixed(0))
-        console.log('late', late)
-        var early = parseInt((step.analytics.on_time_percentage['Early'] * 100).toFixed(0))
-        console.log('early', early)
-        var on_time = parseInt((step.analytics.on_time_percentage['On_time'] * 100).toFixed(0))
-        console.log('on time', on_time)
+
         var data = google.visualization.arrayToDataTable([
             ['header', 'header'],
             ['On time', on_time],
