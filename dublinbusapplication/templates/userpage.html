@@ -61,17 +61,23 @@
                                 {% endfor %}
                                 </tbody>
                             </table>
-                            {% if user_routes %}
-                                <button type="button" id="delete_btn" class="btn btn-danger"
-                                        onclick="RemoveFavRouteAlert()">Remove Route
+                            <div id="danger-zone">
+                                {% if user_routes %}
+                                    <button type="button" id="delete_btn" class="btn btn-danger"
+                                            onclick="RemoveFavRouteAlert()">Remove Route
+                                    </button>
+                                {% endif %}
+                                <button type="button" id="del_user_btn" value="{{ request.user.id }}"
+                                        class="btn btn-danger"
+                                        onclick="removeUserAlert()">Delete Account
                                 </button>
-                            {% endif %}
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-                {% csrf_token %}
-           <button type="button" id="del_user_btn" value="{{ request.user.id }}" class="btn btn-danger" onclick="removeUserAlert()">Delete Account</button>
+            {% csrf_token %}
+
         </div>
     </div>
 
