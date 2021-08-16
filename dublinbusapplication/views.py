@@ -310,7 +310,9 @@ class displayFavRoute(View):
             user_metrics = UserAccountMetrics.objects.values_list('total_distance_planned', 'total_trips_planned').get(
                 username= request.user)
         except:
+            #catch legacy/admin users who didn't have AccountMetrics on creation
             UserAccountMetrics.objects.create(total_distance_planned=0, total_trips_planned=0, username=request.user)
+            user_metrics =[0,0]
 
         return render(request, 'userpage.html', {'user_routes': user_routes, 'total_distance_planned': user_metrics[0],'total_trips_planned':user_metrics[1]})
 
