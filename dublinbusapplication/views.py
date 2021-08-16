@@ -54,6 +54,15 @@ def predict(request):
     journey = open(filePath('all_routes_dict_new_key.json'))
     journey_analytics = json.load(journey)
 
+    full_distance = journey_steps[0]['full_distance']
+
+    # try:
+    #     UserAccountMetrics.objects.filter(username=request.user).update(accvalue=F("total_distance_planned") += full_distance)
+    #
+    # except Exception as e:
+    #     print("Could not update user record")
+
+
     try:
         # retrieving the stops data such that the latitude and longitude coordinates can be matched up
         # with the closest stop id

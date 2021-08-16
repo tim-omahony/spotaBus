@@ -6,7 +6,7 @@ let departure_time_text;
 let transit_departure_time;
 let walking_time_text;
 let walking_time_value;
-
+let full_distance;
 
 //creating the AutocompleteDirectionsHandler class to be called in InitMap
 class AutocompleteDirectionsHandler {
@@ -115,20 +115,22 @@ class AutocompleteDirectionsHandler {
                         departure_time_text = [];
                         arrival_time = [];
                         step_distance = [];
-                        walking_time_text = []
-                        walking_time_value = []
+                        walking_time_text = [];
+                        walking_time_value = [];
 
                         //retrieving the response
                         Direction_Steps = response.routes[0].legs[0].steps[y].instructions;
                         departure_time = response.routes[0].legs[0].departure_time.value.getTime()
                         departure_time_text = response.routes[0].legs[0].departure_time['text'];
                         arrival_time = response.routes[0].legs[0].arrival_time['text'];
+                        full_distance = response.routes[0].legs[0].distance['value'];
 
                         //adding the array of responses to the response dictionary
                         response_dictionary['instructions'] = Direction_Steps;
                         response_dictionary['departure_time'] = departure_time;
                         response_dictionary['departure_time_text'] = departure_time_text;
                         response_dictionary['arrival_time'] = arrival_time;
+                        response_dictionary['full_distance'] = full_distance;
 
                         //gathering specific responses where transit type is walking
                         if (Transit_Type === "WALKING") {
