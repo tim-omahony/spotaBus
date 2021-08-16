@@ -10,6 +10,7 @@ from django.views.generic import View
 from django.views.generic.edit import DeleteView
 from dublinbusapplication.models import FavouriteJourney
 from django.contrib.auth.models import User
+from django.db.models import F
 from django.http import HttpResponse, HttpResponseRedirect
 import requests
 
@@ -54,13 +55,18 @@ def predict(request):
     journey = open(filePath('all_routes_dict_new_key.json'))
     journey_analytics = json.load(journey)
 
-    full_distance = journey_steps[0]['full_distance']
 
-    # try:
-    #     UserAccountMetrics.objects.filter(username=request.user).update(accvalue=F("total_distance_planned") += full_distance)
-    #
-    # except Exception as e:
-    #     print("Could not update user record")
+    # need to functionalise this section for user metrics
+    full_distance = journey_steps[0]['full_distance']
+    print(full_distance)
+
+    try:
+        UserAccountMetrics.objects.filter(username=request.user).update(total_distance_planned=F("total_distance_planned") + full_distance/1000)
+        UserAccountMetrics.objects.filter(username=request.user).update(total_trips_planned=F("total_trips_planned") + 1)
+
+    except Exception as e:
+        print(e)
+        print("Could not update user record")
 
 
     try:
@@ -304,7 +310,7 @@ class displayFavRoute(View):
             user_metrics = UserAccountMetrics.objects.values_list('total_distance_planned', 'total_trips_planned').get(
                 username= request.user)
         except:
-            user_metrics= [0,0]
+            UserAccountMetrics.objects.create(total_distance_planned=0, total_trips_planned=0, username=request.user)
 
         return render(request, 'userpage.html', {'user_routes': user_routes, 'total_distance_planned': user_metrics[0],'total_trips_planned':user_metrics[1]})
 
