@@ -103,7 +103,7 @@ function results_display(array) {
                 `<p><span class="vertical-timeline-element-date">${step.step_distance}</span></p><br>` +
                 `</div></div></div>`;
 
-        } else if (step.transit_type == "TRANSIT") {
+        } else if (step.transit_type === "TRANSIT" && step.route !== 'Dart') {
             journey_instructions +=
                 '<div class="vertical-timeline-item vertical-timeline-element">' +
                 '<div> <span class="vertical-timeline-element-icon bounce-in"><i class="fas fa-bus"></i> </span>' +
@@ -113,7 +113,20 @@ function results_display(array) {
                 `<p>${(step.transit_time / 60).toFixed(0)} mins</p>` +
                 `<span class="vertical-timeline-element-date">${step.step_distance}</span>` +
                 `</div></div></div>`;
+
+        } else if (step.transit_type === "TRANSIT" && step.route === 'Dart') {
+            journey_instructions +=
+                '<div class="vertical-timeline-item vertical-timeline-element">' +
+                '<div> <span class="vertical-timeline-element-icon bounce-in"><i class="fas fa-train"></i> </span>' +
+                `<div class="vertical-timeline-element-content bounce-in">` +
+                `<h3 class="timeline-title">${step.instructions}</h3>` +
+                `<p>Take the <b>${step.route}</b> at <b>${step.transit_departure_time}</b>, hop off at ${step.arrival_stop}</p>` +
+                `<p>${(step.transit_time / 60).toFixed(0)} mins</p>` +
+                `<span class="vertical-timeline-element-date">${step.step_distance}</span>` +
+                `</div></div></div>`;
         }
+
+
     });
 
     //calling the get_arrival_time function to display the arrival time dynamically.
