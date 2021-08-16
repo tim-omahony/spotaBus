@@ -91,9 +91,3 @@ class FavouriteJourney(models.Model):
 
     def __str__(self):
         return f"Route: {self.users_origin_stop} to stop {self.users_dest_stop}"
-
-# Used to store overall user metrics that are displayed on the user account page
-class UserAccountMetrics(models.Model):
-    total_distance_planned = models.FloatField(default=0)
-    total_trips_planned = models.IntegerField(default=0)
-    username = models.CharField(max_length=200)
