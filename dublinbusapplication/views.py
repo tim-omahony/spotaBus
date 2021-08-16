@@ -26,6 +26,8 @@ def index(request):
         return render(request, 'index.html', {'stops': list(stops), 'stations': list(render_bike_stations)})
 
 
+
+
 def predict(request):
     """ The main prediction function that takes an AJAX post request to retrieve the parameters needed in order to
     produce a prediction for the user on the front end, along with the journey step response, the weather response
