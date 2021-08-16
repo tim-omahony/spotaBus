@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from dublinbusapplication.predictive_model.get_prediction import *
 from dublinbusapplication.predictive_model.Get_Times import *
-from .models import Stop, Bikes
+from .models import Stop, Bikes, UserAccountMetrics
 from django.views.generic import View
 from django.views.generic.edit import DeleteView
 from dublinbusapplication.models import FavouriteJourney
@@ -239,6 +239,8 @@ def registerPage(request):
             if form.is_valid():
                 form.save()
                 user = form.cleaned_data.get('username')
+                UserAccountMetrics.objects.create(total_distance_planned=0, total_trips_planned=0, username=user)
+
                 messages.success(request, "Account was created for " + user)
                 return redirect('login')
 
@@ -297,7 +299,14 @@ class displayFavRoute(View):
     # function to retrieve user specific favorite routes from the database and display them
     def get(self, request):
         user_routes = FavouriteJourney.objects.filter(user_id=request.user)
-        return render(request, 'userpage.html', {'user_routes': user_routes})
+
+        try:
+            user_metrics = UserAccountMetrics.objects.values_list('total_distance_planned', 'total_trips_planned').get(
+                username= request.user)
+        except:
+            user_metrics= [0,0]
+
+        return render(request, 'userpage.html', {'user_routes': user_routes, 'total_distance_planned': user_metrics[0],'total_trips_planned':user_metrics[1]})
 
     # function to get the specific chosen favroite route IDs from the user on the userpage, and finding them in the
     # database before deleting them from the database
