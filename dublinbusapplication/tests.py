@@ -107,13 +107,13 @@ class StandardUserTestCase(TestCase):
         self.assertNotEqual(num_users, 0)
 
     def test_user_str_return_value(self):
-        self.assertEqual(self.user.str(), self.user.username)
+        self.assertEqual(self.User.str(), self.User.username)
 
     def test_user_has_perm_return_value(self):
-        self.assertEqual(self.user.has_perm(), self.user.is_admin)
+        self.assertEqual(self.User.has_perm(), self.User.is_admin)
 
     def test_user_has_module_perms_return_value(self):
-        self.assertEqual(self.user.has_module_perms(), True)
+        self.assertEqual(self.User.has_module_perms(), True)
 
 
 class StopTestCase(TestCase):
