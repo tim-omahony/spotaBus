@@ -120,7 +120,7 @@ class AutocompleteDirectionsHandler {
 
                         //retrieving the response
                         Direction_Steps = response.routes[0].legs[0].steps[y].instructions;
-                        departure_time = response.routes[0].legs[0].departure_time.value.getTime()
+                        departure_time = response.routes[0].legs[0].departure_time.value.getTime();
                         departure_time_text = response.routes[0].legs[0].departure_time['text'];
                         arrival_time = response.routes[0].legs[0].arrival_time['text'];
                         full_distance = response.routes[0].legs[0].distance['value'];
