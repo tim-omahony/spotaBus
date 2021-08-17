@@ -1,4 +1,5 @@
 import os
+import sys
 from pathlib import Path
 import django_heroku
 
@@ -50,7 +51,6 @@ else:
         # 'frontend.apps.FrontendConfig'
     ]
 
-
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -85,8 +85,7 @@ WSGI_APPLICATION = 'dublinbusesproject.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 
-
-#testing on sql due to heroku DB creation restrictions
+# testing on sql due to heroku DB creation restrictions
 if 'test' in sys.argv:
     DATABASES = {
         'default': {
