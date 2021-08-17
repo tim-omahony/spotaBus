@@ -267,6 +267,7 @@ a:focus {
     #content-wrapper {
         position: relative;
         top: 0;
+
     }
 
     #wrapper.toggled #navbar-wrapper,
@@ -649,6 +650,7 @@ tr:nth-child(even) {
 
 /* about us page css */
 
+/*
 .ourteam img {
     width: 100%;
     height: 400px;
@@ -662,9 +664,7 @@ tr:nth-child(even) {
 .ourteam_layout {
     margin-top: 2%;
     padding: 0 6px;
-    float: left;
-    width: 25%;
-    padding-bottom: 100px;
+    display: flex;
 }
 
 @media only screen and (max-width: 700px) {
@@ -680,9 +680,24 @@ tr:nth-child(even) {
     }
 }
 
-.card {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 1);
+@media only screen and (max-width: 100px) {
+    .ourteam_layout {
+        display:none;
+    }
 }
+
+*/
+
+.ourteam_description {
+    padding: 15px;
+    text-align: center;
+}
+
+
+.card {
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 1);
+}
+
 
 /* ------------------------------------------------------------------------------------------------------------- */
 /* Journey planner instruction text CSS  https://bbbootstrap.com/snippets/user-business-timeline-32289439 */
@@ -845,7 +860,6 @@ tr:nth-child(even) {
 #analytics-output {
     height: auto;
     width: auto;
-
 }
 
 
