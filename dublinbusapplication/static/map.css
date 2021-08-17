@@ -423,7 +423,7 @@ a:focus {
 /* Transport comparator widget */
 
 
-#drivingDiv, #walkingDiv {
+#drivingDiv {
 
     border-top-right-radius: 25px;
     border-bottom-right-radius: 25px;
@@ -436,6 +436,21 @@ a:focus {
     border-style: solid;
 }
 
+#walkingDiv {
+
+    border-top-left-radius: 25px;
+    border-bottom-left-radius: 25px;
+    padding: 1em;
+    float: left;
+    width: 33%;
+    background-color: #e5e6e0;
+
+    border-color: #fff;
+    border-style: solid;
+
+
+}
+
 #transitDiv {
     padding: 1em;
     float: left;
@@ -443,7 +458,6 @@ a:focus {
     background-color: #37383b;
     color: #fffeff;
     border-color: #fff;
-    border-radius: 20px;
     border-style: solid;
 
 }
@@ -695,7 +709,7 @@ tr:nth-child(even) {
 
 
 .card {
-    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 1);
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
 }
 
 
@@ -824,6 +838,7 @@ tr:nth-child(even) {
 
     width: 30%;
 }
+
 
 #total-estimate {
     width: 40%;
