@@ -55,19 +55,19 @@ def predict(request):
     journey = open(filePath('all_routes_dict_new_key.json'))
     journey_analytics = json.load(journey)
 
-
     # need to functionalise this section for user metrics
     full_distance = journey_steps[0]['full_distance']
     print(full_distance)
 
     try:
-        UserAccountMetrics.objects.filter(username=request.user).update(total_distance_planned=F("total_distance_planned") + full_distance/1000)
-        UserAccountMetrics.objects.filter(username=request.user).update(total_trips_planned=F("total_trips_planned") + 1)
+        UserAccountMetrics.objects.filter(username=request.user).update(
+            total_distance_planned=F("total_distance_planned") + round((full_distance / 1000), 2))
+        UserAccountMetrics.objects.filter(username=request.user).update(
+            total_trips_planned=F("total_trips_planned") + 1)
 
     except Exception as e:
         print(e)
         print("Could not update user record")
-
 
     try:
         # retrieving the stops data such that the latitude and longitude coordinates can be matched up
@@ -237,7 +237,7 @@ def registerPage(request):
     if request.user.is_authenticated:
         return redirect('home')
     else:
-        # using djangos built in Form to get username and password as input from the user
+        # using django's built in Form to get username and password as input from the user
         form = UserCreationForm()
         # if the request is a POST request and the form is filled in correctly, the user is saved to the database
         if request.method == 'POST':
@@ -254,12 +254,12 @@ def registerPage(request):
         return render(request, 'register.html', context)
 
 
-# function to view the login page for useres that are not logged in
+# function to view the login page for users that are not logged in
 def loginPage(request):
     if request.user.is_authenticated:
         return redirect('home')
     else:
-        # if its a POST request, the username and password is retrivied from the Form and checked against the database
+        # if its a POST request, the username and password is retrieved from the Form and checked against the database
         if request.method == 'POST':
             username = request.POST.get('username')
             password = request.POST.get('password')
@@ -300,7 +300,7 @@ def add_favourite_route(request):
 #    return render(request, 'userpage.html')
 
 
-# function to display and delete favorite route using djangos built in View module
+# function to display and delete favorite route using django's built in View module
 class displayFavRoute(View):
     # function to retrieve user specific favorite routes from the database and display them
     def get(self, request):
@@ -308,13 +308,14 @@ class displayFavRoute(View):
 
         try:
             user_metrics = UserAccountMetrics.objects.values_list('total_distance_planned', 'total_trips_planned').get(
-                username= request.user)
+                username=request.user)
         except:
-            #catch legacy/admin users who didn't have AccountMetrics on creation
+            # catch legacy/admin users who didn't have AccountMetrics on creation
             UserAccountMetrics.objects.create(total_distance_planned=0, total_trips_planned=0, username=request.user)
-            user_metrics =[0,0]
+            user_metrics = [0, 0]
 
-        return render(request, 'userpage.html', {'user_routes': user_routes, 'total_distance_planned': user_metrics[0],'total_trips_planned':user_metrics[1]})
+        return render(request, 'userpage.html', {'user_routes': user_routes, 'total_distance_planned': user_metrics[0],
+                                                 'total_trips_planned': user_metrics[1]})
 
     # function to get the specific chosen favroite route IDs from the user on the userpage, and finding them in the
     # database before deleting them from the database

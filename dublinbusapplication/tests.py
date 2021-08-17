@@ -1,4 +1,4 @@
-#Importing Django BuiltIn modules for testing along with custom models and views
+# Importing Django BuiltIn modules for testing along with custom models and views
 
 from django.test import TestCase, Client
 from django.http import JsonResponse
@@ -14,7 +14,7 @@ class TestViews(TestCase):
 # Testing URLs
 class TestUrls(TestCase):
 
-    #setting up test URL variables
+    # setting up test URL variables
     def setUp(self):
         self.client = Client()
         self.home_url = '/'
@@ -91,21 +91,18 @@ class TestUrls(TestCase):
         self.assertNotEqual(response.content, "")
 
 
-
-
-
 # Testing Models
 class StandardUserTestCase(TestCase):
 
     def setUp(self):
-        self.user = user(email="test@email.com", username="JohnDoe", date_joined="", last_login="", is_admin=False,
+        self.user = User(email="test@email.com", username="JohnDoe", date_joined="", last_login="", is_admin=False,
                          is_active=True, is_staff=False, is_superuser=False)
         self.user.save()
 
         app_label = 'django.contrib.admin'
 
     def test_user_created(self):
-        num_users = user.objects.all().count()
+        num_users = User.objects.all().count()
         self.assertEqual(num_users, 1)
         self.assertNotEqual(num_users, 0)
 
@@ -119,18 +116,12 @@ class StandardUserTestCase(TestCase):
         self.assertEqual(self.user.has_module_perms(), True)
 
 
-
-
 class StopTestCase(TestCase):
 
-    def setUp(self, stop_id="790", stop_name="Stephen's Green Nth", stop_lat=53.33937450876734, stop_lon=-6.258077749139876):
-        self.stop = Stop.objects.create(stop_id=stop_id, stop_name=stop_name, stop_lat=stop_lat, stop_lon = stop_lon)
+    def setUp(self, stop_id="790", stop_name="Stephen's Green Nth", stop_lat=53.33937450876734,
+              stop_lon=-6.258077749139876):
+        self.stop = Stop.objects.create(stop_id=stop_id, stop_name=stop_name, stop_lat=stop_lat, stop_lon=stop_lon)
         self.stop_to_json = self.stop.to_json()
-
-
-
-
-
 
     def test_stop_information_types(self):
         """
@@ -144,10 +135,6 @@ class StopTestCase(TestCase):
         self.assertIsInstance(self.stop.stop_lat, float)
         self.assertIsInstance(self.stop.stop_lon, float)
 
-    #testing return type of to-json function
+    # testing return type of to-json function
     def test_to_json_information_type(self):
         self.assertIsInstance(self.stop_to_json, dict)
-
-
-
-
