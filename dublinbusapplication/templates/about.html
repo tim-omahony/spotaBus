@@ -1,14 +1,50 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<img src="paris.jpg" alt="Paris" width="300" height="300">
-<div class="aboutdiv">
-    <h2>A little bit about the team</h2>
-    <p>                    This application was designed as part of our Research Practicum for our Msc. Computer Science at
-                    UCD. If you have
-                    any questions about the project or the process, please don't hesitate to check out the GitHub
-                    respository or
-                    click our names to drop us a message on LinkedIn!</p>
+    <div class="aboutdiv">
+        <h2 class="pagetitle">Our Team</h2>
 
-</div>
+        <div class="ourteam_layout">
+            <div class="card">
+                <div class="ourteam">
+                    <img src="https://cdn.discordapp.com/attachments/852850900934328394/877149279297339392/image.jpg"
+                         alt="cian :)">
+                    <div class="ourteam_description">Cian Fitzgerald, Customer Lead<br><a
+                            href="https://github.com/CianFitzgerald">Cian's GitHub</a></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ourteam_layout">
+            <div class="card">
+                <div class="ourteam">
+                    <img src="https://cdn.discordapp.com/attachments/852850900934328394/877150659747655760/image0.png"
+                         alt="david :)">
+                    <div class="ourteam_description">David Kuhestani, Maintenance Lead<br><a
+                            href="https://github.com/DavidKuhestani">David's GitHub</a></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ourteam_layout">
+            <div class="card">
+                <div class="ourteam">
+                    <img src="matt.jpg" alt="matthew :)">
+                    <div class="ourteam_description">Matthew Kehoe, Coordination Lead<br><a
+                            href="https://github.com/MatthewKehoeUCD">Matthew's GitHub</a></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ourteam_layout">
+            <div class="card">
+                <div class="ourteam">
+                    <img src="https://avatars.githubusercontent.com/u/72252102?s=400&u=80cc6fa6298043ed50d5dd0fb8b3ae73dfbdc257&v=4"
+                         alt="tim :)">
+                    <div class="ourteam_description">Tim O'Mahony, Code Lead<br><a
+                            href="https://github.com/tim-omahony">Tim's GitHub</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
