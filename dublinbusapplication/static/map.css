@@ -662,51 +662,10 @@ tr:nth-child(even) {
     margin: 10px;
 }
 
-/* about us page css */
-
-/*
-.ourteam img {
-    width: 100%;
-    height: 400px;
-}
-
 .ourteam_description {
     padding: 15px;
     text-align: center;
 }
-
-.ourteam_layout {
-    margin-top: 2%;
-    padding: 0 6px;
-    display: flex;
-}
-
-@media only screen and (max-width: 700px) {
-    .ourteam_layout {
-        width: 50%;
-        margin: 6px 0;
-    }
-}
-
-@media only screen and (max-width: 500px) {
-    .ourteam_layout {
-        width: 100%;
-    }
-}
-
-@media only screen and (max-width: 100px) {
-    .ourteam_layout {
-        display:none;
-    }
-}
-
-*/
-
-.ourteam_description {
-    padding: 15px;
-    text-align: center;
-}
-
 
 .card {
     box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);

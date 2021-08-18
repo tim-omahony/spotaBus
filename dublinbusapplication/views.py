@@ -299,8 +299,9 @@ class DisplayFavRoute(View):
             UserAccountMetrics.objects.create(total_distance_planned=0, total_trips_planned=0, username=request.user)
             user_metrics = [0, 0]
 
-        return render(request, 'userpage.html', {'user_routes': user_routes, 'total_distance_planned': user_metrics[0],
-                                                 'total_trips_planned': user_metrics[1]})
+        return render(request, 'userpage.html',
+                      {'user_routes': user_routes, 'total_distance_planned': round(user_metrics[0], 2),
+                       'total_trips_planned': user_metrics[1]})
 
     # function to get the specific chosen favorite route IDs from the user on the userpage, and finding them in the
     # database before deleting them from the database
