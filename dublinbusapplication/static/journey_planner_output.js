@@ -4,7 +4,7 @@ function googleOrUs(response) {
     let response_type = '<div id = "googleOrUs"><div id ="google_container">';
 
     if (response.prediction_type['type'] === "google") {
-        response_type += 'This result is powered by: <img id = "google_maps_logo" src="https://logos-download.com/wp-content/uploads/2016/05/Google_Maps_logo_wordmark.png" alt="google logo">';
+        response_type += 'This result is powered by: <img id = "google_maps_logo" src="https://logos-download.com/wp-content/uploads/2016/05/Google_Maps_logo_wordmark.png" alt="Google Maps">';
     }
     response_type += '</div></div>';
     return response_type;
