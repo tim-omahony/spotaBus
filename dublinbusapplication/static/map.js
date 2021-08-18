@@ -50,4 +50,3 @@ function initMap() {
 function loadJson(selector) {
     return JSON.parse(document.getElementById(selector).textContent);
 }
-
