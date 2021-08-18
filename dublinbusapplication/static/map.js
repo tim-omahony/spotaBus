@@ -60,9 +60,10 @@ window.onload = function () {
     const searchParams = new URLSearchParams(window.location.search);
     if (searchParams.get('openRoutePlanner') === 'true') {
         $('#exampleModal').modal('show');
+        swal("Make sure to confirm your origin and destination from the drop downs by clicking the fields!");
         document.getElementById('origin-input').value = searchParams.get('originStop')
         document.getElementById('destination-input').value = searchParams.get('destStop')
-        const confirm = document.getElementById("confirmSelection")
+        /*const confirm = document.getElementById("confirmSelection")*/
         confirm.style.display = "block"
         mergeWeather()
         hideCard()
