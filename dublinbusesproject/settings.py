@@ -87,14 +87,21 @@ WSGI_APPLICATION = 'dublinbusesproject.wsgi.application'
 
 # testing on sql due to heroku DB creation restrictions
 if 'test' in sys.argv:
+    # DATABASES = {
+    #     'default': {
+    #         'ENGINE': 'django.db.backends.mysql',
+    #         'NAME': 'dublinbus',
+    #         'USER': 'CiansDB',
+    #         'PASSWORD': 'DBG18_2021',
+    #         'HOST': 'dublinbus.cmxnicqe342l.eu-west-1.rds.amazonaws.com',
+    #         'PORT': '3306',
+    #     }
+    # }
+
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'dublinbus',
-            'USER': 'CiansDB',
-            'PASSWORD': 'DBG18_2021',
-            'HOST': 'dublinbus.cmxnicqe342l.eu-west-1.rds.amazonaws.com',
-            'PORT': '3306',
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'test_db.sqlite3')
         }
     }
 

@@ -1,18 +1,67 @@
 # Importing Django BuiltIn modules for testing along with custom models and views
 
-from django.test import TestCase, Client
+from django.contrib.auth.models import AnonymousUser, User
+from django.test import TestCase, Client, RequestFactory
+
 from django.http import JsonResponse
 from django.urls import reverse, resolve
+
+from django.db import connection
+
 from .models import *
 from .views import *
+
+class DataBaseConnection(TestCase):
+
+    def testConnection(self):
+        self.assertEqual(connection.ensure_connection(), None)
 
 
 class TestViews(TestCase):
     pass
 
 
-# Testing URLs
-class TestUrls(TestCase):
+class TestUrlResolutions(TestCase):
+
+    def test_resolution_for_no_input(self):
+        view = resolve('/')
+        self.assertEquals(view.func, index)
+
+    def test_resolution_home(self):
+        url = reverse('home')
+        self.assertEquals(resolve(url).func, index)
+
+    def test_resolution_login(self):
+        url = reverse('login')
+        self.assertEquals(resolve(url).func, loginPage)
+
+    def test_resolution_logout(self):
+        url = reverse('logout')
+        self.assertEquals(resolve(url).func, logoutUser)
+
+    def test_resolution_register(self):
+        url = reverse('register')
+        self.assertEquals(resolve(url).func, registerPage)
+
+    def test_resolution_predict(self):
+        url = reverse('predict')
+        print(resolve(url))
+        self.assertEquals(resolve(url).func, predict)
+
+    def test_resolution_add_favourite_route(self):
+        url = reverse('add_favourite_route')
+        self.assertEquals(resolve(url).func, add_favourite_route)
+
+    # def test_resolution_delete_UserFav_Journey(self):
+    #     url = reverse('deleteUserFavJourney')
+    #     print(resolve(url))
+    #     self.assertEquals(resolve(url).func, displayFavRoute)
+
+    def test_resolution_delete_user(self):
+        url = reverse('deleteuser')
+        self.assertEquals(resolve(url).func, del_user)
+
+class ResponseTemplateContentTests(TestCase):
 
     # setting up test URL variables
     def setUp(self):
@@ -35,6 +84,11 @@ class TestUrls(TestCase):
     def test_home_content_returned(self):
         response = self.client.get(self.home_url)
         self.assertNotEqual(response.content, "")
+
+    def test_home_content_returned(self):
+        response = self.client.get(self.home_url)
+        self.assertContains()
+
 
     # About page test
     def test_about_response_code(self):
@@ -92,28 +146,30 @@ class TestUrls(TestCase):
 
 
 # Testing Models
-class StandardUserTestCase(TestCase):
 
-    def setUp(self):
-        self.user = User(email="test@email.com", username="JohnDoe", date_joined="", last_login="", is_admin=False,
-                         is_active=True, is_staff=False, is_superuser=False)
-        self.user.save()
-
-        app_label = 'django.contrib.admin'
-
-    def test_user_created(self):
-        num_users = User.objects.all().count()
-        self.assertEqual(num_users, 1)
-        self.assertNotEqual(num_users, 0)
-
-    def test_user_str_return_value(self):
-        self.assertEqual(self.User.str(), self.User.username)
-
-    def test_user_has_perm_return_value(self):
-        self.assertEqual(self.User.has_perm(), self.User.is_admin)
-
-    def test_user_has_module_perms_return_value(self):
-        self.assertEqual(self.User.has_module_perms(), True)
+# Not sure whether to move forward with this
+# class StandardUserTestCase(TestCase):
+#
+#     def setUp(self):
+#         self.user = User(email="test@email.com", username="JohnDoe", date_joined="", last_login="", is_admin=False,
+#                          is_active=True, is_staff=False, is_superuser=False)
+#         self.user.save()
+#
+#         app_label = 'django.contrib.admin'
+#
+#     def test_user_created(self):
+#         num_users = User.objects.all().count()
+#         self.assertEqual(num_users, 1)
+#         self.assertNotEqual(num_users, 0)
+#
+#     def test_user_str_return_value(self):
+#         self.assertEqual(self.User.str(), self.User.username)
+#
+#     def test_user_has_perm_return_value(self):
+#         self.assertEqual(self.User.has_perm(), self.User.is_admin)
+#
+#     def test_user_has_module_perms_return_value(self):
+#         self.assertEqual(self.User.has_module_perms(), True)
 
 
 class StopTestCase(TestCase):
@@ -138,3 +194,155 @@ class StopTestCase(TestCase):
     # testing return type of to-json function
     def test_to_json_information_type(self):
         self.assertIsInstance(self.stop_to_json, dict)
+
+
+class FavouriteJourneyTestCase(TestCase):
+
+    def setUp(self, users_origin_stop="University College Dublin, Belfield, Dublin 4, Ireland",
+              users_dest_stop="Donnybrook Castle, Dublin, Ireland", user=1,
+              username="testUser"):
+        self.journey = FavouriteJourney.objects.create(users_origin_stop=users_origin_stop,
+                                                       users_dest_stop=users_dest_stop, user=user, username=username)
+
+    def test_variable_types(self):
+        """
+        Tests stop model to verify datatypes are congruent with model structure
+
+        :return: standard unittest output
+        """
+
+        self.assertIsInstance(self.journey.users_origin_stop, str)
+        self.assertIsInstance(self.journey.users_dest_stop, str)
+        self.assertIsInstance(self.journey.user, int)
+        self.assertIsInstance(self.journey.username, str)
+
+    def test_dunder_str(self):
+        self.assertIsEqual()
+
+
+class FavouriteJourneyTestCase(TestCase):
+
+    def setUp(self, users_origin_stop="University College Dublin, Belfield, Dublin 4, Ireland",
+              users_dest_stop="Donnybrook Castle, Dublin, Ireland", user=1,
+              username="testUser"):
+        self.journey = FavouriteJourney.objects.create(users_origin_stop=users_origin_stop,
+                                                       users_dest_stop=users_dest_stop,
+                                                       user=User.objects.create_user(username='testuser',
+                                                                                     password='12345'),
+                                                       username=username)
+
+    def test_variable_types(self):
+        """
+        Tests stop model to verify datatypes are congruent with model structure
+
+        :return: standard unittest output
+        """
+
+        self.assertIsInstance(self.journey.users_origin_stop, str)
+        self.assertIsInstance(self.journey.users_dest_stop, str)
+        self.assertIsInstance(self.journey.user, User)
+        self.assertIsInstance(self.journey.username, str)
+
+    def test_dunder_str(self):
+        self.assertEqual(self.journey.__str__(),
+                         f"Route: {self.journey.users_origin_stop} to stop {self.journey.users_dest_stop}")
+
+
+class UserAccountMetricsTestCase(TestCase):
+
+    def setUp(self, total_distance_planned=0.0,
+              total_trips_planned=0,
+              username="testUser"):
+        self.user_account_metric = UserAccountMetrics.objects.create(total_distance_planned=total_distance_planned,
+                                                                     total_trips_planned=total_trips_planned,
+                                                                     username=username
+                                                                     )
+
+    def test_variable_types(self):
+        """
+        Tests stop model to verify datatypes are congruent with model structure
+
+        :return: standard unittest output
+        """
+
+        self.assertIsInstance(self.user_account_metric.total_distance_planned, float)
+        self.assertIsInstance(self.user_account_metric.total_trips_planned, int)
+        self.assertIsInstance(self.user_account_metric.username, str)
+
+class BikesTestCase(TestCase):
+
+    def setUp(self, Number=42,
+              Name="SMITHFIELD NORTH",
+              Address="Smithfield North",
+              Latitude=53.349562,
+              Longitude=-6.278198):
+        self.bike_stop = Bikes.objects.create(Number=Number, Name=Name, Address=Address, Latitude=Latitude, Longitude=Longitude)
+
+    def test_variable_types(self):
+        self.assertIsInstance(self.bike_stop.Number, int)
+        self.assertIsInstance(self.bike_stop.Name, str)
+        self.assertIsInstance(self.bike_stop.Address, str)
+        self.assertIsInstance(self.bike_stop.Latitude, float)
+        self.assertIsInstance(self.bike_stop.Longitude, float)
+
+class RegisterTest(TestCase):
+    def setUp(self):
+        self.registration_form_data = {
+            'username': 'testuser1',
+            'password1': 'dublinbuspassword',
+            'password2': 'dublinbuspassword'}
+
+        self.user_count = User.objects.count()
+
+    def test_registration_success(self):
+
+        #getting number of users
+
+        #getting response data
+        response = self.client.post('/register/', self.registration_form_data, follow=True)
+
+        #verifying user is active via response contact
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(User.objects.count(), self.user_count + 1)
+
+class LogInTest(TestCase):
+    def setUp(self):
+        self.credentials = {
+            'username': 'testuser1',
+            'password': 'dublinbuspassword'}
+        User.objects.create_user(**self.credentials)
+    def test_login_success(self):
+        #logging user in
+        response = self.client.post('/login/', self.credentials, follow=True)
+
+        #verifying user is active via response contact
+        self.assertTrue(response.context['user'].is_active)
+
+
+#CANNOT RUN TEST UNTIL ACCESS REGAINED TO DATABSE
+# class TestUserMetricsCreation(TestCase):
+#
+#     def setUp(self):
+#         self.credentials = {
+#             'username': 'testuser1',
+#             'password': 'dublinbuspassword'}
+#         self.user = User.objects.create_user(**self.credentials)
+#
+#
+#     def test_successful_metric_creation(self):
+#         print(UserAccountMetrics.objects.values_list('total_distance_planned', 'total_trips_planned').get(
+#                 username='testuser1'))
+#         self.assertTrue(UserAccountMetrics.objects.values_list('total_distance_planned', 'total_trips_planned').get(
+#                 username='testuser1'),[0.0,0])
+
+
+
+
+
+
+
+
+
+
+
+
