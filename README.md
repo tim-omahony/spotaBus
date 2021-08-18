@@ -20,7 +20,7 @@ Select it from the dropdown!
 
 ![](readme_imgs/fave_dropdown.gif)
 
-### Want to plan your favourite route but feeling too lazy to select start points?
+### Want to plan your favourite route but feeling too lazy to select start start and end points?
 
 Use the take trip button!
 
@@ -28,7 +28,7 @@ Use the take trip button!
 
 ### Have a look at how many trips you've planned on the app
 
-Our app tracks how many trips you've planned out and how far those trips may (or may not) have taken you!
+Our app tracks how many trips you've planned out and how far those trips have taken you!
 
 ![](readme_imgs/userpage.png)
 
@@ -38,7 +38,7 @@ Our app tracks how many trips you've planned out and how far those trips may (or
 
 #### Run the app for yourself locally
 
-There are a few steps required to do this so bare with us:
+There are a few steps required to do this so bear with us:
 
 1. Clone this repository
 2. Create a new anaconda environment:
