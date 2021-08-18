@@ -1,10 +1,10 @@
 /*function that is executed when the delete button is clicked with the checkboxes filled out.
 * The IDs of favorite routes for the users are extracted and deleted from the DB and UI*/
-function remove_route() {
-    var id = [];
-    var csrf = $('input[name=csrfmiddlewaretoken]').val();
+function removeRoute() {
+    const id = [];
+    const csrf = $('input[name=csrfmiddlewaretoken]').val();
 
-/*    console.log($(':checkbox:checked'))*/
+    /*    console.log($(':checkbox:checked'))*/
 
     $(':checkbox:checked').each(function (i) {
         id[i] = $(this).val()
@@ -12,7 +12,6 @@ function remove_route() {
 
 
     })
-    console.log(id)
     if (id.length === 0) {
         swal("You've got to select one (or more) routes first!");
     } else {
@@ -23,7 +22,7 @@ function remove_route() {
                 id,
                 csrfmiddlewaretoken: csrf
             },
-            success: function (response) {
+            success: function () {
                 for (let i = 0; i < id.length; i++) {
                     $('tr#' + id[i] + '').fadeOut('slow');
                     $('tr#' + id[i] + '').remove();
@@ -33,6 +32,7 @@ function remove_route() {
         })
     }
 }
+
 //function that is executed when the remove favorite route button is clicked that shows the alerts
 function RemoveFavRouteAlert() {
 
@@ -45,7 +45,7 @@ function RemoveFavRouteAlert() {
         .then((willDelete) => {
             if (willDelete) {
                 swal("Route Removed!", "", "success");
-                remove_route();
+                removeRoute();
             } else {
                 swal("Pheew", "Route has not been removed!", "error");
             }

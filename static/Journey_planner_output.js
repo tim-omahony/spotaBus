@@ -2,7 +2,7 @@
 //journey time estimates have been retrieved from the google maps API
 function google_or_us(response) {
     console.log(response)
-    let response_type = '<div id = "google_or_us"><div id ="google_container">';
+    let response_type = '<div id = "googleOrUs"><div id ="google_container">';
 
     if (response.prediction_type['type'] == "google") {
         response_type += 'This result is powered by: <img id = "google_maps_logo" src="https://logos-download.com/wp-content/uploads/2016/05/Google_Maps_logo_wordmark.png">';
@@ -116,7 +116,7 @@ function results_display(array) {
         }
     });
 
-    //calling the get_arrival_time function to display the arrival time dynamically.
+    //calling the getArrivalTime function to display the arrival time dynamically.
     journey_instructions += '<div class="vertical-timeline-item vertical-timeline-element">' +
         `<div class="vertical-timeline-element-content bounce-in">` +
         '<h3 class="timeline-title">Arrive at: ' + get_arrival_time(response_array) + '</h3>' +

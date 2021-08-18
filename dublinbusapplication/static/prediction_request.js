@@ -1,6 +1,6 @@
 // function to return provided details on travel to the prediction model
 
-function submit_form() {
+function submitForm() {
     const inputTime = new Date($('#predictTime').val())
     // ajax post request takes the date, time, journey steps and weather info and passes it to the views.py
     $.ajax({
@@ -30,8 +30,6 @@ function submit_form() {
                 'Weather': result.Weather,
                 'prediction_type': result.prediction_type,
             };
-            console.log(response)
-
             //fetching the weather icon form open weather maps API
             const iconurl = "http://openweathermap.org/img/wn/" + response.Weather.icon + "@2x.png";
 
@@ -41,16 +39,16 @@ function submit_form() {
             var journey_response = response.journey_steps_response
 
             //sending the journey planner output to the output div
-            //see Journey_planner_output.js for information on the functions being called below.
-            $('#output').html("<div id = 'instructions-output'>" + results_display(journey_response) + "</div>" +
-                "<div id = 'parent'><div id='total-estimate'><p>Journey Time: <br><b>" + get_full_journey_time(journey_response) + " mins</b></p></div>" +
-                "<div id = 'narrow'><i id='estimate-walking-icon' class='fas fa-walking'></i> <br><b>" + get_walking_time(journey_response) + " mins</b></div>" +
-                "<div id = 'wide'><i id='estimate-bus-icon' class='fas fa-bus'></i> <br><b> " + get_transit_time(journey_response) + " mins</b></div></div>" +
+            //see journey_planner_output.js for information on the functions being called below.
+            $('#output').html("<div id = 'instructions-output'>" + resultsDisplay(journey_response) + "</div>" +
+                "<div id = 'parent'><div id='total-estimate'><p>Journey Time: <br><b>" + getFullJourneyTime(journey_response) + " mins</b></p></div>" +
+                "<div id = 'narrow'><i id='estimate-walking-icon' class='fas fa-walking'></i> <br><b>" + getWalkingTime(journey_response) + " mins</b></div>" +
+                "<div id = 'wide'><i id='estimate-bus-icon' class='fas fa-bus'></i> <br><b> " + getTransitTime(journey_response) + " mins</b></div></div>" +
                 "<div id='parenttwo'><div id='narrowtwo'><p>Weather Forecast:</p></div><div id ='widetwo'><img id='wicon' src=" + iconurl + ">" + temperature + "<span>&#176;</span></div></div>" +
-                "<div>" + google_or_us(response) + "</div>"
+                "<div>" + googleOrUs(response) + "</div>"
             );
 
-            $('#analytics-output').html(analytics_display(journey_response));
+            $('#analytics-output').html(analyticsDisplay(journey_response));
 
         },
 

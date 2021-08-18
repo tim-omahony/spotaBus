@@ -13,11 +13,8 @@ function saveRoute() {
             },
 
         // if the function properly sends data to the predictive model the estimated travel time is returned
-        success: function (result) {
-            console.log('success', result)
-
-            SaveRouteAlert();
-
+        success: function () {
+            saveRouteAlert();
         },
 
         failure: function (result) {
@@ -27,8 +24,8 @@ function saveRoute() {
 }
 
 
-function SaveRouteAlert(){
-	swal("This route has been successfully saved!");
+function saveRouteAlert() {
+    swal("This route has been successfully saved!");
 }
 
 

@@ -42,13 +42,13 @@ $(document).ready(function () {
                 var journey_response = response.journey_steps_response
 
                 //sending the journey planner output to the output div
-                //see Journey_planner_output.js for information on the functions being called below.
-                $('#output').html("<div id = 'instructions-output'>" + results_display(journey_response) + "</div>" +
-                    "<div id = 'parent'><div id='total-estimate'><p>Journey Time: <br><b>" + get_full_journey_time(journey_response) + " mins</b></p></div>" +
-                    "<div id = 'narrow'><i id='estimate-walking-icon' class='fas fa-walking'></i> <br><b>" + get_walking_time(journey_response) + " mins</b></div>" +
+                //see journey_planner_output.js for information on the functions being called below.
+                $('#output').html("<div id = 'instructions-output'>" + resultsDisplay(journey_response) + "</div>" +
+                    "<div id = 'parent'><div id='total-estimate'><p>Journey Time: <br><b>" + getFullJourneyTime(journey_response) + " mins</b></p></div>" +
+                    "<div id = 'narrow'><i id='estimate-walking-icon' class='fas fa-walking'></i> <br><b>" + getWalkingTime(journey_response) + " mins</b></div>" +
                     "<div id = 'wide'><i id='estimate-bus-icon' class='fas fa-bus'></i> <br><b> " + (response.JourneyTime / 60).toFixed(0) + " mins</b></div></div>" +
                     "<div id='parenttwo'><div id='narrowtwo'><p>Weather Forecast:</p></div><div id ='widetwo'><img id='wicon' src=" + iconurl + ">" + temperature + "<span>&#176;</span></div></div>" +
-                    "<div>" + google_or_us(response) + "</div>"
+                    "<div>" + googleOrUs(response) + "</div>"
                 );
 
             },

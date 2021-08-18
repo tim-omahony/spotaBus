@@ -20,7 +20,7 @@ $(function () {
 //this function toggles between using the user's location as origin point or not
 $(function () {
     $('#origin-toggle-event').change(function () {
-        if ($(this).prop('checked') == true) {
+        if ($(this).prop('checked') === true) {
             $(Geolocation());
         } else {
             document.getElementById("origin-input").value = null;
@@ -31,7 +31,7 @@ $(function () {
 // function toggles between showing and hiding Dublin Bikes stations on the map
 $(function () {
     $('#bike-toggle-event').change(function () {
-        if ($(this).prop('checked') == true) {
+        if ($(this).prop('checked') === true) {
             $(populateDublinBikes());
         } else {
             $(clearMarkers());
@@ -41,8 +41,7 @@ $(function () {
 
 // function to hide modal box when plan journey is clicked and scroll down to output
 
-function hidemodal() {
-
+function hideModal() {
     $('#plan_journey_btn').click(function () {
         $('#exampleModal').modal('hide');
         $('html,body').animate({
@@ -60,16 +59,16 @@ function validateForm() {
     var b = document.getElementById("destination-input").value || document.getElementById("destination-input-fav").value;
     var c = document.getElementById("predictTime").value;
 
-    if (a == null || a == "" || b == null || b == "" || c == null || c == "") {
-        JSalert();
+    if (a == null || a === "" || b == null || b === "" || c == null || c === "") {
+        JSAlert();
     } else {
         changeButtonValue();
-        hidemodal();
-        submit_form();
+        hideModal();
+        submitForm();
     }
 }
 
-function JSalert() {
+function JSAlert() {
     swal("Please fill out the required fields ");
 }
 

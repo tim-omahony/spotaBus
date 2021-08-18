@@ -8,10 +8,8 @@ function Geolocation() {
                 lat: position.coords.latitude,
                 lng: position.coords.longitude,
             };
-            console.log(pos)
             find_address(pos)
         })
-
 }
 
 //using reverse geocoding this function takes the current location of the user and converts the lat and long to
@@ -26,7 +24,6 @@ function find_address(pos) {
                 alert("No results found");
             }
         })
-
         .catch((e) => window.alert("Geocoder failed due to: " + e));
 }
 

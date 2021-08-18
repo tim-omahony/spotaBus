@@ -64,7 +64,7 @@ window.onload = function () {
         document.getElementById('destination-input').value = searchParams.get('destStop')
         const confirm = document.getElementById("confirmSelection")
         confirm.style.display = "block"
-        Merge_weather()
+        mergeWeather()
         hideCard()
     }
 }

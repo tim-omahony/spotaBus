@@ -2,76 +2,74 @@
 {% load static %}
 {% block content %}
 
-<div class="card" style="background-color: rgba(245, 245, 245, 0.4); ">
+    <div class="card" style="background-color: rgba(245, 245, 245, 0.4); ">
 
-    <div class="container contact">
-	<div class="row">
-		<div class="col-md-3">
-			<div class="contact-info">
-				<img src="https://image.ibb.co/kUASdV/contact-image.png" alt="image"/>
-				<h2>Contact</h2>
-				<h4>Your feedback is important to us!</h4>
-			</div>
-		</div>
-		<div class="col-md-9">
-			<div class="contact-form">
-                <br>
-				<div class="form-group">
-				  <label class="control-label col-sm-2" for="email"><b>Email:</b></label>
-				  <div class="col-sm-10">
-					<input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
-				  </div>
-				</div>
-
-                <div class="col-sm-10">
-                    <hr>
-                </div>
-
-                <div class="form-group">
-                    <label class="control-label col-sm-2" for="exampleFormControlSelect1"><b>Topic:</b></label>
-                    <div class="col-sm-10">
-                        <select class="form-control" id="exampleFormControlSelect1" >
-                          <option>Layout</option>
-                          <option>Functionality</option>
-                          <option>Features</option>
-                          <option>Bug</option>
-                          <option>Other</option>
-                        </select>
-
+        <div class="container contact">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="contact-info">
+                        <img src="https://image.ibb.co/kUASdV/contact-image.png" alt="image"/>
+                        <h2>Contact</h2>
+                        <h4>Your feedback is important to us!</h4>
                     </div>
-
                 </div>
+                <div class="col-md-9">
+                    <div class="contact-form">
+                        <br>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="email"><b>Email:</b></label>
+                            <div class="col-sm-10">
+                                <input type="email" class="form-control" id="email" placeholder="Enter email"
+                                       name="email">
+                            </div>
+                        </div>
 
-                <div class="col-sm-10">
-                    <hr>
+                        <div class="col-sm-10">
+                            <hr>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="exampleFormControlSelect1"><b>Topic:</b></label>
+                            <div class="col-sm-10">
+                                <select class="form-control" id="exampleFormControlSelect1">
+                                    <option>Layout</option>
+                                    <option>Functionality</option>
+                                    <option>Features</option>
+                                    <option>Bug</option>
+                                    <option>Other</option>
+                                </select>
+
+                            </div>
+
+                        </div>
+
+                        <div class="col-sm-10">
+                            <hr>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="control-label col-sm-2" for="comment"><b>Comment:</b></label>
+                            <div class="col-sm-10">
+                                <textarea class="form-control" rows="5" id="comment"></textarea>
+                            </div>
+                        </div>
+
+
+                        <div class="col-sm-10">
+                            <hr>
+                        </div>
+
+
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-10">
+                                <button type="button" class="btn btn-primary">Submit</button>
+                            </div>
+                        </div>
+                        <br>
+                    </div>
                 </div>
-
-
-				<div class="form-group">
-				  <label class="control-label col-sm-2" for="comment"><b>Comment:</b></label>
-				  <div class="col-sm-10">
-					<textarea class="form-control" rows="5" id="comment"></textarea>
-				  </div>
-				</div>
-
-
-                <div class="col-sm-10">
-                    <hr>
-                </div>
-
-
-				<div class="form-group">
-				  <div class="col-sm-offset-2 col-sm-10">
-					<button type="button" class="btn btn-primary">Submit</button>
-				  </div>
-				</div>
-                <br>
-			</div>
-		</div>
-	</div>
-</div>
-
-
-
-</div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
