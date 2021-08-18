@@ -51,21 +51,3 @@ function loadJson(selector) {
     return JSON.parse(document.getElementById(selector).textContent);
 }
 
-// when the main window of the application loads data on Dublin Bus stops and Dublin Bikes stations is loaded
-// as well as this todays_date() is called to retrieve info for the date time picker
-window.onload = function () {
-    todays_date();
-    stops = loadJson("stops-data")
-
-    const searchParams = new URLSearchParams(window.location.search);
-    if (searchParams.get('openRoutePlanner') === 'true') {
-        $('#exampleModal').modal('show');
-        document.getElementById('origin-input').value = searchParams.get('originStop')
-        document.getElementById('destination-input').value = searchParams.get('destStop')
-        const confirm = document.getElementById("confirmSelection")
-        confirm.style.display = "block"
-        mergeWeather()
-        hideCard()
-    }
-}
-
