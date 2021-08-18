@@ -4,8 +4,6 @@ function removeRoute() {
     const id = [];
     const csrf = $('input[name=csrfmiddlewaretoken]').val();
 
-    /*    console.log($(':checkbox:checked'))*/
-
     $(':checkbox:checked').each(function (i) {
         id[i] = $(this).val()
         $(this).checked = false;
