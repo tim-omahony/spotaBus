@@ -15,7 +15,7 @@
     <hr/>
     <div class="row">
         <div class="col-md-6">
-            <div class="card" style="background-color: rgba(245, 245, 245, 0.4); ">
+            <div class="card h-100" style="background-color: rgba(245, 245, 245, 0.4); ">
                 <div class="card-body">
                     <div id="plan-journey-title"><h5 id="card-title" class="card-title">Click below to plan your
                         journey!</h5></div>
@@ -126,7 +126,7 @@
         </div>
 
         <div class="col-md-6">
-            <div class="card" style="background-color: rgba(245, 245, 245, 0.4);">
+            <div class="card h-100" style="background-color: rgba(245, 245, 245, 0.4);">
                 <div class="card-body">
                     <div id="top-card" style="display: block;">
                         <h5 class="card-title">Why take the bus?</h5>
@@ -185,14 +185,13 @@
                 document.getElementById('origin-input').value = searchParams.get('originStop')
                 document.getElementById('destination-input').value = searchParams.get('destStop')
                 {% comment %}const confirm = document.getElementById("confirmSelection"){% endcomment %}
-                confirm.style.display = "block"
-                mergeWeather()
-                hideCard()
+                {% comment %}confirm.style.display = "block"{% endcomment %}
+                mergeWeather();
+                hideCard();
             }
         }
     </script>
     <script src=" {% static '/map.js' %}"></script>
-
     <script src="https://unpkg.com/@googlemaps/markerclustererplus/dist/index.min.js"></script>
     <script async
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBpmxEf_9hpbApu3UhIu8jY41LDdgPFkqc&libraries=places&callback=initMap">

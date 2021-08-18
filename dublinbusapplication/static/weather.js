@@ -48,6 +48,7 @@ function getForecast() {
         })
         .catch(err => {
             console.log(err);
+            swal("Error!", "It seems we're having some technical difficulties, please refresh and try again.", "error");
         });
 }
 
@@ -89,6 +90,7 @@ function getWeather() {
         })
         .catch(err => {
             console.log(err);
+            swal("Error!", "It seems we're having some technical difficulties, please refresh and try again.", "error");
         });
 
 }
