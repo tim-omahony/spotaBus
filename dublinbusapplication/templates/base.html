@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     {% load static %}
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
     <script> const csrfmiddlewaretoken = '{{ csrf_token }}'; </script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -38,14 +39,13 @@
     <script src="{% static '/autocomplete.js' %}"></script>
     <script src=" {% static '/journey_planner_output.js' %}"></script>
     <script src=" {% static '/analytics_display.js' %}"></script>
-    <script src=" {% static '/map.js' %}"></script>
 
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-    <title>Dublin Bus</title>
+    <title>Dublin Bus-Boys</title>
 </head>
 
 <body>
@@ -54,7 +54,7 @@
 
     <aside id="sidebar-wrapper">
         <div class="sidebar-brand">
-            <h2>{% comment %}<i class="fas fa-bus" size: 7x></i> &nbsp;&nbsp;&nbsp;&nbsp;{% endcomment %} &nbsp; Dublin
+            <h2>&nbsp; Dublin
                 Bus</h2>
         </div>
 
@@ -153,9 +153,5 @@
 </script>
 
 
-<script src="https://unpkg.com/@googlemaps/markerclustererplus/dist/index.min.js"></script>
-<script async
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBpmxEf_9hpbApu3UhIu8jY41LDdgPFkqc&libraries=places&callback=initMap">
-</script>
 </body>
 </html>

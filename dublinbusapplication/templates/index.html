@@ -4,9 +4,6 @@
 
 {% block content %}
 
-
-
-
     {{ stops | json_script:"stops-data" }}
     {{ stations | json_script:"stations-data" }}
     {{ favourites | json_script:"fave-routes-data" }}
@@ -173,5 +170,30 @@
             </div>
         </div>
     </div>
+    {#    when the main window of the application loads data on Dublin Bus stops is loaded#}
+    {#    as well as this todays_date() is called to retrieve info for the date time picker#}
+    <script>
+        window.onload = function () {
+            todays_date()
 
+            stops = loadJson("stops-data")
+
+            const searchParams = new URLSearchParams(window.location.search);
+            if (searchParams.get('openRoutePlanner') === 'true') {
+                $('#exampleModal').modal('show');
+                document.getElementById('origin-input').value = searchParams.get('originStop')
+                document.getElementById('destination-input').value = searchParams.get('destStop')
+                const confirm = document.getElementById("confirmSelection")
+                confirm.style.display = "block"
+                mergeWeather()
+                hideCard()
+            }
+        }
+    </script>
+    <script src=" {% static '/map.js' %}"></script>
+
+    <script src="https://unpkg.com/@googlemaps/markerclustererplus/dist/index.min.js"></script>
+    <script async
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBpmxEf_9hpbApu3UhIu8jY41LDdgPFkqc&libraries=places&callback=initMap">
+    </script>
 {% endblock %}
