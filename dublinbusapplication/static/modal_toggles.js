@@ -65,6 +65,7 @@ function validateForm() {
         changeButtonValue();
         hideModal();
         submitForm();
+        displayTransportComparator();
     }
 }
 
