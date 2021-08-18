@@ -12,7 +12,9 @@ function removeUser(user_id) {
             alert("user successfully deleted!")
         }
     })
+
     location.replace("/login")
+
 }
 
 //function to show alerts when delete user button is clicked

@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-
+  <!--  loginpage html code with username and password fields -->
     <body>
     <div class="container h-100">
         <div class="d-flex justify-content-center h-100">
@@ -31,12 +31,13 @@
                     </form>
 
                 </div>
-
+            <!--  Using the django messages framework to display messages depending on outcome-->
                 {% for message in messages %}
                     <p id="messages">{{ message }}</p>
                 {% endfor %}
 
                 <div class="mt-4">
+                    <!--  redirect user to register page if clicked -->
                     <div class="d-flex justify-content-center links" id='form-title'>
                         Don't have an account? <a href="{% url 'register' %}" class="ml-2">Sign Up</a>
                     </div>
