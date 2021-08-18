@@ -23,8 +23,7 @@ function showFavourites() {
         })
     } else {
         confirmSelection.style.display = "none";
-        // if the butto
-        // n is clicked again the list is wiped
+        // if the button is clicked again the list is wiped
         document.getElementById("star-btn").style.color = '#222';
         originList.innerHTML = ""
         destList.innerHTML = ""

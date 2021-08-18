@@ -48,7 +48,6 @@ class AutocompleteDirectionsHandler {
         autocomplete.addListener("place_changed", () => {
 
             const place = autocomplete.getPlace();
-            console.log({place})
 
             if (!place.place_id) {
                 window.alert("Please select an option from the dropdown list.");
@@ -180,14 +179,10 @@ class AutocompleteDirectionsHandler {
                         //pushing all of the responses to the main response_dictionary
                         steps_array.push(response_dictionary);
                     }
-                    console.log(response)
-                    console.log(steps_array)
-
                     //error handling
                 } else {
                     window.alert("Directions request failed due to " + status);
                 }
-
                 //converting the steps array to a JSON object such that AJAX can send it to views.py
                 Journey_Steps = JSON.stringify(steps_array);
             }

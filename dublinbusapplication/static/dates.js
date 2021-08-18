@@ -7,7 +7,7 @@ function todays_date() {
     [yyyy, mm, dd, hh, mi] = today.split(/[/:\-T]/)
 
     //components from above are used to set the min attribute of the datetime picker as the current date and time
-    var mindate = document.getElementById("predictTime");
+    const mindate = document.getElementById("predictTime");
     mindate.setAttribute("min", `${yyyy}-${mm}-${dd}T${hh}:${mi}`);
 }
 
@@ -15,8 +15,6 @@ function todays_date() {
 //takes the date inputted by the user and converts it to UNIX format (called in autocomplete.js)
 function getDateTime() {
     const regDate = document.getElementById("predictTime").value;
-    console.log(regDate);
     unixdate = Date.parse(regDate);
-    console.log(unixdate);
     return unixdate;
 }

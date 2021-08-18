@@ -54,37 +54,6 @@ class UserManager(BaseUserManager):
         return user
 
 
-# class to create a customer user model with django
-class User(AbstractBaseUser):
-    # fields associated with each user
-    email = models.EmailField(verbose_name='email', max_length=60, unique=True)
-    # fields underneath are required to build a custom form
-    username = models.CharField(max_length=30, unique=True)
-    date_joined = models.DateTimeField(verbose_name='date joined', auto_now_add=True)
-    last_login = models.DateTimeField(verbose_name='last login', auto_now_add=True)
-    is_admin = models.BooleanField(default=False)
-    is_active = models.BooleanField(default=True)
-    is_staff = models.BooleanField(default=False)
-    is_superuser = models.BooleanField(default=False)
-    total_distance_travelled = models.FloatField(default=0)
-    total_trips_planned = models.IntegerField(default=0)
-
-    USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['email']
-
-    objects = UserManager()
-
-    # to string to display username
-    def str(self):
-        return self.username
-
-    def has_perm(self):
-        return self.is_admin
-
-    def has_module_perms(self):
-        return True
-
-
 # this class takes the user's origin and destination stops, the user and the username and returns them as a string
 class FavouriteJourney(models.Model):
     users_origin_stop = models.CharField(max_length=200)

@@ -11,7 +11,6 @@
 //
 // }
 
-
 const lotsOfMins = (mins) => mins / 60 > 1
 
 function drivingComparatorInfoPopulator(duration) {

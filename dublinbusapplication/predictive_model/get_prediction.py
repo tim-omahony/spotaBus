@@ -7,9 +7,9 @@ from math import cos, asin, sqrt
 
 # filePath method to find the right path to the pkl files because it couldn't find them before
 def filePath(filename):
-    modulePath = os.path.dirname(__file__)  # get current directory
-    filePath = os.path.join(modulePath, filename)
-    return filePath
+    module_path = os.path.dirname(__file__)  # get current directory
+    file_path = os.path.join(module_path, filename)
+    return file_path
 
 
 # reading in the JSON file with all stop sequences
@@ -63,15 +63,15 @@ def distance(lat1, lon1, lat2, lon2):
 
 
 def closest(data, v):
-    '''given a list of dictionaries containing latitude and longitude coordiantes and a specific set of coordinates (v),
-    this function will find the closest coordinates using the haversine formula above'''
+    """given a list of dictionaries containing latitude and longitude coordinates and a specific set of coordinates (v),
+    this function will find the closest coordinates using the haversine formula above"""
     return min(data, key=lambda p: distance(v['lat'], v['lon'], p['lat'], p['lon']))
 
 
 def prediction(route, hour, day, month, start_stop_id, end_stop_id, wind_speed, temp, humidity, weather_main,
                stops):
     """ this is the main prediction function which takes in the parameters of the machine learning model and returns an
-    estimated jourey time in seconds """
+    estimated journey time in seconds """
 
     dir = direction(start_stop_id, end_stop_id, stops)
 
@@ -81,7 +81,6 @@ def prediction(route, hour, day, month, start_stop_id, end_stop_id, wind_speed, 
     # the specific stop sequence between the stops chosen by the user is retrieved by taking the index of the
     # start stop id and the end stop id and getting a list of the stops in between
     stop_sequence = journey_stops[journey_stops.index(start_stop_id):journey_stops.index(end_stop_id) + 1]
-
 
     # a dataframe is created with the stop IDs and the next stop ID, creating a dataframe of stop-wise pairs
     prediction_df = pd.DataFrame(stop_sequence, columns=['STOPPOINTID'])
@@ -122,7 +121,8 @@ def prediction(route, hour, day, month, start_stop_id, end_stop_id, wind_speed, 
     except (OSError, IOError) as e:
 
         # retrieving the dummy headers that were created on creation of the specific model
-        with open(filePath('Final_LR_DT_Pickles/DecisionTree_route_{}_{}_headers.pkl'.format(route, dir)), 'rb') as handle:
+        with open(filePath('Final_LR_DT_Pickles/DecisionTree_route_{}_{}_headers.pkl'.format(route, dir)),
+                  'rb') as handle:
             dummies = pickle.load(handle)
 
     # creating a dataframe with these headers
@@ -140,7 +140,8 @@ def prediction(route, hour, day, month, start_stop_id, end_stop_id, wind_speed, 
     except (OSError, IOError):
 
         # opening the specific pickle file in order to make the prediction
-        with open(filePath('Final_LR_DT_Pickles/DecisionTree_Model_route_{}_{}.pkl'.format(route, dir)), 'rb') as handle:
+        with open(filePath('Final_LR_DT_Pickles/DecisionTree_Model_route_{}_{}.pkl'.format(route, dir)),
+                  'rb') as handle:
             model = pickle.load(handle)
 
     # making the final prediction
@@ -148,7 +149,7 @@ def prediction(route, hour, day, month, start_stop_id, end_stop_id, wind_speed, 
 
     # remove any predictions that are way off due to the new stop sequence data being used
     # take the average journey time between all other stops and replace the incorrect prediction with this value
-    good_array = [item for item in y_pred_linear if item < 400 and item > 0]
+    good_array = [item for item in y_pred_linear if 400 > item > 0]
     average = sum(good_array) / len(good_array)
     good_pred = [average if test > 400 or test < 0 else test for test in y_pred_linear]
 

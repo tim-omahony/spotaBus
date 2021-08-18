@@ -1,8 +1,7 @@
-function analytics_display(array) {
+function analyticsDisplay(array) {
     const response_array = array
-    /*    let analytics_display = '<div><h5>Route Analytics</h5></div><div>';*/
-    var i = 0;
-    var toAdd = document.createDocumentFragment();
+    let i = 0;
+    const toAdd = document.createDocumentFragment();
     //for each loop iterates over the AJAX response and retrieves the relevant elements at each step
     response_array.forEach(function (step) {
 
@@ -32,7 +31,7 @@ function analytics_display(array) {
         i++;
     });
 
-    /*    //calling the get_arrival_time function to display the arrival time dynamically.
+    /*    //calling the getArrivalTime function to display the arrival time dynamically.
         analytics_display += '</div>';*/
 
     // Add the timeline to the page
@@ -41,8 +40,6 @@ function analytics_display(array) {
 
 
 function charts(late, early, on_time, map_id) {
-    console.log(map_id)
-    console.log(late, early, on_time)
     google.charts.load("current", {packages: ["corechart"]});
     google.charts.setOnLoadCallback(drawChart);
 

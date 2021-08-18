@@ -11,6 +11,7 @@ from django.db import connection
 from .models import *
 from .views import *
 
+
 class DataBaseConnection(TestCase):
 
     def testConnection(self):
@@ -33,15 +34,15 @@ class TestUrlResolutions(TestCase):
 
     def test_resolution_login(self):
         url = reverse('login')
-        self.assertEquals(resolve(url).func, loginPage)
+        self.assertEquals(resolve(url).func, login_page)
 
     def test_resolution_logout(self):
         url = reverse('logout')
-        self.assertEquals(resolve(url).func, logoutUser)
+        self.assertEquals(resolve(url).func, logout_user)
 
     def test_resolution_register(self):
         url = reverse('register')
-        self.assertEquals(resolve(url).func, registerPage)
+        self.assertEquals(resolve(url).func, register_page)
 
     def test_resolution_predict(self):
         url = reverse('predict')
@@ -60,6 +61,7 @@ class TestUrlResolutions(TestCase):
     def test_resolution_delete_user(self):
         url = reverse('deleteuser')
         self.assertEquals(resolve(url).func, del_user)
+
 
 class ResponseTemplateContentTests(TestCase):
 
@@ -88,7 +90,6 @@ class ResponseTemplateContentTests(TestCase):
     def test_home_content_returned(self):
         response = self.client.get(self.home_url)
         self.assertContains()
-
 
     # About page test
     def test_about_response_code(self):
@@ -269,6 +270,7 @@ class UserAccountMetricsTestCase(TestCase):
         self.assertIsInstance(self.user_account_metric.total_trips_planned, int)
         self.assertIsInstance(self.user_account_metric.username, str)
 
+
 class BikesTestCase(TestCase):
 
     def setUp(self, Number=42,
@@ -276,7 +278,8 @@ class BikesTestCase(TestCase):
               Address="Smithfield North",
               Latitude=53.349562,
               Longitude=-6.278198):
-        self.bike_stop = Bikes.objects.create(Number=Number, Name=Name, Address=Address, Latitude=Latitude, Longitude=Longitude)
+        self.bike_stop = Bikes.objects.create(Number=Number, Name=Name, Address=Address, Latitude=Latitude,
+                                              Longitude=Longitude)
 
     def test_variable_types(self):
         self.assertIsInstance(self.bike_stop.Number, int)
@@ -284,6 +287,7 @@ class BikesTestCase(TestCase):
         self.assertIsInstance(self.bike_stop.Address, str)
         self.assertIsInstance(self.bike_stop.Latitude, float)
         self.assertIsInstance(self.bike_stop.Longitude, float)
+
 
 class RegisterTest(TestCase):
     def setUp(self):
@@ -295,15 +299,15 @@ class RegisterTest(TestCase):
         self.user_count = User.objects.count()
 
     def test_registration_success(self):
+        # getting number of users
 
-        #getting number of users
-
-        #getting response data
+        # getting response data
         response = self.client.post('/register/', self.registration_form_data, follow=True)
 
-        #verifying user is active via response contact
+        # verifying user is active via response contact
         self.assertEqual(response.status_code, 200)
         self.assertEqual(User.objects.count(), self.user_count + 1)
+
 
 class LogInTest(TestCase):
     def setUp(self):
@@ -311,15 +315,15 @@ class LogInTest(TestCase):
             'username': 'testuser1',
             'password': 'dublinbuspassword'}
         User.objects.create_user(**self.credentials)
+
     def test_login_success(self):
-        #logging user in
+        # logging user in
         response = self.client.post('/login/', self.credentials, follow=True)
 
-        #verifying user is active via response contact
+        # verifying user is active via response contact
         self.assertTrue(response.context['user'].is_active)
 
-
-#CANNOT RUN TEST UNTIL ACCESS REGAINED TO DATABSE
+# CANNOT RUN TEST UNTIL ACCESS REGAINED TO DATABSE
 # class TestUserMetricsCreation(TestCase):
 #
 #     def setUp(self):
@@ -334,15 +338,3 @@ class LogInTest(TestCase):
 #                 username='testuser1'))
 #         self.assertTrue(UserAccountMetrics.objects.values_list('total_distance_planned', 'total_trips_planned').get(
 #                 username='testuser1'),[0.0,0])
-
-
-
-
-
-
-
-
-
-
-
-

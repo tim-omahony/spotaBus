@@ -4,7 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from dublinbusapplication.predictive_model.get_prediction import *
-from dublinbusapplication.predictive_model.Get_Times import *
+from dublinbusapplication.predictive_model.get_times import *
 from .models import Stop, Bikes, UserAccountMetrics
 from django.views.generic import View
 from django.views.generic.edit import DeleteView
@@ -72,7 +72,7 @@ def predict(request):
     try:
         # retrieving the stops data such that the latitude and longitude coordinates can be matched up
         # with the closest stop id
-        stop_ids = open(filePath('Stop_IDs.json'))
+        stop_ids = open(filePath('stop_IDs.json'))
         stop = json.load(stop_ids)
 
         # array to hold the final estimate
@@ -215,23 +215,8 @@ def contact(request):
     return render(request, 'contact.html')
 
 
-def google_api(request):
-    received_json_data = json.loads(request.body)
-    origin_stop = received_json_data['origin_stop']
-    destination_stop = received_json_data['destination_stop']
-    url = 'https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input='
-    query = '&inputtype=textquery&key=AIzaSyBpmxEf_9hpbApu3UhIu8jY41LDdgPFkqc'
-    origin_url = url + origin_stop + query
-    destination_url = url + destination_stop + query
-    origin = requests.get(origin_url)
-    destination = requests.get(destination_url)
-    print(origin)
-    print(destination)
-    return JsonResponse({'origin': origin.json(), 'destination': destination.json()})
-
-
 # this function allows users to register their own account
-def registerPage(request):
+def register_page(request):
     # only allows users that are not logged in to be able to view the register page, if not they are redirected to
     # homepage
     if request.user.is_authenticated:
@@ -255,7 +240,7 @@ def registerPage(request):
 
 
 # function to view the login page for users that are not logged in
-def loginPage(request):
+def login_page(request):
     if request.user.is_authenticated:
         return redirect('home')
     else:
@@ -276,7 +261,7 @@ def loginPage(request):
 
 
 # function that logs user out and returns to login page
-def logoutUser(request):
+def logout_user(request):
     logout(request)
     return redirect('login')
 
@@ -301,7 +286,7 @@ def add_favourite_route(request):
 
 
 # function to display and delete favorite route using django's built in View module
-class displayFavRoute(View):
+class DisplayFavRoute(View):
     # function to retrieve user specific favorite routes from the database and display them
     def get(self, request):
         user_routes = FavouriteJourney.objects.filter(user_id=request.user)
