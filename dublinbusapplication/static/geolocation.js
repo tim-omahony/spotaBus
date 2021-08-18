@@ -19,6 +19,7 @@ function find_address(pos) {
     geocoder.geocode({location: pos})
         .then((response) => {
             if (response.results[0]) {
+                swal("Make sure to confirm your address from the drop down by clicking the origin input field!");
                 document.getElementById("origin-input").value = response.results[0].formatted_address;
             } else {
                 alert("No results found");

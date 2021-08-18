@@ -85,7 +85,7 @@ WSGI_APPLICATION = 'dublinbusesproject.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 
-# testing on sql due to heroku DB creation restrictions
+# testing on RDS due to heroku DB creation restrictions
 if 'test' in sys.argv:
     # DATABASES = {
     #     'default': {

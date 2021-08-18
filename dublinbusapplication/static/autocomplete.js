@@ -90,95 +90,103 @@ class AutocompleteDirectionsHandler {
             (response, status) => {
                 googleResponse = response
                 if (status === "OK") {
-                    //displaying the directions service response on the map
-                    me.directionsRenderer.setDirections(response);
 
-                    //getting the length of the response
-                    const Steps = response.routes[0].legs[0].steps.length;
+                    try {
+                        //displaying the directions service response on the map
+                        me.directionsRenderer.setDirections(response);
 
-                    //creating an array in which the steps of the journey can be stored
-                    steps_array = [];
+                        //getting the length of the response
+                        const Steps = response.routes[0].legs[0].steps.length;
 
-                    //iterating over the response
-                    for (let y = 0; y < Steps; y++) {
+                        //creating an array in which the steps of the journey can be stored
+                        steps_array = [];
 
-                        //creating a dictionary in which the response at each step is stored
-                        const response_dictionary = {};
+                        //iterating over the response
+                        for (let y = 0; y < Steps; y++) {
 
-                        //getting the transit type of the current step
-                        const Transit_Type = response.routes[0].legs[0].steps[y].travel_mode;
+                            //creating a dictionary in which the response at each step is stored
+                            const response_dictionary = {};
 
-                        //creating a set of arrays in which the response is stored
-                        Direction_Steps = [];
-                        departure_time = [];
-                        departure_time_text = [];
-                        arrival_time = [];
-                        step_distance = [];
-                        walking_time_text = [];
-                        walking_time_value = [];
-
-                        //retrieving the response
-                        Direction_Steps = response.routes[0].legs[0].steps[y].instructions;
-                        departure_time = response.routes[0].legs[0].departure_time.value.getTime();
-                        departure_time_text = response.routes[0].legs[0].departure_time['text'];
-                        arrival_time = response.routes[0].legs[0].arrival_time['text'];
-                        full_distance = response.routes[0].legs[0].distance['value'];
-
-                        //adding the array of responses to the response dictionary
-                        response_dictionary['instructions'] = Direction_Steps;
-                        response_dictionary['departure_time'] = departure_time;
-                        response_dictionary['departure_time_text'] = departure_time_text;
-                        response_dictionary['arrival_time'] = arrival_time;
-                        response_dictionary['full_distance'] = full_distance;
-
-                        //gathering specific responses where transit type is walking
-                        if (Transit_Type === "WALKING") {
-                            step_distance = response.routes[0].legs[0].steps[y].distance['text'];
-                            walking_time_text = response.routes[0].legs[0].steps[y].duration['text'];
-                            walking_time_value = response.routes[0].legs[0].steps[y].duration['value'];
-
-                            response_dictionary['step_distance'] = step_distance;
-                            response_dictionary['walking_time_text'] = walking_time_text;
-                            response_dictionary['walking_time_value'] = walking_time_value;
-                            response_dictionary['transit_type'] = Transit_Type;
-                        }
-
-                        //gathering specific responses where transit type is TRANSIT
-                        if (Transit_Type === "TRANSIT") {
-
-                            // tripCO2Details(response.routes[0].legs[0].distance.value / 1000)
+                            //getting the transit type of the current step
+                            const Transit_Type = response.routes[0].legs[0].steps[y].travel_mode;
 
                             //creating a set of arrays in which the response is stored
-                            arrival_stop = []
-                            RouteShortname = [];
-                            start_stop_lat_lon = [];
-                            end_stop_lat_lon = [];
-                            transit_departure_time = []
+                            Direction_Steps = [];
+                            departure_time = [];
+                            departure_time_text = [];
+                            arrival_time = [];
+                            step_distance = [];
+                            walking_time_text = [];
+                            walking_time_value = [];
 
                             //retrieving the response
-                            arrival_stop = response.routes[0].legs[0].steps[y].transit.arrival_stop['name'];
-                            step_distance = response.routes[0].legs[0].steps[y].distance['text'];
-                            RouteShortname = response.routes[0].legs[0].steps[y].transit.line.short_name;
-                            transit_departure_time = response.routes[0].legs[0].steps[y].transit.departure_time['text'];
-                            start_stop_lat_lon = response.routes[0].legs[0].steps[y].start_location.lat() + ',' + response.routes[0].legs[0].steps[y].start_location.lng();
-                            end_stop_lat_lon = response.routes[0].legs[0].steps[y].end_location.lat() + ',' + response.routes[0].legs[0].steps[y].end_location.lng();
-                            Google_Journey_time = response.routes[0].legs[0].steps[y].duration['value'];
+                            Direction_Steps = response.routes[0].legs[0].steps[y].instructions;
+                            departure_time = response.routes[0].legs[0].departure_time.value.getTime();
+                            departure_time_text = response.routes[0].legs[0].departure_time['text'];
+                            arrival_time = response.routes[0].legs[0].arrival_time['text'];
+                            full_distance = response.routes[0].legs[0].distance['value'];
 
                             //adding the array of responses to the response dictionary
-                            response_dictionary['arrival_stop'] = arrival_stop;
-                            response_dictionary['step_distance'] = step_distance;
+                            response_dictionary['instructions'] = Direction_Steps;
                             response_dictionary['departure_time'] = departure_time;
-                            response_dictionary['route'] = RouteShortname;
-                            response_dictionary['transit_departure_time'] = transit_departure_time;
-                            response_dictionary['start_stop_lat_lon'] = start_stop_lat_lon;
-                            response_dictionary['end_stop_lat_lon'] = end_stop_lat_lon;
-                            response_dictionary['transit_type'] = Transit_Type;
-                            response_dictionary['Google_Journey_time'] = Google_Journey_time;
+                            response_dictionary['departure_time_text'] = departure_time_text;
+                            response_dictionary['arrival_time'] = arrival_time;
+                            response_dictionary['full_distance'] = full_distance;
+
+                            //gathering specific responses where transit type is walking
+                            if (Transit_Type === "WALKING") {
+                                step_distance = response.routes[0].legs[0].steps[y].distance['text'];
+                                walking_time_text = response.routes[0].legs[0].steps[y].duration['text'];
+                                walking_time_value = response.routes[0].legs[0].steps[y].duration['value'];
+
+                                response_dictionary['step_distance'] = step_distance;
+                                response_dictionary['walking_time_text'] = walking_time_text;
+                                response_dictionary['walking_time_value'] = walking_time_value;
+                                response_dictionary['transit_type'] = Transit_Type;
+                            }
+
+                            //gathering specific responses where transit type is TRANSIT
+                            if (Transit_Type === "TRANSIT") {
+
+                                // tripCO2Details(response.routes[0].legs[0].distance.value / 1000)
+
+                                //creating a set of arrays in which the response is stored
+                                arrival_stop = []
+                                RouteShortname = [];
+                                start_stop_lat_lon = [];
+                                end_stop_lat_lon = [];
+                                transit_departure_time = []
+
+                                //retrieving the response
+                                arrival_stop = response.routes[0].legs[0].steps[y].transit.arrival_stop['name'];
+                                step_distance = response.routes[0].legs[0].steps[y].distance['text'];
+                                RouteShortname = response.routes[0].legs[0].steps[y].transit.line.short_name;
+                                transit_departure_time = response.routes[0].legs[0].steps[y].transit.departure_time['text'];
+                                start_stop_lat_lon = response.routes[0].legs[0].steps[y].start_location.lat() + ',' + response.routes[0].legs[0].steps[y].start_location.lng();
+                                end_stop_lat_lon = response.routes[0].legs[0].steps[y].end_location.lat() + ',' + response.routes[0].legs[0].steps[y].end_location.lng();
+                                Google_Journey_time = response.routes[0].legs[0].steps[y].duration['value'];
+
+                                //adding the array of responses to the response dictionary
+                                response_dictionary['arrival_stop'] = arrival_stop;
+                                response_dictionary['step_distance'] = step_distance;
+                                response_dictionary['departure_time'] = departure_time;
+                                response_dictionary['route'] = RouteShortname;
+                                response_dictionary['transit_departure_time'] = transit_departure_time;
+                                response_dictionary['start_stop_lat_lon'] = start_stop_lat_lon;
+                                response_dictionary['end_stop_lat_lon'] = end_stop_lat_lon;
+                                response_dictionary['transit_type'] = Transit_Type;
+                                response_dictionary['Google_Journey_time'] = Google_Journey_time;
+                            }
+
+                            //pushing all of the responses to the main response_dictionary
+                            steps_array.push(response_dictionary);
                         }
 
-                        //pushing all of the responses to the main response_dictionary
-                        steps_array.push(response_dictionary);
+                        //error handling, displaying error message to the user.
+                    } catch (err) {
+                        swal("Error!", "It seems we're having some technical difficulties (you may have entered a route that doesn't require public transport), please refresh and try again.", "error");
                     }
+
                     //error handling
                 } else {
                     window.alert("Directions request failed due to " + status);

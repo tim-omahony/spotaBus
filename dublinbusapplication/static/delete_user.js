@@ -12,13 +12,9 @@ function removeUser(user_id) {
             alert("user successfully deleted!")
         }
     })
-    //once the ajax request has been sent, change page from the userpage to homepage
-    changePage()
-}
 
-//Function to change to the homepage once the user is deleted
-function changePage() {
-    location.replace("http://127.0.0.1:8000/")
+    location.replace("/login")
+
 }
 
 //function to show alerts when delete user button is clicked

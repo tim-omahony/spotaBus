@@ -1,5 +1,4 @@
 // function to return provided details on travel to the prediction model
-
 function submitForm() {
     const inputTime = new Date($('#predictTime').val())
     // ajax post request takes the date, time, journey steps and weather info and passes it to the views.py
@@ -45,7 +44,7 @@ function submitForm() {
                 "<div id = 'narrow'><i id='estimate-walking-icon' class='fas fa-walking'></i> <br><b>" + getWalkingTime(journey_response) + " mins</b></div>" +
                 "<div id = 'wide'><i id='estimate-bus-icon' class='fas fa-bus'></i> <br><b> " + getTransitTime(journey_response) + " mins</b></div></div>" +
                 "<div id='parenttwo'><div id='narrowtwo'><p>Weather Forecast:</p></div><div id ='widetwo'><img id='wicon' src=" + iconurl + ">" + temperature + "<span>&#176;</span></div></div>" +
-                "<div>" + googleOrUs(response) + "</div>"
+                "<div id='google_or_us'>" + googleOrUs(response) + "</div>"
             );
 
             $('#analytics-output').html(analyticsDisplay(journey_response));
@@ -53,6 +52,7 @@ function submitForm() {
         },
 
         failure: function (result) {
+            swal("Error!", "It seems we're having some technical difficulties, please try again.", "error");
             console.log(result)
         }
     })
