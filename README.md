@@ -32,6 +32,10 @@ Our app tracks how many trips you've planned out and how far those trips may (or
 
 ![](readme_imgs/userpage.png)
 
+### System Architecture
+
+![](readme_imgs/dublin_busboys_architecture_diagram.png)
+
 #### Run the app for yourself locally
 
 There are a few steps required to do this so bare with us:
