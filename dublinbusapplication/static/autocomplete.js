@@ -252,6 +252,5 @@ class AutocompleteDirectionsHandler {
                 }
             }
         )
-        displayTransportComparator();
     }
 }
