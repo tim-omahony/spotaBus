@@ -184,8 +184,6 @@
                 swal("Make sure to confirm your origin and destination from the drop downs by clicking the fields!");
                 document.getElementById('origin-input').value = searchParams.get('originStop')
                 document.getElementById('destination-input').value = searchParams.get('destStop')
-                {% comment %}const confirm = document.getElementById("confirmSelection"){% endcomment %}
-                {% comment %}confirm.style.display = "block"{% endcomment %}
                 mergeWeather();
                 hideCard();
             }
