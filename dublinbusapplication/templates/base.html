@@ -54,8 +54,10 @@
 
     <aside id="sidebar-wrapper">
         <div class="sidebar-brand">
-            <h2>&nbsp; Dublin
-                Bus</h2>
+            <h2> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; spotaBus <img
+                    src="{% static 'spotaBusLogo.png' %}"
+                    height="50px"
+                    width="50px"/></h2>
         </div>
 
         <ul class="sidebar-nav">
@@ -131,6 +133,7 @@
     $button.addEventListener('click', (e) => {
         e.preventDefault();
         $wrapper.classList.toggle('toggled');
+        document.getElementsByClassName("sidebar-brand").style.display = "none";
     });
 
 
