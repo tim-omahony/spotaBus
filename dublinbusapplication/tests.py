@@ -46,17 +46,15 @@ class TestUrlResolutions(TestCase):
 
     def test_resolution_predict(self):
         url = reverse('predict')
-        print(resolve(url))
         self.assertEquals(resolve(url).func, predict)
 
     def test_resolution_add_favourite_route(self):
         url = reverse('add_favourite_route')
         self.assertEquals(resolve(url).func, add_favourite_route)
 
-    # def test_resolution_delete_UserFav_Journey(self):
-    #     url = reverse('deleteUserFavJourney')
-    #     print(resolve(url))
-    #     self.assertEquals(resolve(url).func, displayFavRoute)
+    def test_resolution_delete_UserFav_Journey(self):
+        url = reverse('deleteUserFavJourney')
+        self.assertEquals(resolve(url).func, DisplayFavRoute)
 
     def test_resolution_delete_user(self):
         url = reverse('deleteuser')
@@ -87,9 +85,20 @@ class ResponseTemplateContentTests(TestCase):
         response = self.client.get(self.home_url)
         self.assertNotEqual(response.content, "")
 
-    def test_home_content_returned(self):
-        response = self.client.get(self.home_url)
-        self.assertContains()
+    def test_holiday_widget_hidden(self):
+        response = self.client.get("/")
+        self.assertContains(response, """<div id="holidayWidget" style="visibility: hidden;"></div>""", status_code=200)
+
+    def test_holiday_widget_hidden(self):
+        response = self.client.get("/")
+        self.assertContains(response, """<div id="journeyComparer" style="display: none;">""", status_code=200)
+
+    def test_empty_analytics_div(self):
+        response = self.client.get("/")
+        self.assertContains(response, """<div id="analytics-output"></div>""", status_code=200)
+
+
+
 
     # About page test
     def test_about_response_code(self):
@@ -323,7 +332,39 @@ class LogInTest(TestCase):
         # verifying user is active via response contact
         self.assertTrue(response.context['user'].is_active)
 
-# CANNOT RUN TEST UNTIL ACCESS REGAINED TO DATABSE
+#     def test_logout_success(self):
+#         response = self.client.post('/login/', self.credentials, follow=True)
+#
+#         # verifying user is active via response contact
+#         self.assertTrue(response.context['user'].is_active)
+#
+#         self.client.post('/logout/')
+#
+#         print(self.user.is_authenticated)
+#
+#         self.assertEqual(self.user.is_authenticated(), False)
+#
+# #
+# class ViewTest(TestCase):
+#
+#     def setUp(self):
+#         self.factory = RequestFactory()
+#
+#
+#
+#
+#     def test_details(self):
+#         request = self.factory.get('/')
+#         request.user = AnonymousUser()
+#         response = index(request)
+#         print(response.content)
+
+
+
+
+
+
+
 # class TestUserMetricsCreation(TestCase):
 #
 #     def setUp(self):
@@ -331,10 +372,9 @@ class LogInTest(TestCase):
 #             'username': 'testuser1',
 #             'password': 'dublinbuspassword'}
 #         self.user = User.objects.create_user(**self.credentials)
+#         self.metric_count = UserAccountMetrics.objects.count()
 #
 #
 #     def test_successful_metric_creation(self):
-#         print(UserAccountMetrics.objects.values_list('total_distance_planned', 'total_trips_planned').get(
-#                 username='testuser1'))
-#         self.assertTrue(UserAccountMetrics.objects.values_list('total_distance_planned', 'total_trips_planned').get(
-#                 username='testuser1'),[0.0,0])
+#
+#         self.assertEqual(UserAccountMetrics.objects.count(), self.metric_count + 1)

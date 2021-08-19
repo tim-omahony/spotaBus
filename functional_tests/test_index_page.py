@@ -6,29 +6,68 @@ import time
 class TestIndexPage(StaticLiveServerTestCase):
 
     def setUp(self):
-        self.browser = webdriver.Chrome('functional_tests/chromedriver.exe')
+        self.driver = webdriver.Chrome("C:/Users/matth/Desktop/Summer/Project code/dublin_busboys/functional_tests/chromedriver.exe")
 
     def tearDown(self):
-        self.browser.close()
+        self.driver.quit()
 
-    def test_holiday_div_not_displayed(self):
-        self.browser.get(self.live_server_url)
+    def test_why_take_bus_hidden(self):
 
-        # User arrives on page for first time
-        alert = self.browser.find_element_by_id("holidayWidget")
-        self.assertEqual(
-            alert.text,""
-        )
+        #user navigates to homepage
+        self.driver.get("http://127.0.0.1:8000/");
+        self.driver.maximize_window()
 
-    def test_modal_displays_on_click(self):
-        self.browser.get(self.live_server_url)
-
-        # User arrives on page for first time
-        self.browser.find_element_by_id("planButton").click()
+        #user clicks modal box button
+        plan_button = self.driver.find_element_by_id('planButton')
+        plan_button.click()
 
 
-    def test_github_redirects(self):
-        self.browser.get(self.live_server_url)
+        #give time for DOM to execute
+        time.sleep(2)
 
-        # User arrives on page for first time
-        self.browser.find_element_by_id("planButton").click()
+
+        # retrieving div style
+        element = self.driver.find_element_by_id("top-card")
+        attribute_value = element.get_attribute("style")
+
+        # checking why take bus div is hidden
+        self.assertEqual(attribute_value, "display: none;")
+
+    def test_modal_display(self):
+
+        # user navigates to homepage
+        self.driver.get("http://127.0.0.1:8000/");
+        self.driver.maximize_window()
+
+        # user clicks modal box button
+        plan_button = self.driver.find_element_by_id('planButton')
+        plan_button.click()
+
+        # give time for DOM to execute
+        time.sleep(1)
+
+        #retrieving modal element
+        element = self.driver.find_element_by_id("exampleModal")
+        attribute_value = element.get_attribute("style")
+
+
+
+        #checking modal box is displayed
+        self.assertIn("block", attribute_value)
+
+#     # def test_modal_display(self):
+#     #
+#     #     response = webdriver.request('POST', 'http://127.0.0.1:8000/')
+#     #     print(response)
+#     # def test_modal_displays_on_click(self):
+#     #     self.browser.get(self.live_server_url)
+#     #
+#     #     # User arrives on page for first time
+#     #     self.browser.find_element_by_id("planButton").click()
+#     #
+#     #
+#     # def test_github_redirects(self):
+#     #     self.browser.get(self.live_server_url)
+#     #
+#     #     # User arrives on page for first time
+#     #     self.browser.find_element_by_id("planButton").click()
