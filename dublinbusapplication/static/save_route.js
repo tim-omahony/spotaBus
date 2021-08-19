@@ -1,4 +1,4 @@
-// function to save route to the database
+// function to save a route to the database
 function saveRoute() {
     $.ajax({
         // POST request takes the start and end addresses from the Google response and adds them to the origin and destination fields in the stops table of the database

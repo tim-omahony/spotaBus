@@ -1,3 +1,5 @@
+/* Font styling*/
+
 * {
     margin: 0;
     padding: 0;
@@ -9,7 +11,7 @@
 
 
 /* ------------------------------------------------------------------------------------------------------------- */
-/* base CSS, template retrieved from codepen */
+/* base CSS for responsive sidebar and navbar, template retrieved from codepen */
 
 body {
     padding-bottom: 30px;
@@ -431,24 +433,19 @@ a:focus {
     float: left;
     width: 33%;
     background-color: #e5e6e0;
-
     border-color: #fff;
     border-style: solid;
 }
 
 #walkingDiv {
-
     border-top-left-radius: 25px;
     border-bottom-left-radius: 25px;
     padding: 1em;
     float: left;
     width: 33%;
     background-color: #e5e6e0;
-
     border-color: #fff;
     border-style: solid;
-
-
 }
 
 #transitDiv {
@@ -610,6 +607,7 @@ figcaption.ratings a:hover {
 
 /* ------------------------------------------------------------------------------------------------------------- */
 /*Table on User page styling*/
+
 #table {
     width: 100%;
     border-radius: 10px;
@@ -673,7 +671,7 @@ tr:nth-child(even) {
 
 
 /* ------------------------------------------------------------------------------------------------------------- */
-/* Journey planner instruction text CSS  https://bbbootstrap.com/snippets/user-business-timeline-32289439 */
+/* Journey planner instruction text CSS, template from https://bbbootstrap.com/snippets/user-business-timeline-32289439 */
 
 
 .vertical-timeline {
@@ -769,8 +767,8 @@ tr:nth-child(even) {
 
 
 /* ------------------------------------------------------------------------------------------------------------- */
-
 /*CSS for google pop up message and other journey planner output*/
+
 #google_maps_logo {
     width: 60px;
     height: 12.5px;
@@ -794,14 +792,12 @@ tr:nth-child(even) {
 
 #narrow, #wide, #narrowtwo, #widetwo {
     flex: 1;
-
     width: 30%;
 }
 
 
 #total-estimate {
     width: 40%;
-
 }
 
 #estimate-walking-icon, #estimate-bus-icon, #narrow, #wide {
