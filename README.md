@@ -1,6 +1,6 @@
-# Dublin Bus-Boys
+# spotaBus
 
-Our app is currently hosted **[here](https://dublin-busboys.herokuapp.com/)**
+Our app is currently hosted **[here](https://spotabus.herokuapp.com/)**
 
 ### The app all Dublin commuters have been waiting for!
 
