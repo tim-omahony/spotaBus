@@ -13,7 +13,9 @@
                         <h4>Your feedback is important to us!</h4>
                     </div>
                 </div>
-                <div class="col-md-9">
+                <div class="col-md-9"?>
+                    <form  method="POST" role="form" class="contact-form">
+                        {% csrf_token %}
                     <div class="contact-form">
                         <br>
                         <div class="form-group">
@@ -29,9 +31,9 @@
                         </div>
 
                         <div class="form-group">
-                            <label class="control-label col-sm-2" for="exampleFormControlSelect1"><b>Topic:</b></label>
+                            <label class="control-label col-sm-2" ><b>Topic:</b></label>
                             <div class="col-sm-10">
-                                <select class="form-control" id="exampleFormControlSelect1">
+                                <select class="form-control" id="exampleFormControlSelect1" name="topic">
                                     <option>Layout</option>
                                     <option>Functionality</option>
                                     <option>Features</option>
@@ -49,25 +51,37 @@
 
 
                         <div class="form-group">
-                            <label class="control-label col-sm-2" for="comment"><b>Comment:</b></label>
+                            <label class="control-label col-sm-2" for="comment" ><b>Comment:</b></label>
                             <div class="col-sm-10">
-                                <textarea class="form-control" rows="5" id="comment"></textarea>
+                                <textarea class="form-control" rows="5" id="comment" name="comment"></textarea>
                             </div>
                         </div>
 
 
                         <div class="col-sm-10">
                             <hr>
+                            <input type="Submit" class="btn btn-primary" value="Submit">
                         </div>
 
 
-                        <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-10">
-                                <button type="button" class="btn btn-primary">Submit</button>
-                            </div>
-                        </div>
+
+                        {% if messages %}
+
+                            <div class="col-sm-10">
+                                <hr>
+                                {% for message in messages %}
+                                <div class="alert alert-{{ message.tags }}" role="alert">
+                                    {{ message }}
+                                </div>
+                                {% endfor %}
+                                </div>
+                        {% endif %}
+
+
                         <br>
                     </div>
+
+                    </form>
                 </div>
             </div>
         </div>
