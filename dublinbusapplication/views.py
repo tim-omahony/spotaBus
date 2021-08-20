@@ -342,7 +342,7 @@ class DisplayFavRoute(View):
 
         return render(request, 'userpage.html',
                       {'user_routes': user_routes, 'total_distance_planned': round(user_metrics[0], 2),
-                       'total_trips_planned': user_metrics[1]})
+                       'total_trips_planned': user_metrics[1], 'co2_reduction': round(user_metrics[0]*144/1000, 2)})
 
     # function to get the specific chosen favorite route IDs from the user on the userpage, and finding them in the
     # database before deleting them from the database
