@@ -1,7 +1,10 @@
 import os
 import sys
+from django.contrib.messages import constants as messages
+
 from pathlib import Path
 import django_heroku
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -61,6 +64,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+
 ROOT_URLCONF = 'dublinbusesproject.urls'
 
 TEMPLATES = [
@@ -78,6 +82,10 @@ TEMPLATES = [
         },
     },
 ]
+
+MESSAGE_TAGS = {
+    messages.ERROR: 'danger',
+}
 
 WSGI_APPLICATION = 'dublinbusesproject.wsgi.application'
 
@@ -158,3 +166,12 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 django_heroku.settings(locals())
 # DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+#email details
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'spotabus@gmail.com'
+EMAIL_HOST_PASSWORD = 'dublinbuspassword'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False

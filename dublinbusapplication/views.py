@@ -1,4 +1,5 @@
 from django.http import JsonResponse
+from django.core.mail import send_mail
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
@@ -212,7 +213,47 @@ def about(request):
 
 # function to render contact.html as a landing page
 def contact(request):
+
+
+    if request.method == 'POST':
+
+        if request.POST.get('comment') != "":
+            email = request.POST.get('email')
+            topic = request.POST.get('topic')
+            comment = request.POST.get('comment')
+
+            data = {"email": email,
+                    "topic": topic,
+                    "comment": comment}
+
+            print(data)
+
+            message = """
+            New message: {}
+    
+            Topic: {}
+    
+            From: {}
+    
+            """.format(data['comment'], data['topic'], data['email'])
+
+            send_mail(f"New contact us form message on {data['topic']}", message, '', ['spotabus@gmail.com'])
+
+
+            messages.success(request, 'Form submission successful.')
+
+            return render(request, 'contact.html')
+        else:
+
+            messages.error(request, 'Comment field blank, please leave a comment!')
+
+            return render(request, 'contact.html')
+
+
+
+
     return render(request, 'contact.html')
+
 
 
 # this function allows users to register their own account
