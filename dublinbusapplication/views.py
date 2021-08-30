@@ -177,9 +177,9 @@ def predict(request):
             if journey_steps[i]["transit_type"] == "TRANSIT":
 
                 google_time = int(journey_steps[i]["Google_Journey_time"])
-                route = (journey_steps[i]['route'])
 
                 try:
+                    route = (journey_steps[i]['route'])
                     analytics = journey_analytics[route]
                     journey_steps[i]["analytics"] = analytics
 

@@ -7,6 +7,8 @@ let transit_departure_time;
 let walking_time_text;
 let walking_time_value;
 let full_distance;
+let nightlinkshortname;
+let agency_type;
 
 //creating the AutocompleteDirectionsHandler class to be called in InitMap
 class AutocompleteDirectionsHandler {
@@ -151,31 +153,37 @@ class AutocompleteDirectionsHandler {
                                 // tripCO2Details(response.routes[0].legs[0].distance.value / 1000)
 
                                 //creating a set of arrays in which the response is stored
-                                arrival_stop = []
+                                arrival_stop = [];
                                 RouteShortname = [];
                                 start_stop_lat_lon = [];
                                 end_stop_lat_lon = [];
-                                transit_departure_time = []
+                                transit_departure_time = [];
+                                nightlinkshortname = [];
+                                agency_type = [];
 
                                 //retrieving the response
                                 arrival_stop = response.routes[0].legs[0].steps[y].transit.arrival_stop['name'];
                                 step_distance = response.routes[0].legs[0].steps[y].distance['text'];
                                 RouteShortname = response.routes[0].legs[0].steps[y].transit.line.short_name;
+                                nightlinkshortname = response.routes[0].legs[0].steps[y].transit.line.name;
                                 transit_departure_time = response.routes[0].legs[0].steps[y].transit.departure_time['text'];
                                 start_stop_lat_lon = response.routes[0].legs[0].steps[y].start_location.lat() + ',' + response.routes[0].legs[0].steps[y].start_location.lng();
                                 end_stop_lat_lon = response.routes[0].legs[0].steps[y].end_location.lat() + ',' + response.routes[0].legs[0].steps[y].end_location.lng();
                                 Google_Journey_time = response.routes[0].legs[0].steps[y].duration['value'];
+                                agency_type = response.routes[0].legs[0].steps[y].transit.line.agencies[0].name;
 
                                 //adding the array of responses to the response dictionary
                                 response_dictionary['arrival_stop'] = arrival_stop;
                                 response_dictionary['step_distance'] = step_distance;
                                 response_dictionary['departure_time'] = departure_time;
                                 response_dictionary['route'] = RouteShortname;
+                                response_dictionary['nightlinkshortname'] = nightlinkshortname;
                                 response_dictionary['transit_departure_time'] = transit_departure_time;
                                 response_dictionary['start_stop_lat_lon'] = start_stop_lat_lon;
                                 response_dictionary['end_stop_lat_lon'] = end_stop_lat_lon;
                                 response_dictionary['transit_type'] = Transit_Type;
                                 response_dictionary['Google_Journey_time'] = Google_Journey_time;
+                                response_dictionary['agency_type'] = agency_type;
                             }
 
                             //pushing all of the responses to the main response_dictionary
@@ -184,7 +192,7 @@ class AutocompleteDirectionsHandler {
 
                         //error handling, displaying error message to the user.
                     } catch (err) {
-                        swal("Error!", "It seems we're having some technical difficulties (you may have entered a route that doesn't require public transport), please refresh and try again.", "error");
+                        swal("Error!", "It seems we're having some technical difficulties, please refresh and try again.", "error");
                     }
 
                     //error handling
