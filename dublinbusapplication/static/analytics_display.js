@@ -10,7 +10,7 @@ function analyticsDisplay(array) {
         const map_id = 'r' + i + 1;
 
         let iterative_response = '<div = "iterative-stats-output">';
-        if (step.transit_type === "TRANSIT" && "analytics" in step) {
+        if (step.transit_type === "TRANSIT" && step.agency_type === "Dublin Bus" && "analytics" in step) {
             var late = parseInt((step.analytics.on_time_percentage['Late'] * 100).toFixed(0))
             var early = parseInt((step.analytics.on_time_percentage['Early'] * 100).toFixed(0))
             var on_time = parseInt((step.analytics.on_time_percentage['On_time'] * 100).toFixed(0))
@@ -21,9 +21,14 @@ function analyticsDisplay(array) {
                 `<p>Average stop-to-stop time: <b>${step.analytics.stops_travel_time_description.mean.toFixed(0)}</b> secs</p>` +
                 '<div id = "' + map_id + '"></div>';
 
-        } else if (step.transit_type === "TRANSIT" && !("analytics" in step)) {
+        } else if (step.transit_type === "TRANSIT" && step.agency_type === "Dublin Bus" && !("analytics" in step)) {
             iterative_response +=
                 `<h6><b>Route: ${step.route}</b></h6>` +
+                `<p>It looks like we don't have any analytics on the line you chose, come back later to see our updated analytics!</p></div>`;
+
+        } else if (step.transit_type === "TRANSIT" && step.agency_type === "Nitelink, Dublin Bus" && !("analytics" in step)) {
+            iterative_response +=
+                `<h6><b>Route: ${step.nightlinkshortname}</b></h6>` +
                 `<p>It looks like we don't have any analytics on the line you chose, come back later to see our updated analytics!</p></div>`;
         }
         newDiv.innerHTML = iterative_response
