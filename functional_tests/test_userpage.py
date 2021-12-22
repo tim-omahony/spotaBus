@@ -1,12 +1,10 @@
 from selenium import webdriver
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
-from django.urls import reverse
-import time
 
 class TestUserPage(StaticLiveServerTestCase):
 
     def setUp(self):
-        self.driver = webdriver.Chrome("C:/Users/matth/Desktop/Summer/Project code/dublin_busboys/functional_tests/chromedriver.exe")
+        self.driver = webdriver.Chrome("/dublin_busboys/functional_tests/chromedriver.exe")
 
     def tearDown(self):
         self.driver.quit()

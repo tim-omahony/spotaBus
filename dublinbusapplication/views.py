@@ -328,7 +328,7 @@ def add_favourite_route(request):
 
 # function to display and delete favorite route using django's built in View module
 class DisplayFavRoute(View):
-    # function to retrieve user specific favorite routes from the database and display them
+    # function to retrieve user specific favorite metrics from the database and display them
     def get(self, request):
         user_routes = FavouriteJourney.objects.filter(user_id=request.user)
 
